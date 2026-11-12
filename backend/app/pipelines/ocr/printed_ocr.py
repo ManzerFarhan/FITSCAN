@@ -5,6 +5,7 @@ Each returns text segments with confidence and a page-normalized bounding box.
 """
 from __future__ import annotations
 
+import os
 import queue
 import shutil
 import threading
@@ -28,8 +29,23 @@ def _box_from_points(points, page: int, w: int, h: int) -> BBox:
     return BBox(page=page, x0=min(xs) / w, y0=min(ys) / h, x1=max(xs) / w, y1=max(ys) / h)
 
 
-ONNX_THREADS = 4   # per engine; ONNX's default (all logical cores) was ~2x slower on hybrid desktop CPUs
-POOL_SIZE = 3      # RapidOCR engines kept for OCR-ing several pages at once (engines are not shared across threads)
+# Per engine; ONNX's default (all logical cores) was ~2x slower on hybrid desktop CPUs. Small hosts: OCR_THREADS=1.
+ONNX_THREADS = int(os.environ.get("OCR_THREADS", "4"))
+# RapidOCR engines kept for OCR-ing several pages at once (engines are not shared across threads). Each needs ~150 MB;
+# 512 MB hosts: OCR_POOL_SIZE=1.
+POOL_SIZE = max(1, int(os.environ.get("OCR_POOL_SIZE", "3")))
+# Longest page side fed to OCR (0 = no limit). Detection memory grows with page area; 512 MB hosts: OCR_MAX_SIDE=1600.
+MAX_SIDE = int(os.environ.get("OCR_MAX_SIDE", "0"))
+
+
+def _fit(image: np.ndarray) -> np.ndarray:
+    h, w = image.shape[:2]
+    if not MAX_SIDE or max(h, w) <= MAX_SIDE:
+        return image
+    import cv2
+
+    scale = MAX_SIDE / max(h, w)
+    return cv2.resize(image, (round(w * scale), round(h * scale)), interpolation=cv2.INTER_AREA)
 
 
 def _new_rapidocr():
@@ -92,7 +108,7 @@ class PrintedOCR:
             raise OCRUnavailable("No OCR engine installed (PaddleOCR / RapidOCR / Tesseract).")
         engine = self._acquire()
         try:
-            return self._run(engine, image, page_no)
+            return self._run(engine, _fit(image), page_no)  # boxes are page-normalised, so scaling is transparent
         finally:
             self._pool.put(engine)
 

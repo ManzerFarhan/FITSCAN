@@ -1,0 +1,36 @@
+# Render Blueprint for the FITSCAN backend (free plan). The website is on Vercel and forwards /api/v1/* here.
+# Secrets marked "sync: false" are entered in the Render dashboard (or via its API), never committed.
+services:
+  - type: web
+    name: fitscan-api
+    runtime: docker
+    plan: free
+    region: singapore          # same region as the Neon database
+    rootDir: backend
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/v1/ping
+    autoDeployTrigger: commit  # every push to main redeploys
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: STORAGE_BACKEND
+        value: db              # uploaded files live in Postgres (free plan has no persistent disk)
+      - key: FRONTEND_ORIGIN
+        value: https://fitscan-smoky.vercel.app
+      - key: WEB_CONCURRENCY
+        value: "1"             # 512 MB RAM: one worker...
+      - key: OCR_POOL_SIZE
+        value: "1"             # ...with one OCR engine
+      - key: OCR_THREADS
+        value: "1"
+      - key: OCR_MAX_SIDE
+        value: "1600"          # caps OCR memory (~430 MB peak); same accuracy on the scanned test set
+      - key: CENTRE_PROVIDER
+        value: osm
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DATABASE_URL
+        sync: false            # Neon connection string
+      - key: GEMINI_API_KEY
+        sync: false            # chatbot

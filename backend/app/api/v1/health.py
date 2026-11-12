@@ -7,6 +7,12 @@ from app.db.session import get_db
 router = APIRouter(tags=["health"])
 
 
+@router.get("/ping")
+def ping() -> dict:
+    """Liveness only - no database query, so host health checks and keep-awake pings let the DB sleep."""
+    return {"status": "ok"}
+
+
 @router.get("/health")  # API-19
 def health(db: Session = Depends(get_db)) -> dict:
     db_ok = True

@@ -17,6 +17,6 @@ USER fitscan
 
 EXPOSE 8000
 HEALTHCHECK --interval=30s --timeout=5s --start-period=40s --retries=3 \
-  CMD curl -fsS http://localhost:${PORT:-8000}/api/v1/health || exit 1
+  CMD curl -fsS http://localhost:${PORT:-8000}/api/v1/ping || exit 1
 # Migrations first; trust X-Forwarded-* from the reverse proxy so HTTPS/cookies behave correctly.
 CMD ["sh", "-c", "alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000} --workers ${WEB_CONCURRENCY:-2} --proxy-headers --forwarded-allow-ips='*'"]

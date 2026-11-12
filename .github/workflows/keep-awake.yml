@@ -1,0 +1,22 @@
+# Render's free plan sleeps after 15 minutes without traffic; a sleeping backend takes ~1 minute to wake.
+# This pings the lightweight /ping endpoint (no database query, so Neon can still sleep) every 10 minutes.
+# Setup: GitHub repo -> Settings -> Secrets and variables -> Actions -> Variables -> BACKEND_URL
+#        (e.g. https://fitscan-api.onrender.com). Render itself deploys from GitHub (see render.yaml).
+name: Keep backend awake
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Ping the API
+        env:
+          BACKEND_URL: ${{ vars.BACKEND_URL }}
+        run: |
+          test -n "$BACKEND_URL" || { echo "Set the BACKEND_URL repository variable."; exit 0; }
+          curl -fsS --retry 4 --retry-delay 20 --max-time 90 "${BACKEND_URL%/}/api/v1/ping" || true
