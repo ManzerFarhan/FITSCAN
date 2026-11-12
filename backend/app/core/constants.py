@@ -79,6 +79,32 @@ class BmiCategory(StrEnum):
     OBESE = "OBESE"              # >= 30
 
 
+class DoctorType(StrEnum):
+    """Optional 'type of doctor' the user picks on Tests & Centres. Chosen by the user only, like tests (BR-07) -
+    FITSCAN never suggests a specialist from a report (no referrals)."""
+    GENERAL_PHYSICIAN = "GENERAL_PHYSICIAN"
+    PHYSIOTHERAPIST = "PHYSIOTHERAPIST"
+    CARDIOLOGIST = "CARDIOLOGIST"
+    ENDOCRINOLOGIST = "ENDOCRINOLOGIST"
+    DIABETOLOGIST = "DIABETOLOGIST"
+    DERMATOLOGIST = "DERMATOLOGIST"
+    GASTROENTEROLOGIST = "GASTROENTEROLOGIST"
+    NEPHROLOGIST = "NEPHROLOGIST"
+    NEUROLOGIST = "NEUROLOGIST"
+    ORTHOPAEDIC = "ORTHOPAEDIC"
+    GYNAECOLOGIST = "GYNAECOLOGIST"
+    PAEDIATRICIAN = "PAEDIATRICIAN"
+    ENT = "ENT"
+    OPHTHALMOLOGIST = "OPHTHALMOLOGIST"
+    DENTIST = "DENTIST"
+    PSYCHIATRIST = "PSYCHIATRIST"
+    PULMONOLOGIST = "PULMONOLOGIST"
+    UROLOGIST = "UROLOGIST"
+    ONCOLOGIST = "ONCOLOGIST"
+    HAEMATOLOGIST = "HAEMATOLOGIST"
+    DIETITIAN = "DIETITIAN"
+
+
 ALLOWED_MIME_TYPES = {
     "application/pdf": ".pdf",
     "image/jpeg": ".jpg",

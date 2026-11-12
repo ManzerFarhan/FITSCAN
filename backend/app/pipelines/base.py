@@ -54,6 +54,7 @@ class LoadedPage(BaseModel):
     height: float
     words: list[Word] = Field(default_factory=list)
     source: str = "native"  # native | ocr
+    image_cover: float = 0.0  # share of the page covered by pictures (a results table pasted in as an image)
     image: Any = Field(default=None, exclude=True)  # np.ndarray (BGR) when rasterized
 
 

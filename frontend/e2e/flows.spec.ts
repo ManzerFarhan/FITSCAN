@@ -63,6 +63,12 @@ test("3. analysis preview locked until a report is attached; Tests & Centres is 
   await page.waitForURL("**/tests?doc=*");                                           // back where they were
   await expect(page.getByText("Which test do you need?")).toBeVisible();
   await expect(page.getByRole("button", { name: "Complete Blood Count", pressed: true })).toBeVisible();
+  // Optional type of doctor - nothing chosen by default; picking one adds it to the search.
+  const doctor = page.getByLabel("Type of doctor (optional)");
+  await expect(doctor).toHaveValue("");
+  await doctor.selectOption("CARDIOLOGIST");
+  await expect(page.getByRole("button", { name: "Find centres for 1 test(s) + Cardiologist (heart)" })).toBeVisible();
+  if (process.env.SHOT_DIR) await page.screenshot({ path: path.join(process.env.SHOT_DIR, "tests-doctor.png") });
 });
 
 test("6. floating assistant on every page (log in to unlock) + dashboard charts", async ({ page }) => {

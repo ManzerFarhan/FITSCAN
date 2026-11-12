@@ -3,7 +3,7 @@ review/corrections, listing and deletion. (API-01..05, 10, 11; FR-UPL; FR-LAB-9)
 from __future__ import annotations
 
 import uuid
-from datetime import date, datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
 from sqlalchemy import Select, func, or_, select
@@ -94,6 +94,21 @@ def _set_status(document_id: uuid.UUID, status: str, message: str | None = None)
             doc.status = status
             doc.status_message = message
             db.commit()
+
+
+_IN_PROGRESS = (DocumentStatus.UPLOADED, DocumentStatus.PREPROCESSING, DocumentStatus.OCR_RUNNING, DocumentStatus.EXTRACTING)
+
+
+def fail_interrupted(db: Session, older_than_minutes: int = 15) -> int:
+    """Reading jobs run in-process, so a document still 'in progress' long after upload was cut off by a restart
+    (deploy, crash). Mark it FAILED with a clear message instead of leaving it spinning forever."""
+    cutoff = datetime.now(timezone.utc) - timedelta(minutes=older_than_minutes)
+    stuck = db.scalars(select(Document).where(Document.status.in_(_IN_PROGRESS), Document.uploaded_at < cutoff)).all()
+    for doc in stuck:
+        doc.status = DocumentStatus.FAILED
+        doc.status_message = "Reading was interrupted (the server restarted). Please upload the report again."
+    db.commit()
+    return len(stuck)
 
 
 def _patient_sex(db: Session, doc: Document) -> str | None:

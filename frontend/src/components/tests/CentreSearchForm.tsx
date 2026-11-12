@@ -6,9 +6,9 @@ import { Spinner } from "@/components/ui/misc";
 import { LocationPicker, type LocationValue } from "./LocationPicker";
 
 /** FR-TEST-4: test(s), city, locality, postal code, distance. */
-export function CentreSearchForm({ location, onLocation, source, radius, onRadius, selectedCount, busy, onSearch }: {
+export function CentreSearchForm({ location, onLocation, source, radius, onRadius, searchLabel, busy, onSearch }: {
   location: LocationValue; onLocation: (v: LocationValue) => void; source: string | null;
-  radius: number; onRadius: (r: number) => void; selectedCount: number; busy: boolean; onSearch: () => void;
+  radius: number; onRadius: (r: number) => void; searchLabel: string; busy: boolean; onSearch: () => void;
 }) {
   return (
     <form className="space-y-3" onSubmit={(e) => { e.preventDefault(); onSearch(); }}>
@@ -22,7 +22,7 @@ export function CentreSearchForm({ location, onLocation, source, radius, onRadiu
           </Field>
         </div>
         <Button type="submit" disabled={busy || (!location.city && !location.locality && !location.postal_code && location.lat === undefined)}>
-          {busy ? <Spinner /> : <Search className="h-4 w-4" />}Find centres{selectedCount ? ` for ${selectedCount} test(s)` : ""}
+          {busy ? <Spinner /> : <Search className="h-4 w-4" />}Find centres{searchLabel ? ` for ${searchLabel}` : ""}
         </Button>
       </div>
     </form>

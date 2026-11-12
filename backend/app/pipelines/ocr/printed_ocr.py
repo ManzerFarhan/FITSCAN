@@ -34,8 +34,6 @@ ONNX_THREADS = int(os.environ.get("OCR_THREADS", "4"))
 # RapidOCR engines kept for OCR-ing several pages at once (engines are not shared across threads). Each needs ~150 MB;
 # 512 MB hosts: OCR_POOL_SIZE=1.
 POOL_SIZE = max(1, int(os.environ.get("OCR_POOL_SIZE", "3")))
-# Longest page side fed to OCR (0 = no limit). Detection memory grows with page area; 512 MB hosts: OCR_MAX_SIDE=1600.
-MAX_SIDE = int(os.environ.get("OCR_MAX_SIDE", "0"))
 # Longest side used for text *detection* only (0 = RapidOCR's own choice, up to 2000 px). 512 MB hosts: 960.
 DET_MAX_SIDE = int(os.environ.get("OCR_DET_MAX_SIDE", "0"))
 
@@ -49,16 +47,6 @@ def _release_memory() -> None:
         ctypes.CDLL("libc.so.6").malloc_trim(0)
     except (OSError, AttributeError):
         pass  # not glibc (Windows/macOS/musl): nothing to do
-
-
-def _fit(image: np.ndarray) -> np.ndarray:
-    h, w = image.shape[:2]
-    if not MAX_SIDE or max(h, w) <= MAX_SIDE:
-        return image
-    import cv2
-
-    scale = MAX_SIDE / max(h, w)
-    return cv2.resize(image, (round(w * scale), round(h * scale)), interpolation=cv2.INTER_AREA)
 
 
 def _new_rapidocr():
@@ -130,7 +118,7 @@ class PrintedOCR:
             raise OCRUnavailable("No OCR engine installed (PaddleOCR / RapidOCR / Tesseract).")
         engine = self._acquire()
         try:
-            return self._run(engine, _fit(image), page_no)  # boxes are page-normalised, so scaling is transparent
+            return self._run(engine, image, page_no)
         finally:
             self._pool.put(engine)
             _release_memory()

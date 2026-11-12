@@ -36,3 +36,34 @@ def test_verified_only_when_adequately_sourced():  # BR-12
     assert verification(ok, "openstreetmap")[0] is False
     assert verification(C("Lab", 1, 1, business_status="OPERATIONAL"), "google_places")[0] is False
 
+# ---------------------------------------------------------------- optional type of doctor
+def test_doctor_type_matching_uses_tags_and_word_starts():
+    from app.core.constants import DoctorType
+    from app.integrations.centre_provider import matches_doctor_type
+
+    assert matches_doctor_type(DoctorType.CARDIOLOGIST, "Sunrise Heart Clinic", [])
+    assert matches_doctor_type(DoctorType.CARDIOLOGIST, "Dr Rao", ["doctor", "cardiology"])   # OSM speciality tag
+    assert matches_doctor_type(DoctorType.ORTHOPAEDIC, "City Ortho Care", [])
+    assert not matches_doctor_type(DoctorType.UROLOGIST, "Apex Neurology Centre", [])        # 'uro' inside 'Neuro'
+    assert matches_doctor_type(DoctorType.UROLOGIST, "Pune Urology Hospital", [])
+    assert not matches_doctor_type(DoctorType.DENTIST, "Sunrise Heart Clinic", [])
+
+
+def test_doctor_results_ranked_by_specialty_and_labelled():
+    from app.core.constants import DoctorType
+
+    match = C("Sunrise Heart Clinic", 18.522, 73.851, kind="doctor")
+    other = C("Family Clinic", 18.521, 73.850, kind="doctor")
+    out = rank([other, match], [], ORIGIN, 10, "openstreetmap", DoctorType.CARDIOLOGIST)
+    assert out[0].centre.name == "Sunrise Heart Clinic"
+    assert out[0].test_availability.startswith("Cardiologist")
+    assert "not confirmed" in out[1].test_availability
+
+
+def test_doctors_and_labs_each_keep_their_own_slots():
+    from app.core.constants import DoctorType
+
+    labs = [C(f"Lab {i} Diagnostics", 18.52, 73.85 + i / 10000, phone="1", address="a", hours=["x"]) for i in range(20)]
+    doc = C("Heart Care Clinic", 18.58, 73.85, kind="doctor")  # far-ish, lower score than every lab
+    out = rank(labs + [doc], ["CBC"], ORIGIN, 10, "openstreetmap", DoctorType.CARDIOLOGIST)
+    assert any(r.centre.kind == "doctor" for r in out)

@@ -18,8 +18,10 @@ from app.pipelines.lab_report.table_parser import parse_tables
 from app.pipelines.layout import group_lines
 from app.pipelines.ocr.printed_ocr import get_printed_ocr
 from app.pipelines.preprocessing.image_enhance import enhance
-from app.pipelines.preprocessing.pdf_loader import load_document
+from app.pipelines.preprocessing.pdf_loader import load_document, render_page_bgr
 from app.utils.units import normalize_unit
+
+IMAGE_PAGE_COVER = 0.3  # pages at least this much picture are OCR'd when their own text has no results
 
 VERSION = "lab-0.2.0"
 
@@ -97,6 +99,14 @@ def is_note_or_paragraph(name: str, matched: bool) -> bool:
     return not matched and (len(n.split()) >= _SENTENCE_WORDS or len(n) > 60)
 
 
+def is_test_row(row) -> bool:
+    """Only test rows: not header/footer text ("Booking Centre :5498 - ...") and not notes / long paragraphs."""
+    matched = match_parameter(row.name_raw).parameter_id is not None
+    full = row.line_text or row.name_raw
+    return not (is_boilerplate(row.name_raw) or is_note_or_paragraph(row.name_raw, matched)
+                or (not matched and (is_boilerplate(full) or is_note_or_paragraph(full, matched))))
+
+
 def parse_number(raw: str | None) -> float | None:
     if raw is None:
         return None
@@ -145,18 +155,26 @@ class LabReportPipeline:
         self.max_pages = max_pages
         self.on_stage = on_stage or (lambda _s: None)
 
-    def _ocr(self, doc: LoadedDocument) -> str:
-        ocr_pages = [p for p in doc.pages if p.source == "ocr"]
+    @staticmethod
+    def _needs_ocr(page) -> bool:
+        # Mostly a picture and its text holds no test rows (only header/footer) -> the results are in the picture.
+        return page.source == "ocr" or (page.image_cover >= IMAGE_PAGE_COVER
+                                        and not any(is_test_row(r) for r in parse_tables(group_lines(page.words))))
+
+    def _ocr(self, doc: LoadedDocument, data: bytes) -> str:
+        ocr_pages = [p for p in doc.pages if self._needs_ocr(p)]
         if not ocr_pages:
             return "native-text"
         self.on_stage(DocumentStatus.OCR_RUNNING)
         ocr = get_printed_ocr()
 
         def read(page) -> None:
+            # Rendered only now and dropped right after, so a 13-page scan never holds 13 page images at once.
+            image = page.image if page.image is not None else render_page_bgr(data, page.page_no)
             log_memory(f"page {page.page_no} loaded")
-            image = enhance(page.image)
+            image = enhance(image)
             log_memory(f"page {page.page_no} enhanced")
-            page.words = ocr.run(image, page.page_no)
+            page.words, page.source, page.image = ocr.run(image, page.page_no), "ocr", None
             log_memory(f"page {page.page_no} OCR done")
 
         workers = min(len(ocr_pages), ocr.parallel_pages)
@@ -168,12 +186,13 @@ class LabReportPipeline:
         else:
             for page in ocr_pages:
                 read(page)
-        return f"native-text+{ocr.engine_name}" if doc.is_digital is False and len(ocr_pages) < len(doc.pages) else ocr.engine_name
+        doc.is_digital = False
+        return f"native-text+{ocr.engine_name}" if len(ocr_pages) < len(doc.pages) else ocr.engine_name
 
     def run(self, data: bytes, mime: str, sex: str | None = None) -> LabExtractionResult:
         self.on_stage(DocumentStatus.PREPROCESSING)
         doc = load_document(data, mime, self.max_pages)
-        engine = self._ocr(doc)
+        engine = self._ocr(doc, data)
 
         self.on_stage(DocumentStatus.EXTRACTING)
         words = [w for p in doc.pages for w in p.words]
@@ -185,15 +204,10 @@ class LabReportPipeline:
             sex = pre_meta["patient_sex"].value
 
         params: list[ExtractedParameter] = []
-        skipped = 0
-        for row in parse_tables(lines):
-            # Only test rows: skip header/footer text ("Booking Centre :5498 - ...") and notes / long paragraphs.
-            matched = match_parameter(row.name_raw).parameter_id is not None
-            full = row.line_text or row.name_raw
-            if (is_boilerplate(row.name_raw) or is_note_or_paragraph(row.name_raw, matched)
-                    or (not matched and (is_boilerplate(full) or is_note_or_paragraph(full, matched)))):
-                skipped += 1
-                continue
+        rows = parse_tables(lines)
+        test_rows = [r for r in rows if is_test_row(r)]
+        skipped = len(rows) - len(test_rows)
+        for row in test_rows:
             params.append(build_parameter(
                 len(params), row.name_raw, row.value_raw, row.unit_raw, row.ref_raw, row.flag_raw,
                 row.conf, row.bbox, row.page_no, self.threshold, sex=sex, ambiguous=row.ambiguous,

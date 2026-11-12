@@ -106,6 +106,9 @@ class FakeProvider:
         return [Centre(provider_id="1", name="Alpha Diagnostics Lab", lat=18.521, lng=73.851, phone="020", address="Pune"),
                 Centre(provider_id="2", name="Beta Hospital", lat=18.53, lng=73.86)]
 
+    def search_doctors(self, doctor, origin, radius, label):
+        return [Centre(provider_id="d1", name="Gamma Heart Clinic", lat=18.522, lng=73.852, kind="doctor")]
+
 
 @pytest.fixture()
 def fake_provider():
@@ -129,7 +132,17 @@ def test_centre_search_flow(client, fake_provider):  # BR-06, BR-07, BR-12; log 
     assert all(x["verified"] is False for x in body["results"])                       # BR-12 (not adequately sourced)
     assert "do not guarantee" in body["disclaimer"]
     r = client.post(f"{API}/centres/search", json={"city": "Pune"})
-    assert r.status_code == 200 and r.json()["tests"] == []
+    assert r.status_code == 200 and r.json()["tests"] == [] and r.json()["doctor_type"] is None
+
+    # Optional type of doctor: alone -> only doctors; with tests -> doctors and labs.
+    r = client.post(f"{API}/centres/search", json={"city": "Pune", "doctor_type": "CARDIOLOGIST"})
+    body = r.json()
+    assert r.status_code == 200 and body["doctor_type"] == "CARDIOLOGIST"
+    assert [x["centre"]["kind"] for x in body["results"]] == ["doctor"]
+    assert body["results"][0]["test_availability"].startswith("Cardiologist")
+    r = client.post(f"{API}/centres/search", json={"city": "Pune", "doctor_type": "CARDIOLOGIST", "test_names": ["Lipid Profile"]})
+    assert {x["centre"]["kind"] for x in r.json()["results"]} == {"doctor", "lab"}
+    assert client.post(f"{API}/centres/search", json={"city": "Pune", "doctor_type": "WIZARD"}).status_code == 422
 
     upload(client, render_pdf(LAYOUTS[0]))  # the report prints the LAB's address - never used as the user's (BR-06)
     loc = client.get(f"{API}/centres/location").json()

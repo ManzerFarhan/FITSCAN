@@ -15,13 +15,16 @@ settings = get_settings()
 
 
 async def _retention_loop() -> None:
-    """BR-15: hourly guest/retention cleanup (cron via scripts/cleanup_guests.py also works)."""
+    """BR-15: hourly guest/retention cleanup (cron via scripts/cleanup_guests.py also works); also un-sticks reads
+    cut off by a restart (they would otherwise show 'Reading text...' forever)."""
     from app.db.session import SessionLocal
+    from app.services.document_service import fail_interrupted
     from app.services.retention_service import cleanup
 
     def run_once():
         with SessionLocal() as db:
             cleanup(db)
+            fail_interrupted(db)
 
     while True:
         try:

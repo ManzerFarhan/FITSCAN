@@ -12,9 +12,11 @@ import type { LocationValue } from "@/components/tests/LocationPicker";
 import { TestPicker } from "@/components/tests/TestPicker";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Field, Select } from "@/components/ui/form";
 import { Alert, Dialog, Skeleton } from "@/components/ui/misc";
 import { useAuth } from "@/hooks/useAuth";
 import { api, ApiError } from "@/lib/api";
+import { DOCTOR_TYPE_LABEL, DOCTOR_TYPES, type DoctorType } from "@/lib/constants";
 import type { CentreSearchResult, ExtractionOut, LocationOut } from "@/lib/types";
 
 const CentreMap = dynamic(() => import("@/components/tests/CentreMap"), { ssr: false, loading: () => <Skeleton className="h-[420px]" /> });
@@ -30,6 +32,7 @@ const CATEGORY_TEST: Record<string, string> = {
 function TestsInner() {
   const docId = useSearchParams().get("doc");
   const [testNames, setTestNames] = useState<string[]>([]);
+  const [doctorType, setDoctorType] = useState<DoctorType | "">("");
   const [fromReport, setFromReport] = useState<string[]>([]);
   const [reportName, setReportName] = useState<string | null>(null);
   const [location, setLocation] = useState<LocationValue>({ city: "", locality: "", postal_code: "" });
@@ -71,7 +74,7 @@ function TestsInner() {
       const res = await api<CentreSearchResult>("/centres/search", {
         method: "POST",
         json: {
-          test_names: testNames, radius_km: radius,
+          test_names: testNames, doctor_type: doctorType || null, radius_km: radius,
           city: location.city || null, locality: location.locality || null, postal_code: location.postal_code || null,
           lat: location.lat ?? null, lng: location.lng ?? null,
         },
@@ -82,6 +85,11 @@ function TestsInner() {
     } finally { setBusy(false); }
   };
 
+  const searchLabel = [testNames.length ? `${testNames.length} test(s)` : "", doctorType ? DOCTOR_TYPE_LABEL[doctorType] : ""]
+    .filter(Boolean).join(" + ");
+  const resultDoctor = result?.doctor_type ? DOCTOR_TYPE_LABEL[result.doctor_type] : null;
+  const wanted = [...(result?.tests ?? []), ...(resultDoctor ? [resultDoctor] : [])];
+  const mapsQuery = result?.tests[0] ? `${result.tests[0]} lab` : resultDoctor ? resultDoctor.replace(/ \(.*\)$/, "") : "diagnostic centre lab";
   const compared = useMemo(() => result?.results.filter((r) => compareIds.includes(r.centre.provider_id)) ?? [], [result, compareIds]);
 
   return (
@@ -89,7 +97,7 @@ function TestsInner() {
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <h1 className="text-2xl font-bold text-slate-900">Tests & Diagnostic Centres</h1>
-          <p className="text-slate-600">Choose the test you need and find diagnostic centres near you.</p>
+          <p className="text-slate-600">Choose the test you need - and, if you like, a type of doctor - and find places near you.</p>
         </div>
         <Link href={docId ? `/analysis?doc=${docId}` : "/analysis"} className={buttonVariants({ variant: "secondary" })}>
           <ArrowLeft className="h-4 w-4" />{docId ? "Back to my analysis" : "Upload & Analysis"}
@@ -105,13 +113,22 @@ function TestsInner() {
           </CardHeader>
           <CardContent className="space-y-6">
             <TestPicker value={testNames} onChange={setTestNames} fromReport={fromReport} />
+            <div className="border-t border-slate-100 pt-5">
+              <Field label="Type of doctor (optional)" htmlFor="doctor-type"
+                hint={doctorType ? "We'll also show this kind of doctor or clinic near you." : "Leave as is to search for test centres only."}>
+                <Select id="doctor-type" value={doctorType} onChange={(e) => setDoctorType(e.target.value as DoctorType | "")}>
+                  <option value="">No doctor - test centres only</option>
+                  {DOCTOR_TYPES.map(([value, label]) => <option key={value} value={value}>{label}</option>)}
+                </Select>
+              </Field>
+            </div>
           </CardContent>
         </Card>
         <Card className="lg:col-span-3">
           <CardHeader><div><CardTitle>Find centres near you</CardTitle><CardDescription>Enter your area or use your current location.</CardDescription></div></CardHeader>
           <CardContent>
             <CentreSearchForm location={location} onLocation={(v) => { setLocation(v); setLocSource("MANUAL"); }} source={locSource}
-              radius={radius} onRadius={setRadius} selectedCount={testNames.length} busy={busy} onSearch={search} />
+              radius={radius} onRadius={setRadius} searchLabel={searchLabel} busy={busy} onSearch={search} />
           </CardContent>
         </Card>
       </div>
@@ -121,12 +138,12 @@ function TestsInner() {
           <Alert tone="warning" title="Please confirm before you go">{result.disclaimer}</Alert>
           <div className="flex flex-wrap items-center justify-between gap-2">
             <p className="text-sm text-slate-600">
-              {result.results.length} centre(s) within {result.radius_km} km{result.tests.length ? ` for ${result.tests.join(", ")}` : ""} · data from{" "}
+              {result.results.length} place(s) within {result.radius_km} km{wanted.length ? ` for ${wanted.join(", ")}` : ""} · data from{" "}
               {result.provider === "google_places" ? "Google Maps" : result.provider === "openstreetmap" ? "OpenStreetMap" : result.provider}
             </p>
             <div className="flex flex-wrap gap-2">
               <a target="_blank" rel="noreferrer" className={buttonVariants({ variant: "secondary", size: "sm" })}
-                href={`https://www.google.com/maps/search/${encodeURIComponent(`${result.tests[0] ?? "diagnostic centre"} lab`)}/@${result.origin.lat},${result.origin.lng},14z`}>
+                href={`https://www.google.com/maps/search/${encodeURIComponent(mapsQuery)}/@${result.origin.lat},${result.origin.lng},14z`}>
                 <ExternalLink className="h-4 w-4" />See more on Google Maps
               </a>
               <Button variant="secondary" size="sm" disabled={compared.length < 2} onClick={() => setShowCompare(true)}>
@@ -135,7 +152,7 @@ function TestsInner() {
             </div>
           </div>
           {result.results.length === 0 ? (
-            <Alert tone="info">No centres found. Try a larger distance or a nearby area.</Alert>
+            <Alert tone="info">No places found. Try a larger distance, a nearby area, or &quot;See more on Google Maps&quot; above.</Alert>
           ) : (
             <div className="grid gap-4 lg:grid-cols-2">
               <div className="order-2 space-y-3 lg:order-1">

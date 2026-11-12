@@ -1,4 +1,4 @@
-import { Clock, ExternalLink, Globe, MapPin, Navigation, Phone, Star } from "lucide-react";
+import { Clock, ExternalLink, Globe, MapPin, Navigation, Phone, Star, Stethoscope } from "lucide-react";
 import { VerifiedBadge } from "@/components/ui/badges";
 import type { RankedCentre } from "@/lib/types";
 import { cn } from "@/lib/utils";
@@ -19,6 +19,7 @@ export function CentreCard({ r, rank, active, compare, onCompare, onFocus }: {
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
             <h3 className="font-semibold text-slate-900">{c.name}</h3>
+            {c.kind === "doctor" && <span className="inline-flex items-center gap-1 rounded-full bg-sky-50 px-2 py-0.5 text-xs font-medium text-sky-800"><Stethoscope className="h-3 w-3" aria-hidden />Doctor</span>}
             <VerifiedBadge verified={r.verified} note={r.verification_note} />
           </div>
           <p className="mt-0.5 flex items-start gap-1 text-sm text-slate-600"><MapPin className="mt-0.5 h-3.5 w-3.5 shrink-0" />{c.address ?? ([c.locality, c.city].filter(Boolean).join(", ") || "Address not listed")}</p>
@@ -34,7 +35,7 @@ export function CentreCard({ r, rank, active, compare, onCompare, onFocus }: {
               <ul className="mt-1 pl-5 text-xs">{c.hours.map((h) => <li key={h}>{h}</li>)}</ul>
             </details>
           )}
-          <p className="mt-2 text-xs text-slate-500">Test availability: {r.test_availability}{c.price ? ` · Price: ${c.price}` : " · Price: not listed"}</p>
+          <p className="mt-2 text-xs text-slate-500">{c.kind === "doctor" ? "Doctor" : "Test availability"}: {r.test_availability}{c.price ? ` · Price: ${c.price}` : " · Price: not listed"}</p>
           <div className="mt-3 flex flex-wrap items-center gap-3 text-sm">
             <a href={directionsUrl(c.lat, c.lng)} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 font-medium text-brand-700 hover:underline"><Navigation className="h-3.5 w-3.5" />Directions</a>
             {c.maps_url && <a href={c.maps_url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-slate-600 hover:underline"><ExternalLink className="h-3.5 w-3.5" />Open in Google Maps</a>}

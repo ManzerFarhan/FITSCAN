@@ -34,6 +34,21 @@ export const HEALTH_SCORE_BAND_LABEL: Record<HealthScoreBand, string> = {
   MANY_OUTSIDE: "Many results outside your lab's range",
 };
 
+/** Optional type of doctor on Tests & Centres - mirrors backend DoctorType / DOCTOR_TYPES labels. User-chosen only. */
+export const DOCTOR_TYPES = [
+  ["GENERAL_PHYSICIAN", "General Physician"], ["PHYSIOTHERAPIST", "Physiotherapist"],
+  ["CARDIOLOGIST", "Cardiologist (heart)"], ["ENDOCRINOLOGIST", "Endocrinologist (hormones & thyroid)"],
+  ["DIABETOLOGIST", "Diabetologist (diabetes)"], ["DERMATOLOGIST", "Dermatologist (skin)"],
+  ["GASTROENTEROLOGIST", "Gastroenterologist (stomach & liver)"], ["NEPHROLOGIST", "Nephrologist (kidney)"],
+  ["NEUROLOGIST", "Neurologist (brain & nerves)"], ["ORTHOPAEDIC", "Orthopaedic (bones & joints)"],
+  ["GYNAECOLOGIST", "Gynaecologist"], ["PAEDIATRICIAN", "Paediatrician (children)"], ["ENT", "ENT (ear, nose & throat)"],
+  ["OPHTHALMOLOGIST", "Eye specialist"], ["DENTIST", "Dentist"], ["PSYCHIATRIST", "Psychiatrist (mental health)"],
+  ["PULMONOLOGIST", "Pulmonologist (lungs)"], ["UROLOGIST", "Urologist"], ["ONCOLOGIST", "Oncologist (cancer)"],
+  ["HAEMATOLOGIST", "Haematologist (blood)"], ["DIETITIAN", "Dietitian / Nutritionist"],
+] as const;
+export type DoctorType = (typeof DOCTOR_TYPES)[number][0];
+export const DOCTOR_TYPE_LABEL = Object.fromEntries(DOCTOR_TYPES) as Record<DoctorType, string>;
+
 export type BmiCategory = "UNDERWEIGHT" | "NORMAL" | "OVERWEIGHT" | "OBESE";
 export const BMI_CATEGORY_LABEL: Record<BmiCategory, string> = {
   UNDERWEIGHT: "Underweight", NORMAL: "Healthy weight", OVERWEIGHT: "Overweight", OBESE: "Obese",

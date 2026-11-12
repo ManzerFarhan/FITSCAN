@@ -1,6 +1,6 @@
 // TS types mirroring backend Pydantic schemas.
 import type {
-  BmiCategory, DocType, DocumentStatus, FindingClass, HealthScoreBand, ParameterStatus, SourceTag,
+  BmiCategory, DocType, DoctorType, DocumentStatus, FindingClass, HealthScoreBand, ParameterStatus, SourceTag,
 } from "./constants";
 
 export interface DocumentOut {
@@ -202,6 +202,7 @@ export interface Centre {
   business_status: string | null;
   categories: string[];
   price: string | null;
+  kind: "lab" | "doctor";
 }
 
 export interface RankedCentre {
@@ -221,6 +222,7 @@ export interface CentreSearchResult {
   origin: { lat: number; lng: number; label: string | null };
   radius_km: number;
   tests: string[];
+  doctor_type: DoctorType | null;
   provider: string;
   disclaimer: string;
   results: RankedCentre[];

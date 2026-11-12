@@ -3,7 +3,8 @@ from __future__ import annotations
 
 import httpx
 
-from app.integrations.centre_provider import Centre, GeoPoint, ProviderError
+from app.core.constants import DoctorType
+from app.integrations.centre_provider import DOCTOR_TYPES, Centre, GeoPoint, ProviderError
 
 SEARCH_URL = "https://places.googleapis.com/v1/places:searchText"
 FIELD_MASK = ",".join([
@@ -41,8 +42,14 @@ class GooglePlacesProvider:
         return GeoPoint(lat=loc["latitude"], lng=loc["longitude"], label=places[0].get("formattedAddress"))
 
     def search(self, test_names: list[str], origin: GeoPoint, radius_km: float, place_label: str) -> list[Centre]:
-        seen: dict[str, Centre] = {}
         queries = [f"diagnostic lab pathology near {place_label}"] + [f"{t} test lab near {place_label}" for t in test_names[:2]]
+        return self._collect(queries, origin, radius_km, "lab")
+
+    def search_doctors(self, doctor: DoctorType, origin: GeoPoint, radius_km: float, place_label: str) -> list[Centre]:
+        return self._collect([f"{DOCTOR_TYPES[doctor].query} near {place_label}"], origin, radius_km, "doctor")
+
+    def _collect(self, queries: list[str], origin: GeoPoint, radius_km: float, kind: str) -> list[Centre]:
+        seen: dict[str, Centre] = {}
         for q in queries:
             for p in self._search_text(q, origin, radius_km):
                 if p["id"] in seen:
@@ -55,6 +62,6 @@ class GooglePlacesProvider:
                     phone=p.get("nationalPhoneNumber") or p.get("internationalPhoneNumber"), website=p.get("websiteUri"),
                     maps_url=p.get("googleMapsUri"), rating=p.get("rating"), rating_count=p.get("userRatingCount"),
                     hours=p.get("regularOpeningHours", {}).get("weekdayDescriptions", []),
-                    business_status=p.get("businessStatus"), categories=p.get("types", []),
+                    business_status=p.get("businessStatus"), categories=p.get("types", []), kind=kind,
                 )
         return list(seen.values())

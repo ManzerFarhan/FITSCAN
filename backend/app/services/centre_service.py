@@ -13,9 +13,10 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.core.config import get_settings
+from app.core.constants import DoctorType
 from app.core.errors import AppError
 from app.db.models import CentreSearch, Document
-from app.integrations.centre_provider import Centre, CentreProvider, GeoPoint, ProviderError
+from app.integrations.centre_provider import DOCTOR_TYPES, Centre, CentreProvider, GeoPoint, ProviderError, matches_doctor_type
 from app.services import audit
 
 log = logging.getLogger(__name__)
@@ -39,6 +40,8 @@ class LocationOut(BaseModel):
 class SearchRequest(BaseModel):
     # Tests the user chose (e.g. from their verified lab report); optional - empty = any diagnostic centre.
     test_names: list[str] = Field(default_factory=list, max_length=10)
+    # Optional type of doctor the user picked (e.g. cardiologist) - also user-chosen only, never suggested.
+    doctor_type: DoctorType | None = None
     city: str | None = None
     locality: str | None = None
     postal_code: str | None = None
@@ -143,7 +146,9 @@ def haversine_km(a: GeoPoint, b_lat: float, b_lng: float) -> float:
     return 2 * r * math.asin(math.sqrt(h))
 
 
-def availability_score(c: Centre, test_names: list[str]) -> tuple[float, str]:
+def availability_score(c: Centre, test_names: list[str], doctor: DoctorType | None = None) -> tuple[float, str]:
+    if c.kind == "doctor" and doctor:
+        return (1.0, "SPECIALTY_LISTED") if matches_doctor_type(doctor, c.name, c.categories) else (0.5, "CLINIC")
     if c.listed_services and any(t.lower() in " ".join(c.listed_services).lower() for t in test_names):
         return 1.0, "LISTED_BY_PROVIDER"
     text = f" {c.name.lower()} {' '.join(c.categories).lower().replace('_', ' ')} "
@@ -177,7 +182,18 @@ def verification(c: Centre, provider: str) -> tuple[bool, str]:
     return False, "Unverified listing - details may be incomplete or out of date."
 
 
-def rank(centres: list[Centre], test_names: list[str], origin: GeoPoint | None, radius_km: float, provider: str) -> list[RankedCentre]:
+def availability_text(kind: str, doctor: DoctorType | None) -> str:
+    who = DOCTOR_TYPES[doctor].label if doctor else "Doctor"
+    return {"LISTED_BY_PROVIDER": "Listed by the provider - confirm by phone",
+            "LIKELY_LAB": "Likely offers lab tests - not confirmed",
+            "HOSPITAL_OR_CLINIC": "Hospital/clinic - may offer tests, not confirmed",
+            "UNKNOWN": "Unknown - please confirm",
+            "SPECIALTY_LISTED": f"{who} - confirm by phone",
+            "CLINIC": f"Clinic/hospital - {who} not confirmed"}[kind]
+
+
+def rank(centres: list[Centre], test_names: list[str], origin: GeoPoint | None, radius_km: float, provider: str,
+         doctor: DoctorType | None = None) -> list[RankedCentre]:
     w = weights()["weights"]
     out = []
     for c in centres:
@@ -186,7 +202,7 @@ def rank(centres: list[Centre], test_names: list[str], origin: GeoPoint | None, 
         dist = haversine_km(origin, c.lat, c.lng) if origin else None
         if dist is not None and dist > radius_km * 1.5:
             continue
-        avail, avail_kind = availability_score(c, test_names)
+        avail, avail_kind = availability_score(c, test_names, doctor)
         parts = {
             "availability": avail,
             "proximity": max(0.0, 1 - dist / radius_km) if dist is not None else 0.5,
@@ -199,13 +215,13 @@ def rank(centres: list[Centre], test_names: list[str], origin: GeoPoint | None, 
         out.append(RankedCentre(
             centre=c, distance_km=round(dist, 2) if dist is not None else None, score=round(score, 4),
             score_breakdown={k: round(v, 3) for k, v in parts.items()}, verified=verified, verification_note=note,
-            test_availability={"LISTED_BY_PROVIDER": "Listed by the provider - confirm by phone",
-                               "LIKELY_LAB": "Likely offers lab tests - not confirmed",
-                               "HOSPITAL_OR_CLINIC": "Hospital/clinic - may offer tests, not confirmed",
-                               "UNKNOWN": "Unknown - please confirm"}[avail_kind],
+            test_availability=availability_text(avail_kind, doctor),
         ))
     out.sort(key=lambda r: r.score, reverse=True)
-    return out[: weights().get("max_results", 15)]
+    n = weights().get("max_results", 15)
+    # Doctors and labs each keep their own top-n, so one kind never crowds the other out.
+    doctors, labs = [r for r in out if r.centre.kind == "doctor"][:n], [r for r in out if r.centre.kind != "doctor"][:n]
+    return sorted(doctors + labs, key=lambda r: r.score, reverse=True)
 
 
 # ---------------------------------------------------------------- search (API-13)
@@ -220,6 +236,8 @@ def search(db: Session, owner, req: SearchRequest) -> dict:
         raise AppError("LOCATION_REQUIRED", "Please enter a city or area to search near.", 422)
     # BR-07: only test names the user picked themselves.
     test_names = sorted({" ".join(t.split())[:80] for t in req.test_names if t and t.strip()})
+    doctor = req.doctor_type
+    want_labs = bool(test_names) or doctor is None  # doctor only -> just doctors; nothing picked -> any lab
 
     primary = get_provider()
     providers = [primary]
@@ -235,12 +253,19 @@ def search(db: Session, owner, req: SearchRequest) -> dict:
             if origin is None:
                 raise AppError("LOCATION_NOT_FOUND", "We couldn't find that place. Try the PIN code, a nearby landmark or "
                                "just the city name.", 404)
-            key = f"{provider.name}|{round(origin.lat, 3)}|{round(origin.lng, 3)}|{radius}|{'/'.join(test_names)}"
+            key = (f"{provider.name}|{round(origin.lat, 3)}|{round(origin.lng, 3)}|{radius}|{'/'.join(test_names)}"
+                   f"|{doctor or ''}|{want_labs}")
             cached = _CACHE.get(key)
             if cached and time.time() - cached[0] < CACHE_TTL:
                 centres = cached[1]
             else:
-                centres = provider.search(test_names, origin, radius, label or "you")
+                found: dict[str, Centre] = {}
+                if doctor and hasattr(provider, "search_doctors"):
+                    found.update((c.provider_id, c) for c in provider.search_doctors(doctor, origin, radius, label or "you"))
+                if want_labs:
+                    for c in provider.search(test_names, origin, radius, label or "you"):
+                        found.setdefault(c.provider_id, c)
+                centres = list(found.values())
                 _CACHE[key] = (time.time(), centres)
             break
         except ProviderError:
@@ -249,15 +274,17 @@ def search(db: Session, owner, req: SearchRequest) -> dict:
     if centres is None or origin is None:
         raise AppError("PROVIDER_UNAVAILABLE", "Centre search is unavailable right now. Please try again in a moment.", 503)
 
-    ranked = rank(centres, test_names, origin, radius, provider.name)
+    ranked = rank(centres, test_names, origin, radius, provider.name, doctor)
     payload = {
         "location": loc.model_dump(), "origin": origin.model_dump(), "radius_km": radius, "tests": test_names,
-        "provider": provider.name, "disclaimer": DISCLAIMER,
+        "doctor_type": doctor.value if doctor else None, "provider": provider.name, "disclaimer": DISCLAIMER,
         "results": [r.model_dump() for r in ranked],
     }
     db.add(CentreSearch(city=loc.city, locality=loc.locality,
-                        query_json={"tests": test_names, "radius_km": radius, "label": label},
+                        query_json={"tests": test_names, "doctor_type": payload["doctor_type"], "radius_km": radius,
+                                    "label": label},
                         results_json=[x["centre"]["provider_id"] for x in payload["results"]]))
+    wanted = test_names + ([DOCTOR_TYPES[doctor].label] if doctor else [])
     audit.record(db, owner, "CENTRE_SEARCH", "centre", None,
-                 f"Searched centres for {', '.join(test_names) or 'any diagnostic test'}")
+                 f"Searched centres for {', '.join(wanted) or 'any diagnostic test'}")
     return payload
