@@ -40,6 +40,17 @@ MAX_SIDE = int(os.environ.get("OCR_MAX_SIDE", "0"))
 DET_MAX_SIDE = int(os.environ.get("OCR_DET_MAX_SIDE", "0"))
 
 
+def _release_memory() -> None:
+    """Hand freed heap back to the OS after a page (Linux/glibc). Without this a 512 MB host keeps ~100 MB of the
+    previous page's OCR buffers resident, and the next page's peak lands on top of it."""
+    try:
+        import ctypes
+
+        ctypes.CDLL("libc.so.6").malloc_trim(0)
+    except (OSError, AttributeError):
+        pass  # not glibc (Windows/macOS/musl): nothing to do
+
+
 def _fit(image: np.ndarray) -> np.ndarray:
     h, w = image.shape[:2]
     if not MAX_SIDE or max(h, w) <= MAX_SIDE:
@@ -122,6 +133,7 @@ class PrintedOCR:
             return self._run(engine, _fit(image), page_no)  # boxes are page-normalised, so scaling is transparent
         finally:
             self._pool.put(engine)
+            _release_memory()
 
     def _run(self, engine, image: np.ndarray, page_no: int) -> list[Word]:
         h, w = image.shape[:2]
