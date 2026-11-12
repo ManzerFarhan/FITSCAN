@@ -52,7 +52,7 @@ Sample documents (synthetic, no real patients): `python backend/scripts/make_sam
 |---|---|---|
 | `DATABASE_URL` | SQLite file | Postgres in production |
 | `STORAGE_BACKEND` | `local` | `s3` for MinIO / S3 / R2 (signed, expiring URLs); `db` keeps files in Postgres (free hosting) |
-| `OCR_POOL_SIZE` / `OCR_THREADS` / `OCR_DET_MAX_SIDE` / `CV_THREADS` | 3 / 4 / 0 / unset | OCR memory vs speed; 512 MB hosts use 1 / 1 / 1120 / 1 (see `render.yaml`) |
+| `OCR_POOL_SIZE` / `OCR_THREADS` / `OCR_DET_MAX_SIDE` / `CV_THREADS` | 3 / 4 / 0 / unset | OCR memory vs speed; 512 MB hosts use 1 / 1 / 1024 / 1 (see `render.yaml`) |
 | `FRONTEND_ORIGIN` | `http://localhost:3000` | CORS allow-list (comma-separated) |
 | `MAX_UPLOAD_MB` / `MAX_PDF_PAGES` | 15 / 30 | Upload limits |
 | `CONFIDENCE_THRESHOLD` | 0.85 | Below this a field needs user verification |
