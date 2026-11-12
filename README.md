@@ -51,7 +51,8 @@ Sample documents (synthetic, no real patients): `python backend/scripts/make_sam
 | Variable | Default | Purpose |
 |---|---|---|
 | `DATABASE_URL` | SQLite file | Postgres in production |
-| `STORAGE_BACKEND` | `local` | `s3` for MinIO / S3 / R2 (signed, expiring URLs) |
+| `STORAGE_BACKEND` | `local` | `s3` for MinIO / S3 / R2 (signed, expiring URLs); `db` keeps files in Postgres (free hosting) |
+| `OCR_POOL_SIZE` / `OCR_THREADS` / `OCR_DET_MAX_SIDE` / `CV_THREADS` | 3 / 4 / 0 / unset | OCR memory vs speed; 512 MB hosts use 1 / 1 / 960 / 1 (see `render.yaml`) |
 | `FRONTEND_ORIGIN` | `http://localhost:3000` | CORS allow-list (comma-separated) |
 | `MAX_UPLOAD_MB` / `MAX_PDF_PAGES` | 15 / 30 | Upload limits |
 | `CONFIDENCE_THRESHOLD` | 0.85 | Below this a field needs user verification |
@@ -61,6 +62,16 @@ Sample documents (synthetic, no real patients): `python backend/scripts/make_sam
 
 Optional heavy ML (`pip install -r backend/requirements-ml.txt`): sentence-transformers + FAISS
 for dense retrieval. Without them FITSCAN uses RapidOCR (PP-OCR models on ONNX) and a TF-IDF retriever.
+
+## Hosting (free tier)
+
+- **Website:** Vercel, building `frontend/` from GitHub on every push to `main`.
+  - Its settings are `BACKEND_URL` (the Render URL) and `NEXT_PUBLIC_API_BASE_URL=/api/v1`.
+  - The site forwards `/api/v1/*` to the backend, so login cookies come from the site's own address and no CORS is needed.
+- **Backend:** Render free web service, configured in [`render.yaml`](render.yaml) (Docker, Singapore).
+  - Secrets are set in Render, never committed: `DATABASE_URL`, `GEMINI_API_KEY`, `JWT_SECRET`.
+  - `.github/workflows/keep-awake.yml` pings `/api/v1/ping` every 10 minutes so the service doesn't sleep.
+- **Database:** Neon Postgres. Uploaded files are stored in it too (`STORAGE_BACKEND=db`).
 
 ## Tests
 
