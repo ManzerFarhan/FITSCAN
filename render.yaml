@@ -26,6 +26,16 @@ services:
         value: "1"
       - key: OCR_MAX_SIDE
         value: "1600"          # caps OCR memory (~430 MB peak); same accuracy on the scanned test set
+      # Free instances get a slice of one CPU but see every host core: without these, OpenCV/BLAS start a thread
+      # (and buffers) per host core and glibc keeps a memory arena per thread - enough to exceed 512 MB.
+      - key: CV_THREADS
+        value: "1"
+      - key: OMP_NUM_THREADS
+        value: "1"
+      - key: OPENBLAS_NUM_THREADS
+        value: "1"
+      - key: MALLOC_ARENA_MAX
+        value: "2"
       - key: CENTRE_PROVIDER
         value: osm
       - key: JWT_SECRET

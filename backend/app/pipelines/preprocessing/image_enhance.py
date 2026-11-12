@@ -1,8 +1,15 @@
 """Image enhancement for OCR (FR-LAB-1): upscale small images, denoise, contrast (CLAHE), deskew."""
 from __future__ import annotations
 
+import os
+
 import cv2
 import numpy as np
+
+# Small hosts: CV_THREADS=1. OpenCV otherwise starts one worker per *host* core (with per-thread buffers), even when
+# the container only gets a fraction of one CPU - enough to push a 512 MB instance over its memory limit.
+if os.environ.get("CV_THREADS"):
+    cv2.setNumThreads(int(os.environ["CV_THREADS"]))
 
 MIN_LONG_SIDE = 1600
 MAX_LONG_SIDE = 3500
