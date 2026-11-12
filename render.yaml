@@ -25,7 +25,7 @@ services:
       - key: OCR_THREADS
         value: "1"
       - key: OCR_DET_MAX_SIDE
-        value: "960"           # text detection on a 960 px copy (PP-OCR default); reading stays full-res
+        value: "1120"          # text detection in page strips at <=1120 px; reading stays full-res
       # Free instances get a slice of one CPU but see every host core: without these, OpenCV/BLAS start a thread
       # (and buffers) per host core and glibc keeps a memory arena per thread - enough to exceed 512 MB.
       - key: CV_THREADS

@@ -18,7 +18,8 @@ from app.utils import dictionaries
 
 _VALUE_RE = re.compile(r"^[<>]?\s*-?\d{1,3}(?:,\d{2,3})*(?:\.\d+)?$|^[<>]?\s*-?\d+(?:\.\d+)?$")
 _FLAG_RE = re.compile(r"^(?:\*?H\*?|\*?L\*?|HH|LL|\*{1,2}|HIGH|LOW|↑|↓)$", re.IGNORECASE)
-_VALUE_FLAG_RE = re.compile(r"^([<>]?\s*\d[\d,]*(?:\.\d+)?)\s*(\*?H\*?|\*?L\*?|HH|LL|\*{1,2}|HIGH|LOW)$", re.IGNORECASE)
+# "138 H" - plus at most one stray lower-case letter OCR sometimes adds after the flag ("138 H n").
+_VALUE_FLAG_RE = re.compile(r"^([<>]?\s*\d[\d,]*(?:\.\d+)?)\s*(\*?H\*?|\*?L\*?|HH|LL|\*{1,2}|HIGH|LOW)(?:\s+[a-z])?$", re.IGNORECASE)
 _FLAG_VALUE_RE = re.compile(r"^(H|L|HH|LL|HIGH|LOW)\s+([<>]?\d[\d,]*(?:\.\d+)?)$", re.IGNORECASE)
 _VALUE_UNIT_RE = re.compile(r"^([<>]?\d[\d,]*(?:\.\d+)?)\s+([a-zA-Zµμ%/^\d.]+(?:\s*/\s*[a-zA-Zµμ\d.]+)*)$")
 _UNIT_SHAPE_RE = re.compile(r"^(?:[a-zA-Zµμ%^\d.*x]+\s*/\s*[a-zA-Zµμ\d.^ ]+|%|fl|fL|pg|ratio|mm/hr|g%|mg%)$", re.IGNORECASE)

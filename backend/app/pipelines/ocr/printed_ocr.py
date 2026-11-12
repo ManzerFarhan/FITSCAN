@@ -9,6 +9,7 @@ import os
 import queue
 import shutil
 import threading
+import unicodedata
 from functools import lru_cache
 
 import numpy as np
@@ -47,6 +48,53 @@ def _release_memory() -> None:
         ctypes.CDLL("libc.so.6").malloc_trim(0)
     except (OSError, AttributeError):
         pass  # not glibc (Windows/macOS/musl): nothing to do
+
+
+STRIP_OVERLAP = 120  # px; taller than any printed line, so every line lies whole inside at least one strip
+
+
+def _rapidocr_strips(engine, image: np.ndarray, page_no: int) -> list[Word]:
+    """RapidOCR over the page. With DET_MAX_SIDE set (small hosts) a tall page is read in overlapping horizontal
+    strips about half the page width high: detection then sees small print ~1.4x larger than on a whole-page pass
+    (960 px for a whole A4 page misses 9 pt text) while using *less* memory per pass. Lines cut by a strip edge are
+    dropped there and kept from the neighbouring strip, where they are whole; overlap duplicates are removed."""
+    h, w = image.shape[:2]
+    strip = max(600, w // 2)
+    if not DET_MAX_SIDE or h <= strip * 1.3:
+        strip = h
+    words: list[Word] = []
+    top = 0
+    while True:
+        bottom = min(h, top + strip)
+        # Printed reports are deskewed upstream; the 180-degree angle classifier costs ~1/3 of the time for no gain.
+        result, _ = engine(image[top:bottom], use_cls=False)
+        for pts, text, conf in result or []:
+            ys = [float(p[1]) for p in pts]
+            if (top > 0 and min(ys) <= 2) or (bottom < h and max(ys) >= bottom - top - 3):
+                continue  # cut by this strip's edge
+            text = _clean(text)
+            box = _box_from_points([(p[0], float(p[1]) + top) for p in pts], page_no, w, h)
+            if text and not any(_iou(o.bbox, box) > 0.4 for o in words):  # same spot read in both strips
+                words.append(Word(text=text, conf=float(conf), bbox=box))
+        if bottom >= h:
+            return words
+        top = bottom - STRIP_OVERLAP
+
+
+_CJK_PUNCT = str.maketrans({"。": ".", "，": ",", "、": ",", "：": ":", "；": ";", "（": "(", "）": ")", "－": "-", "～": "-"})
+
+
+def _clean(text: str) -> str:
+    """PP-OCR models are Chinese+English: map full-width / CJK punctuation they sometimes emit to ASCII."""
+    return unicodedata.normalize("NFKC", text).translate(_CJK_PUNCT).strip()
+
+
+def _iou(a: BBox, b: BBox) -> float:
+    ix = max(0.0, min(a.x1, b.x1) - max(a.x0, b.x0))
+    iy = max(0.0, min(a.y1, b.y1) - max(a.y0, b.y0))
+    inter = ix * iy
+    union = (a.x1 - a.x0) * (a.y1 - a.y0) + (b.x1 - b.x0) * (b.y1 - b.y0) - inter
+    return inter / union if union > 0 else 0.0
 
 
 def _new_rapidocr():
@@ -132,10 +180,7 @@ class PrintedOCR:
                 pts, (text, conf) = line
                 words.append(Word(text=text, conf=float(conf), bbox=_box_from_points(pts, page_no, w, h)))
         elif self.engine_name == "rapidocr":
-            # Printed reports are deskewed upstream; the 180-degree angle classifier costs ~1/3 of the time for no gain.
-            result, _ = engine(image, use_cls=False)
-            for pts, text, conf in result or []:
-                words.append(Word(text=text, conf=float(conf), bbox=_box_from_points(pts, page_no, w, h)))
+            words = _rapidocr_strips(engine, image, page_no)
         else:
             d = engine.image_to_data(image, output_type=engine.Output.DICT)
             for i, text in enumerate(d["text"]):
