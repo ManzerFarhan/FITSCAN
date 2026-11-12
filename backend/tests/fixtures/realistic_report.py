@@ -126,7 +126,7 @@ def _rasterize(pdf: bytes, dpi: int = 200) -> list[bytes]:
     import pymupdf as fitz
 
     with fitz.open(stream=pdf, filetype="pdf") as doc:
-        return [p.get_pixmap(dpi=dpi).tobytes("png") for p in doc]
+        return [p.get_pixmap(dpi=dpi).tobytes("jpg", jpg_quality=85) for p in doc]  # scanners save JPEG
 
 
 def scanner_pdf(text_layer: str = "garbled") -> bytes:
@@ -154,7 +154,7 @@ def hybrid_pdf() -> bytes:
     for sp in src:
         page = out.new_page(width=595, height=842)
         clip = fitz.Rect(0, 150, 595, 760)  # the table area
-        page.insert_image(clip, pixmap=sp.get_pixmap(dpi=200, clip=clip))
+        page.insert_image(clip, stream=sp.get_pixmap(dpi=200, clip=clip).tobytes("jpg", jpg_quality=85))
         page.show_pdf_page(fitz.Rect(0, 0, 595, 150), src, sp.number, clip=fitz.Rect(0, 0, 595, 150))
         page.show_pdf_page(fitz.Rect(0, 760, 595, 842), src, sp.number, clip=fitz.Rect(0, 760, 595, 842))
     return out.tobytes()
