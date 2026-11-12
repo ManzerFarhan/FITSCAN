@@ -1,0 +1,15 @@
+# Optional heavy ML components. Install only where needed (CPU builds are large: ~2 GB).
+# pip install -r requirements-ml.txt
+
+# Handwriting OCR (FR-RX-2, A5) is switched off in the app (printed lab reports only), so torch /
+# transformers (~2 GB) are no longer installed. Re-add them only if handwritten prescriptions return:
+# torch>=2.4
+# transformers>=4.45
+
+# Full PaddleOCR (preferred printed OCR engine; RapidOCR is the lightweight default)
+# paddlepaddle>=2.6
+# paddleocr>=2.8
+
+# RAG embeddings (FR-AI-7). Without these, the retriever falls back to a built-in TF-IDF index.
+sentence-transformers>=3.0
+faiss-cpu>=1.8

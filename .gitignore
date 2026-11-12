@@ -1,0 +1,36 @@
+# Env / secrets
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+backend/*.db
+backend/storage/
+backend/data/faiss_index/
+
+# Node
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+next-env.d.ts
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Raw public datasets (downloaded by scripts/datasets/build_reference_data.py; only aggregates are committed)
+backend/data/external/
+frontend/.next-build/
+frontend/.vercel/
+frontend/test-results/
+frontend/playwright-report/

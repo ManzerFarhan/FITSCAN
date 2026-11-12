@@ -1,0 +1,2218 @@
+{
+  "_comment": "Canonical lab parameters (FR-LAB-5/6). plausible_min/max are SANITY bounds (in default_unit) used only to catch OCR errors - they are NOT reference ranges (BR-01).",
+  "parameters": [
+    {
+      "parameter_id": "hemoglobin",
+      "canonical_name": "Hemoglobin",
+      "category": "CBC",
+      "default_unit": "g/dL",
+      "conversion_group": "hemoglobin",
+      "plausible_min": 1,
+      "plausible_max": 25,
+      "synonyms": [
+        "hemoglobin",
+        "haemoglobin",
+        "hb",
+        "hgb",
+        "hemoglobin hb",
+        "haemoglobin hb",
+        "hb haemoglobin",
+        "hemoglobin hgb"
+      ]
+    },
+    {
+      "parameter_id": "rbc_count",
+      "canonical_name": "RBC Count",
+      "category": "CBC",
+      "default_unit": "10^6/µL",
+      "plausible_min": 0.5,
+      "plausible_max": 10,
+      "synonyms": [
+        "rbc count",
+        "rbc",
+        "red blood cell count",
+        "red blood cells",
+        "total rbc count",
+        "erythrocyte count",
+        "rbc total count",
+        "total rbc"
+      ]
+    },
+    {
+      "parameter_id": "hematocrit",
+      "canonical_name": "Hematocrit (PCV)",
+      "category": "CBC",
+      "default_unit": "%",
+      "plausible_min": 5,
+      "plausible_max": 75,
+      "synonyms": [
+        "hematocrit",
+        "haematocrit",
+        "hct",
+        "pcv",
+        "packed cell volume",
+        "packed cell volume pcv",
+        "hematocrit hct",
+        "pcv haematocrit"
+      ]
+    },
+    {
+      "parameter_id": "mcv",
+      "canonical_name": "MCV",
+      "category": "CBC",
+      "default_unit": "fL",
+      "plausible_min": 40,
+      "plausible_max": 150,
+      "synonyms": [
+        "mcv",
+        "mean corpuscular volume",
+        "mean cell volume",
+        "mean corpuscular volume mcv"
+      ]
+    },
+    {
+      "parameter_id": "mch",
+      "canonical_name": "MCH",
+      "category": "CBC",
+      "default_unit": "pg",
+      "plausible_min": 10,
+      "plausible_max": 50,
+      "synonyms": [
+        "mch",
+        "mean corpuscular hemoglobin",
+        "mean corpuscular haemoglobin",
+        "mean cell haemoglobin",
+        "mean corpuscular hemoglobin mch"
+      ]
+    },
+    {
+      "parameter_id": "mchc",
+      "canonical_name": "MCHC",
+      "category": "CBC",
+      "default_unit": "g/dL",
+      "plausible_min": 20,
+      "plausible_max": 45,
+      "synonyms": [
+        "mchc",
+        "mean corpuscular hemoglobin concentration",
+        "mean corpuscular haemoglobin concentration",
+        "mean cell haemoglobin concentration"
+      ]
+    },
+    {
+      "parameter_id": "rdw_cv",
+      "canonical_name": "RDW-CV",
+      "category": "CBC",
+      "default_unit": "%",
+      "plausible_min": 5,
+      "plausible_max": 35,
+      "synonyms": [
+        "rdw",
+        "rdw cv",
+        "red cell distribution width",
+        "red cell distribution width cv",
+        "rdw-cv"
+      ]
+    },
+    {
+      "parameter_id": "wbc_count",
+      "canonical_name": "Total WBC Count (TLC)",
+      "category": "CBC",
+      "default_unit": "10^3/µL",
+      "plausible_min": 0.1,
+      "plausible_max": 300,
+      "synonyms": [
+        "wbc count",
+        "wbc",
+        "total wbc count",
+        "tlc",
+        "total leucocyte count",
+        "total leukocyte count",
+        "total leucocytes count",
+        "white blood cell count",
+        "white blood cells",
+        "leucocyte count",
+        "leukocyte count",
+        "total count",
+        "tc",
+        "total leucocyte count tlc",
+        "total wbc"
+      ]
+    },
+    {
+      "parameter_id": "neutrophils_pct",
+      "canonical_name": "Neutrophils",
+      "category": "CBC",
+      "default_unit": "%",
+      "plausible_min": 0,
+      "plausible_max": 100,
+      "synonyms": [
+        "neutrophils",
+        "neutrophil",
+        "polymorphs",
+        "segmented neutrophils",
+        "neutrophils percent",
+        "polymorphs neutrophils"
+      ]
+    },
+    {
+      "parameter_id": "lymphocytes_pct",
+      "canonical_name": "Lymphocytes",
+      "category": "CBC",
+      "default_unit": "%",
+      "plausible_min": 0,
+      "plausible_max": 100,
+      "synonyms": [
+        "lymphocytes",
+        "lymphocyte",
+        "lymphocytes percent"
+      ]
+    },
+    {
+      "parameter_id": "monocytes_pct",
+      "canonical_name": "Monocytes",
+      "category": "CBC",
+      "default_unit": "%",
+      "plausible_min": 0,
+      "plausible_max": 100,
+      "synonyms": [
+        "monocytes",
+        "monocyte",
+        "monocytes percent"
+      ]
+    },
+    {
+      "parameter_id": "eosinophils_pct",
+      "canonical_name": "Eosinophils",
+      "category": "CBC",
+      "default_unit": "%",
+      "plausible_min": 0,
+      "plausible_max": 100,
+      "synonyms": [
+        "eosinophils",
+        "eosinophil",
+        "eosinophils percent"
+      ]
+    },
+    {
+      "parameter_id": "basophils_pct",
+      "canonical_name": "Basophils",
+      "category": "CBC",
+      "default_unit": "%",
+      "plausible_min": 0,
+      "plausible_max": 100,
+      "synonyms": [
+        "basophils",
+        "basophil",
+        "basophils percent"
+      ]
+    },
+    {
+      "parameter_id": "platelet_count",
+      "canonical_name": "Platelet Count",
+      "category": "CBC",
+      "default_unit": "10^3/µL",
+      "plausible_min": 1,
+      "plausible_max": 2000,
+      "synonyms": [
+        "platelet count",
+        "platelets",
+        "platelet",
+        "plt",
+        "plt count",
+        "total platelet count",
+        "thrombocyte count",
+        "platelet count plt"
+      ]
+    },
+    {
+      "parameter_id": "mpv",
+      "canonical_name": "MPV",
+      "category": "CBC",
+      "default_unit": "fL",
+      "plausible_min": 3,
+      "plausible_max": 20,
+      "synonyms": [
+        "mpv",
+        "mean platelet volume"
+      ]
+    },
+    {
+      "parameter_id": "esr",
+      "canonical_name": "ESR",
+      "category": "CBC",
+      "default_unit": "mm/hr",
+      "plausible_min": 0,
+      "plausible_max": 200,
+      "synonyms": [
+        "esr",
+        "erythrocyte sedimentation rate",
+        "e s r",
+        "esr westergren",
+        "erythrocyte sedimentation rate esr"
+      ]
+    },
+    {
+      "parameter_id": "bilirubin_total",
+      "canonical_name": "Bilirubin, Total",
+      "category": "LFT",
+      "default_unit": "mg/dL",
+      "conversion_group": "bilirubin",
+      "plausible_min": 0,
+      "plausible_max": 50,
+      "synonyms": [
+        "bilirubin total",
+        "total bilirubin",
+        "serum bilirubin total",
+        "s bilirubin total",
+        "bilirubin t",
+        "t bilirubin",
+        "bilirubin total serum"
+      ]
+    },
+    {
+      "parameter_id": "bilirubin_direct",
+      "canonical_name": "Bilirubin, Direct",
+      "category": "LFT",
+      "default_unit": "mg/dL",
+      "conversion_group": "bilirubin",
+      "plausible_min": 0,
+      "plausible_max": 40,
+      "synonyms": [
+        "bilirubin direct",
+        "direct bilirubin",
+        "conjugated bilirubin",
+        "bilirubin conjugated",
+        "d bilirubin",
+        "bilirubin d"
+      ]
+    },
+    {
+      "parameter_id": "bilirubin_indirect",
+      "canonical_name": "Bilirubin, Indirect",
+      "category": "LFT",
+      "default_unit": "mg/dL",
+      "conversion_group": "bilirubin",
+      "plausible_min": 0,
+      "plausible_max": 40,
+      "synonyms": [
+        "bilirubin indirect",
+        "indirect bilirubin",
+        "unconjugated bilirubin",
+        "bilirubin unconjugated"
+      ]
+    },
+    {
+      "parameter_id": "ast_sgot",
+      "canonical_name": "AST (SGOT)",
+      "category": "LFT",
+      "default_unit": "U/L",
+      "plausible_min": 1,
+      "plausible_max": 20000,
+      "synonyms": [
+        "sgot",
+        "ast",
+        "ast sgot",
+        "sgot ast",
+        "aspartate aminotransferase",
+        "aspartate transaminase",
+        "s g o t",
+        "serum glutamic oxaloacetic transaminase"
+      ]
+    },
+    {
+      "parameter_id": "alt_sgpt",
+      "canonical_name": "ALT (SGPT)",
+      "category": "LFT",
+      "default_unit": "U/L",
+      "plausible_min": 1,
+      "plausible_max": 20000,
+      "synonyms": [
+        "sgpt",
+        "alt",
+        "alt sgpt",
+        "sgpt alt",
+        "alanine aminotransferase",
+        "alanine transaminase",
+        "s g p t",
+        "serum glutamic pyruvic transaminase"
+      ]
+    },
+    {
+      "parameter_id": "alp",
+      "canonical_name": "Alkaline Phosphatase",
+      "category": "LFT",
+      "default_unit": "U/L",
+      "plausible_min": 5,
+      "plausible_max": 5000,
+      "synonyms": [
+        "alkaline phosphatase",
+        "alp",
+        "alk phos",
+        "alkaline phosphatase alp",
+        "s alkaline phosphatase"
+      ]
+    },
+    {
+      "parameter_id": "ggt",
+      "canonical_name": "Gamma GT (GGT)",
+      "category": "LFT",
+      "default_unit": "U/L",
+      "plausible_min": 1,
+      "plausible_max": 5000,
+      "synonyms": [
+        "ggt",
+        "gamma gt",
+        "ggtp",
+        "gamma glutamyl transferase",
+        "gamma glutamyl transpeptidase",
+        "gamma gt ggt"
+      ]
+    },
+    {
+      "parameter_id": "total_protein",
+      "canonical_name": "Total Protein",
+      "category": "LFT",
+      "default_unit": "g/dL",
+      "plausible_min": 1,
+      "plausible_max": 15,
+      "synonyms": [
+        "total protein",
+        "protein total",
+        "serum total protein",
+        "total proteins",
+        "s total protein"
+      ]
+    },
+    {
+      "parameter_id": "albumin",
+      "canonical_name": "Albumin",
+      "category": "LFT",
+      "default_unit": "g/dL",
+      "plausible_min": 0.5,
+      "plausible_max": 8,
+      "synonyms": [
+        "albumin",
+        "serum albumin",
+        "s albumin",
+        "albumin serum"
+      ]
+    },
+    {
+      "parameter_id": "globulin",
+      "canonical_name": "Globulin",
+      "category": "LFT",
+      "default_unit": "g/dL",
+      "plausible_min": 0.5,
+      "plausible_max": 10,
+      "synonyms": [
+        "globulin",
+        "serum globulin",
+        "s globulin"
+      ]
+    },
+    {
+      "parameter_id": "ag_ratio",
+      "canonical_name": "A/G Ratio",
+      "category": "LFT",
+      "default_unit": "ratio",
+      "plausible_min": 0.1,
+      "plausible_max": 5,
+      "synonyms": [
+        "a g ratio",
+        "ag ratio",
+        "albumin globulin ratio",
+        "albumin/globulin ratio",
+        "a/g ratio"
+      ]
+    },
+    {
+      "parameter_id": "urea",
+      "canonical_name": "Urea",
+      "category": "KFT",
+      "default_unit": "mg/dL",
+      "conversion_group": "urea",
+      "plausible_min": 1,
+      "plausible_max": 500,
+      "synonyms": [
+        "urea",
+        "blood urea",
+        "serum urea",
+        "s urea",
+        "urea serum"
+      ]
+    },
+    {
+      "parameter_id": "bun",
+      "canonical_name": "Blood Urea Nitrogen (BUN)",
+      "category": "KFT",
+      "default_unit": "mg/dL",
+      "plausible_min": 1,
+      "plausible_max": 250,
+      "synonyms": [
+        "bun",
+        "blood urea nitrogen",
+        "urea nitrogen",
+        "blood urea nitrogen bun"
+      ]
+    },
+    {
+      "parameter_id": "creatinine",
+      "canonical_name": "Creatinine",
+      "category": "KFT",
+      "default_unit": "mg/dL",
+      "conversion_group": "creatinine",
+      "plausible_min": 0.05,
+      "plausible_max": 30,
+      "synonyms": [
+        "creatinine",
+        "serum creatinine",
+        "s creatinine",
+        "creatinine serum"
+      ]
+    },
+    {
+      "parameter_id": "uric_acid",
+      "canonical_name": "Uric Acid",
+      "category": "KFT",
+      "default_unit": "mg/dL",
+      "conversion_group": "uric_acid",
+      "plausible_min": 0.5,
+      "plausible_max": 25,
+      "synonyms": [
+        "uric acid",
+        "serum uric acid",
+        "s uric acid",
+        "uric acid serum"
+      ]
+    },
+    {
+      "parameter_id": "egfr",
+      "canonical_name": "eGFR",
+      "category": "KFT",
+      "default_unit": "mL/min/1.73m²",
+      "plausible_min": 1,
+      "plausible_max": 200,
+      "synonyms": [
+        "egfr",
+        "estimated gfr",
+        "estimated glomerular filtration rate",
+        "gfr"
+      ]
+    },
+    {
+      "parameter_id": "sodium",
+      "canonical_name": "Sodium",
+      "category": "KFT",
+      "default_unit": "mmol/L",
+      "plausible_min": 90,
+      "plausible_max": 200,
+      "synonyms": [
+        "sodium",
+        "serum sodium",
+        "s sodium",
+        "na",
+        "na+",
+        "sodium na"
+      ]
+    },
+    {
+      "parameter_id": "potassium",
+      "canonical_name": "Potassium",
+      "category": "KFT",
+      "default_unit": "mmol/L",
+      "plausible_min": 1,
+      "plausible_max": 10,
+      "synonyms": [
+        "potassium",
+        "serum potassium",
+        "s potassium",
+        "k",
+        "k+",
+        "potassium k"
+      ]
+    },
+    {
+      "parameter_id": "chloride",
+      "canonical_name": "Chloride",
+      "category": "KFT",
+      "default_unit": "mmol/L",
+      "plausible_min": 60,
+      "plausible_max": 150,
+      "synonyms": [
+        "chloride",
+        "serum chloride",
+        "s chloride",
+        "cl",
+        "cl-",
+        "chloride cl"
+      ]
+    },
+    {
+      "parameter_id": "calcium",
+      "canonical_name": "Calcium",
+      "category": "KFT",
+      "default_unit": "mg/dL",
+      "conversion_group": "calcium",
+      "plausible_min": 2,
+      "plausible_max": 20,
+      "synonyms": [
+        "calcium",
+        "serum calcium",
+        "s calcium",
+        "calcium total",
+        "total calcium"
+      ]
+    },
+    {
+      "parameter_id": "phosphorus",
+      "canonical_name": "Phosphorus",
+      "category": "KFT",
+      "default_unit": "mg/dL",
+      "plausible_min": 0.5,
+      "plausible_max": 20,
+      "synonyms": [
+        "phosphorus",
+        "serum phosphorus",
+        "inorganic phosphorus",
+        "phosphate",
+        "s phosphorus"
+      ]
+    },
+    {
+      "parameter_id": "cholesterol_total",
+      "canonical_name": "Total Cholesterol",
+      "category": "LIPID",
+      "default_unit": "mg/dL",
+      "conversion_group": "cholesterol",
+      "plausible_min": 30,
+      "plausible_max": 1000,
+      "synonyms": [
+        "total cholesterol",
+        "cholesterol total",
+        "cholesterol",
+        "serum cholesterol",
+        "s cholesterol",
+        "cholesterol serum"
+      ]
+    },
+    {
+      "parameter_id": "triglycerides",
+      "canonical_name": "Triglycerides",
+      "category": "LIPID",
+      "default_unit": "mg/dL",
+      "conversion_group": "triglycerides",
+      "plausible_min": 10,
+      "plausible_max": 5000,
+      "synonyms": [
+        "triglycerides",
+        "triglyceride",
+        "tg",
+        "serum triglycerides",
+        "s triglycerides",
+        "trigs"
+      ]
+    },
+    {
+      "parameter_id": "hdl",
+      "canonical_name": "HDL Cholesterol",
+      "category": "LIPID",
+      "default_unit": "mg/dL",
+      "conversion_group": "cholesterol",
+      "plausible_min": 5,
+      "plausible_max": 200,
+      "synonyms": [
+        "hdl",
+        "hdl cholesterol",
+        "hdl c",
+        "cholesterol hdl",
+        "high density lipoprotein",
+        "hdl cholesterol direct",
+        "hdl-c",
+        "hdl direct",
+        "direct hdl",
+        "hdl c direct",
+        "hdl - direct"
+      ]
+    },
+    {
+      "parameter_id": "ldl",
+      "canonical_name": "LDL Cholesterol",
+      "category": "LIPID",
+      "default_unit": "mg/dL",
+      "conversion_group": "cholesterol",
+      "plausible_min": 5,
+      "plausible_max": 600,
+      "synonyms": [
+        "ldl",
+        "ldl cholesterol",
+        "ldl c",
+        "cholesterol ldl",
+        "low density lipoprotein",
+        "ldl cholesterol calculated",
+        "ldl cholesterol direct",
+        "ldl-c",
+        "ldl direct",
+        "direct ldl",
+        "ldl - direct",
+        "ldl calculated"
+      ]
+    },
+    {
+      "parameter_id": "vldl",
+      "canonical_name": "VLDL Cholesterol",
+      "category": "LIPID",
+      "default_unit": "mg/dL",
+      "conversion_group": "cholesterol",
+      "plausible_min": 1,
+      "plausible_max": 300,
+      "synonyms": [
+        "vldl",
+        "vldl cholesterol",
+        "very low density lipoprotein",
+        "cholesterol vldl",
+        "vldl-c"
+      ]
+    },
+    {
+      "parameter_id": "non_hdl",
+      "canonical_name": "Non-HDL Cholesterol",
+      "category": "LIPID",
+      "default_unit": "mg/dL",
+      "conversion_group": "cholesterol",
+      "plausible_min": 5,
+      "plausible_max": 900,
+      "synonyms": [
+        "non hdl cholesterol",
+        "non hdl",
+        "non-hdl cholesterol",
+        "non hdl c"
+      ]
+    },
+    {
+      "parameter_id": "tc_hdl_ratio",
+      "canonical_name": "Total Cholesterol / HDL Ratio",
+      "category": "LIPID",
+      "default_unit": "ratio",
+      "plausible_min": 0.5,
+      "plausible_max": 30,
+      "synonyms": [
+        "tc hdl ratio",
+        "total cholesterol hdl ratio",
+        "chol hdl ratio",
+        "cholesterol hdl ratio",
+        "tc/hdl ratio",
+        "total cholesterol/hdl ratio"
+      ]
+    },
+    {
+      "parameter_id": "ldl_hdl_ratio",
+      "canonical_name": "LDL / HDL Ratio",
+      "category": "LIPID",
+      "default_unit": "ratio",
+      "plausible_min": 0.1,
+      "plausible_max": 20,
+      "synonyms": [
+        "ldl hdl ratio",
+        "ldl/hdl ratio",
+        "ldl cholesterol hdl ratio"
+      ]
+    },
+    {
+      "parameter_id": "tsh",
+      "canonical_name": "TSH",
+      "category": "THYROID",
+      "default_unit": "µIU/mL",
+      "plausible_min": 0.001,
+      "plausible_max": 500,
+      "synonyms": [
+        "tsh",
+        "thyroid stimulating hormone",
+        "tsh ultrasensitive",
+        "ultrasensitive tsh",
+        "tsh 3rd generation",
+        "s tsh",
+        "thyrotropin",
+        "tsh ultra sensitive"
+      ]
+    },
+    {
+      "parameter_id": "t3_total",
+      "canonical_name": "T3, Total",
+      "category": "THYROID",
+      "default_unit": "ng/dL",
+      "plausible_min": 10,
+      "plausible_max": 1000,
+      "synonyms": [
+        "t3",
+        "total t3",
+        "t3 total",
+        "triiodothyronine",
+        "total triiodothyronine",
+        "triiodothyronine t3"
+      ]
+    },
+    {
+      "parameter_id": "t4_total",
+      "canonical_name": "T4, Total",
+      "category": "THYROID",
+      "default_unit": "µg/dL",
+      "plausible_min": 0.5,
+      "plausible_max": 30,
+      "synonyms": [
+        "t4",
+        "total t4",
+        "t4 total",
+        "thyroxine",
+        "total thyroxine",
+        "thyroxine t4"
+      ]
+    },
+    {
+      "parameter_id": "ft3",
+      "canonical_name": "Free T3",
+      "category": "THYROID",
+      "default_unit": "pg/mL",
+      "plausible_min": 0.5,
+      "plausible_max": 40,
+      "synonyms": [
+        "ft3",
+        "free t3",
+        "free triiodothyronine",
+        "f t3"
+      ]
+    },
+    {
+      "parameter_id": "ft4",
+      "canonical_name": "Free T4",
+      "category": "THYROID",
+      "default_unit": "ng/dL",
+      "plausible_min": 0.1,
+      "plausible_max": 10,
+      "synonyms": [
+        "ft4",
+        "free t4",
+        "free thyroxine",
+        "f t4"
+      ]
+    },
+    {
+      "parameter_id": "glucose_fasting",
+      "canonical_name": "Glucose, Fasting",
+      "category": "SUGAR",
+      "default_unit": "mg/dL",
+      "conversion_group": "glucose",
+      "plausible_min": 10,
+      "plausible_max": 1500,
+      "synonyms": [
+        "glucose fasting",
+        "fasting glucose",
+        "fasting blood sugar",
+        "fbs",
+        "fasting plasma glucose",
+        "fpg",
+        "blood sugar fasting",
+        "plasma glucose fasting",
+        "glucose f",
+        "sugar fasting",
+        "fasting blood glucose",
+        "fbg"
+      ]
+    },
+    {
+      "parameter_id": "glucose_pp",
+      "canonical_name": "Glucose, Post Prandial",
+      "category": "SUGAR",
+      "default_unit": "mg/dL",
+      "conversion_group": "glucose",
+      "plausible_min": 10,
+      "plausible_max": 1500,
+      "synonyms": [
+        "glucose pp",
+        "post prandial glucose",
+        "postprandial blood sugar",
+        "ppbs",
+        "pp blood sugar",
+        "blood sugar pp",
+        "plasma glucose pp",
+        "glucose post prandial",
+        "post prandial blood sugar",
+        "2 hr post prandial glucose",
+        "ppbg"
+      ]
+    },
+    {
+      "parameter_id": "glucose_random",
+      "canonical_name": "Glucose, Random",
+      "category": "SUGAR",
+      "default_unit": "mg/dL",
+      "conversion_group": "glucose",
+      "plausible_min": 10,
+      "plausible_max": 1500,
+      "synonyms": [
+        "glucose random",
+        "random glucose",
+        "random blood sugar",
+        "rbs",
+        "blood sugar random",
+        "plasma glucose random",
+        "random plasma glucose"
+      ]
+    },
+    {
+      "parameter_id": "hba1c",
+      "canonical_name": "HbA1c",
+      "category": "SUGAR",
+      "default_unit": "%",
+      "plausible_min": 2,
+      "plausible_max": 20,
+      "synonyms": [
+        "hba1c",
+        "hb1ac",
+        "hba1",
+        "a1c",
+        "glycated hemoglobin",
+        "glycosylated hemoglobin",
+        "glycated haemoglobin",
+        "glycosylated haemoglobin",
+        "hb a1c",
+        "a1c",
+        "hemoglobin a1c",
+        "glycated hemoglobin hba1c"
+      ]
+    },
+    {
+      "parameter_id": "eag",
+      "canonical_name": "Estimated Average Glucose",
+      "category": "SUGAR",
+      "default_unit": "mg/dL",
+      "conversion_group": "glucose",
+      "plausible_min": 30,
+      "plausible_max": 800,
+      "synonyms": [
+        "estimated average glucose",
+        "eag",
+        "mean blood glucose",
+        "average blood glucose",
+        "mean plasma glucose"
+      ]
+    },
+    {
+      "parameter_id": "vitamin_b12",
+      "canonical_name": "Vitamin B12",
+      "category": "B12",
+      "default_unit": "pg/mL",
+      "conversion_group": "b12",
+      "plausible_min": 20,
+      "plausible_max": 10000,
+      "synonyms": [
+        "vitamin b12",
+        "vit b12",
+        "b12",
+        "cyanocobalamin",
+        "cobalamin",
+        "serum vitamin b12",
+        "vitamin b 12"
+      ]
+    },
+    {
+      "parameter_id": "vitamin_d",
+      "canonical_name": "Vitamin D (25-OH)",
+      "category": "VITAMIN_D",
+      "default_unit": "ng/mL",
+      "conversion_group": "vitamin_d",
+      "plausible_min": 1,
+      "plausible_max": 300,
+      "synonyms": [
+        "vitamin d",
+        "25 oh vitamin d",
+        "25 hydroxy vitamin d",
+        "vitamin d total",
+        "vit d",
+        "25 oh vit d",
+        "vitamin d 25 hydroxy",
+        "25 hydroxyvitamin d",
+        "vitamin d3",
+        "total 25 oh vitamin d"
+      ]
+    },
+    {
+      "parameter_id": "ferritin",
+      "canonical_name": "Ferritin",
+      "category": "IRON",
+      "default_unit": "ng/mL",
+      "plausible_min": 0.5,
+      "plausible_max": 20000,
+      "synonyms": [
+        "ferritin",
+        "serum ferritin",
+        "s ferritin"
+      ]
+    },
+    {
+      "parameter_id": "iron",
+      "canonical_name": "Iron",
+      "category": "IRON",
+      "default_unit": "µg/dL",
+      "plausible_min": 5,
+      "plausible_max": 1000,
+      "synonyms": [
+        "iron",
+        "serum iron",
+        "s iron"
+      ]
+    },
+    {
+      "parameter_id": "crp",
+      "canonical_name": "C-Reactive Protein",
+      "category": "INFLAMMATION",
+      "default_unit": "mg/L",
+      "plausible_min": 0,
+      "plausible_max": 600,
+      "synonyms": [
+        "crp",
+        "c reactive protein",
+        "c-reactive protein",
+        "crp quantitative"
+      ]
+    },
+    {
+      "parameter_id": "neutrophils_abs",
+      "canonical_name": "Absolute Neutrophil Count",
+      "category": "CBC",
+      "default_unit": "10^3/µL",
+      "plausible_min": 0,
+      "plausible_max": 100,
+      "synonyms": [
+        "absolute neutrophil count",
+        "absolute neutrophils",
+        "anc",
+        "neutrophils absolute",
+        "absolute neutrophil count anc",
+        "neutrophil absolute count"
+      ]
+    },
+    {
+      "parameter_id": "lymphocytes_abs",
+      "canonical_name": "Absolute Lymphocyte Count",
+      "category": "CBC",
+      "default_unit": "10^3/µL",
+      "plausible_min": 0,
+      "plausible_max": 100,
+      "synonyms": [
+        "absolute lymphocyte count",
+        "absolute lymphocytes",
+        "alc",
+        "lymphocytes absolute",
+        "lymphocyte absolute count"
+      ]
+    },
+    {
+      "parameter_id": "monocytes_abs",
+      "canonical_name": "Absolute Monocyte Count",
+      "category": "CBC",
+      "default_unit": "10^3/µL",
+      "plausible_min": 0,
+      "plausible_max": 10,
+      "synonyms": [
+        "absolute monocyte count",
+        "absolute monocytes",
+        "amc",
+        "monocytes absolute",
+        "monocyte absolute count"
+      ]
+    },
+    {
+      "parameter_id": "eosinophils_abs",
+      "canonical_name": "Absolute Eosinophil Count",
+      "category": "CBC",
+      "default_unit": "10^3/µL",
+      "plausible_min": 0,
+      "plausible_max": 10,
+      "synonyms": [
+        "absolute eosinophil count",
+        "absolute eosinophils",
+        "aec",
+        "eosinophils absolute",
+        "eosinophil absolute count"
+      ]
+    },
+    {
+      "parameter_id": "basophils_abs",
+      "canonical_name": "Absolute Basophil Count",
+      "category": "CBC",
+      "default_unit": "10^3/µL",
+      "plausible_min": 0,
+      "plausible_max": 2,
+      "synonyms": [
+        "absolute basophil count",
+        "absolute basophils",
+        "abc",
+        "basophils absolute",
+        "basophil absolute count"
+      ]
+    },
+    {
+      "parameter_id": "nrbc",
+      "canonical_name": "Nucleated RBCs",
+      "category": "CBC",
+      "default_unit": "/100WBCs",
+      "plausible_min": 0,
+      "plausible_max": 500,
+      "synonyms": [
+        "nucleated rbcs",
+        "nucleated rbc",
+        "nucleated red blood cells",
+        "nucleated red cells",
+        "nrbc",
+        "nrbcs",
+        "nrbc count"
+      ]
+    },
+    {
+      "parameter_id": "rdw_sd",
+      "canonical_name": "RDW-SD",
+      "category": "CBC",
+      "default_unit": "fL",
+      "plausible_min": 15,
+      "plausible_max": 150,
+      "synonyms": [
+        "rdw sd",
+        "rdw-sd",
+        "red cell distribution width sd",
+        "rdw standard deviation"
+      ],
+      "about": "how much red blood cells vary in size, given as a width in femtolitres"
+    },
+    {
+      "parameter_id": "pdw",
+      "canonical_name": "PDW (Platelet Distribution Width)",
+      "category": "CBC",
+      "default_unit": "fL",
+      "plausible_min": 3,
+      "plausible_max": 40,
+      "synonyms": [
+        "pdw",
+        "platelet distribution width"
+      ],
+      "about": "how much platelets vary in size"
+    },
+    {
+      "parameter_id": "plateletcrit",
+      "canonical_name": "Plateletcrit (PCT)",
+      "category": "CBC",
+      "default_unit": "%",
+      "plausible_min": 0,
+      "plausible_max": 3,
+      "synonyms": [
+        "plateletcrit",
+        "pct",
+        "plateletcrit pct",
+        "thrombocrit"
+      ],
+      "about": "the share of blood volume made up of platelets"
+    },
+    {
+      "parameter_id": "p_lcr",
+      "canonical_name": "P-LCR (Platelet Large Cell Ratio)",
+      "category": "CBC",
+      "default_unit": "%",
+      "plausible_min": 0,
+      "plausible_max": 100,
+      "synonyms": [
+        "p lcr",
+        "p-lcr",
+        "platelet large cell ratio",
+        "plcr"
+      ],
+      "about": "the share of platelets that are larger than usual"
+    },
+    {
+      "parameter_id": "ig_pct",
+      "canonical_name": "Immature Granulocytes %",
+      "category": "CBC",
+      "default_unit": "%",
+      "plausible_min": 0,
+      "plausible_max": 100,
+      "synonyms": [
+        "immature granulocytes",
+        "ig",
+        "ig percent",
+        "immature granulocyte",
+        "ig %"
+      ],
+      "about": "the share of white blood cells that are young (immature) granulocytes"
+    },
+    {
+      "parameter_id": "ig_abs",
+      "canonical_name": "Immature Granulocytes (Absolute)",
+      "category": "CBC",
+      "default_unit": "10^3/µL",
+      "plausible_min": 0,
+      "plausible_max": 50,
+      "synonyms": [
+        "absolute immature granulocytes",
+        "immature granulocytes absolute",
+        "ig absolute",
+        "ig count"
+      ],
+      "about": "the number of young (immature) granulocytes in a volume of blood"
+    },
+    {
+      "parameter_id": "bands_pct",
+      "canonical_name": "Band Forms",
+      "category": "CBC",
+      "default_unit": "%",
+      "plausible_min": 0,
+      "plausible_max": 100,
+      "synonyms": [
+        "band forms",
+        "bands",
+        "band cells",
+        "stab cells",
+        "band neutrophils"
+      ],
+      "about": "the share of white blood cells that are band neutrophils, a slightly younger form of neutrophil"
+    },
+    {
+      "parameter_id": "retic_pct",
+      "canonical_name": "Reticulocyte Count",
+      "category": "CBC",
+      "default_unit": "%",
+      "plausible_min": 0,
+      "plausible_max": 50,
+      "synonyms": [
+        "reticulocyte count",
+        "reticulocytes",
+        "retic count",
+        "retic",
+        "reticulocyte"
+      ],
+      "about": "young red blood cells recently released from the bone marrow"
+    },
+    {
+      "parameter_id": "nlr",
+      "canonical_name": "Neutrophil-Lymphocyte Ratio",
+      "category": "CBC",
+      "default_unit": "ratio",
+      "plausible_min": 0,
+      "plausible_max": 100,
+      "synonyms": [
+        "neutrophil lymphocyte ratio",
+        "nlr",
+        "n l ratio",
+        "neutrophil to lymphocyte ratio"
+      ],
+      "about": "the number of neutrophils divided by the number of lymphocytes"
+    },
+    {
+      "parameter_id": "rbc_morphology_mentzer",
+      "canonical_name": "Mentzer Index",
+      "category": "CBC",
+      "default_unit": "ratio",
+      "plausible_min": 1,
+      "plausible_max": 100,
+      "synonyms": [
+        "mentzer index",
+        "mentzer"
+      ],
+      "about": "MCV divided by the RBC count, a calculated figure some labs print"
+    },
+    {
+      "parameter_id": "pt",
+      "canonical_name": "Prothrombin Time (PT)",
+      "category": "COAG",
+      "default_unit": "sec",
+      "plausible_min": 5,
+      "plausible_max": 150,
+      "synonyms": [
+        "prothrombin time",
+        "pt",
+        "pt patient",
+        "prothrombin time pt",
+        "pt test",
+        "pt (test)"
+      ],
+      "about": "how long it takes a blood sample to clot through one of the clotting pathways"
+    },
+    {
+      "parameter_id": "pt_control",
+      "canonical_name": "Prothrombin Time - Control",
+      "category": "COAG",
+      "default_unit": "sec",
+      "plausible_min": 5,
+      "plausible_max": 60,
+      "synonyms": [
+        "pt control",
+        "prothrombin time control",
+        "control pt",
+        "pt mean normal"
+      ],
+      "about": "the clotting time of the lab's normal control sample, printed for comparison"
+    },
+    {
+      "parameter_id": "inr",
+      "canonical_name": "INR",
+      "category": "COAG",
+      "default_unit": "ratio",
+      "plausible_min": 0.5,
+      "plausible_max": 20,
+      "synonyms": [
+        "inr",
+        "international normalized ratio",
+        "international normalised ratio",
+        "pt inr"
+      ],
+      "about": "a standardised way of reporting the prothrombin time so results can be compared between labs"
+    },
+    {
+      "parameter_id": "aptt",
+      "canonical_name": "aPTT",
+      "category": "COAG",
+      "default_unit": "sec",
+      "plausible_min": 10,
+      "plausible_max": 250,
+      "synonyms": [
+        "aptt",
+        "activated partial thromboplastin time",
+        "ptt",
+        "partial thromboplastin time",
+        "aptt patient",
+        "aptt test"
+      ],
+      "about": "how long it takes a blood sample to clot through another of the clotting pathways"
+    },
+    {
+      "parameter_id": "aptt_control",
+      "canonical_name": "aPTT - Control",
+      "category": "COAG",
+      "default_unit": "sec",
+      "plausible_min": 10,
+      "plausible_max": 100,
+      "synonyms": [
+        "aptt control",
+        "control aptt",
+        "ptt control"
+      ],
+      "about": "the aPTT of the lab's normal control sample, printed for comparison"
+    },
+    {
+      "parameter_id": "fibrinogen",
+      "canonical_name": "Fibrinogen",
+      "category": "COAG",
+      "default_unit": "mg/dL",
+      "plausible_min": 20,
+      "plausible_max": 2000,
+      "synonyms": [
+        "fibrinogen",
+        "plasma fibrinogen",
+        "fibrinogen level"
+      ],
+      "about": "fibrinogen, a protein the body uses to form blood clots"
+    },
+    {
+      "parameter_id": "d_dimer",
+      "canonical_name": "D-Dimer",
+      "category": "COAG",
+      "default_unit": "µg/mL",
+      "plausible_min": 0,
+      "plausible_max": 100,
+      "synonyms": [
+        "d dimer",
+        "d-dimer",
+        "ddimer",
+        "d dimer quantitative"
+      ],
+      "about": "D-dimer, a protein fragment released when a blood clot breaks down"
+    },
+    {
+      "parameter_id": "bleeding_time",
+      "canonical_name": "Bleeding Time",
+      "category": "COAG",
+      "default_unit": "min",
+      "plausible_min": 0,
+      "plausible_max": 60,
+      "synonyms": [
+        "bleeding time",
+        "bt"
+      ],
+      "about": "how long a small standard skin puncture takes to stop bleeding"
+    },
+    {
+      "parameter_id": "clotting_time",
+      "canonical_name": "Clotting Time",
+      "category": "COAG",
+      "default_unit": "min",
+      "plausible_min": 0,
+      "plausible_max": 60,
+      "synonyms": [
+        "clotting time",
+        "ct",
+        "coagulation time"
+      ],
+      "about": "how long blood takes to clot in a tube"
+    },
+    {
+      "parameter_id": "ldh",
+      "canonical_name": "LDH (Lactate Dehydrogenase)",
+      "category": "LFT",
+      "default_unit": "U/L",
+      "plausible_min": 10,
+      "plausible_max": 20000,
+      "synonyms": [
+        "ldh",
+        "lactate dehydrogenase",
+        "ld",
+        "lactic dehydrogenase",
+        "ldh total"
+      ],
+      "about": "LDH, an enzyme found in many tissues of the body"
+    },
+    {
+      "parameter_id": "ast_alt_ratio",
+      "canonical_name": "AST/ALT Ratio",
+      "category": "LFT",
+      "default_unit": "ratio",
+      "plausible_min": 0,
+      "plausible_max": 20,
+      "synonyms": [
+        "ast alt ratio",
+        "sgot sgpt ratio",
+        "ast/alt ratio",
+        "de ritis ratio",
+        "sgot/sgpt ratio"
+      ],
+      "about": "AST divided by ALT, a calculated figure some labs print"
+    },
+    {
+      "parameter_id": "amylase",
+      "canonical_name": "Amylase",
+      "category": "OTHER",
+      "default_unit": "U/L",
+      "plausible_min": 1,
+      "plausible_max": 20000,
+      "synonyms": [
+        "amylase",
+        "serum amylase",
+        "s amylase",
+        "amylase total"
+      ],
+      "about": "amylase, an enzyme mainly from the pancreas and salivary glands that helps digest starch"
+    },
+    {
+      "parameter_id": "lipase",
+      "canonical_name": "Lipase",
+      "category": "OTHER",
+      "default_unit": "U/L",
+      "plausible_min": 1,
+      "plausible_max": 50000,
+      "synonyms": [
+        "lipase",
+        "serum lipase",
+        "s lipase"
+      ],
+      "about": "lipase, an enzyme from the pancreas that helps digest fats"
+    },
+    {
+      "parameter_id": "magnesium",
+      "canonical_name": "Magnesium",
+      "category": "KFT",
+      "default_unit": "mg/dL",
+      "plausible_min": 0.3,
+      "plausible_max": 10,
+      "synonyms": [
+        "magnesium",
+        "mg",
+        "serum magnesium",
+        "s magnesium"
+      ],
+      "about": "magnesium, a mineral needed for muscles, nerves and energy use"
+    },
+    {
+      "parameter_id": "bicarbonate",
+      "canonical_name": "Bicarbonate",
+      "category": "KFT",
+      "default_unit": "mmol/L",
+      "plausible_min": 3,
+      "plausible_max": 60,
+      "synonyms": [
+        "bicarbonate",
+        "hco3",
+        "total co2",
+        "tco2",
+        "serum bicarbonate",
+        "co2"
+      ],
+      "about": "bicarbonate, which helps keep the blood's acid-base balance steady"
+    },
+    {
+      "parameter_id": "bun_creatinine_ratio",
+      "canonical_name": "BUN/Creatinine Ratio",
+      "category": "KFT",
+      "default_unit": "ratio",
+      "plausible_min": 1,
+      "plausible_max": 200,
+      "synonyms": [
+        "bun creatinine ratio",
+        "bun/creatinine ratio",
+        "bun cr ratio",
+        "bun creat ratio"
+      ],
+      "about": "BUN divided by creatinine, a calculated figure some labs print"
+    },
+    {
+      "parameter_id": "urea_creatinine_ratio",
+      "canonical_name": "Urea/Creatinine Ratio",
+      "category": "KFT",
+      "default_unit": "ratio",
+      "plausible_min": 1,
+      "plausible_max": 400,
+      "synonyms": [
+        "urea creatinine ratio",
+        "urea/creatinine ratio",
+        "urea creat ratio"
+      ],
+      "about": "urea divided by creatinine, a calculated figure some labs print"
+    },
+    {
+      "parameter_id": "cystatin_c",
+      "canonical_name": "Cystatin C",
+      "category": "KFT",
+      "default_unit": "mg/L",
+      "plausible_min": 0.1,
+      "plausible_max": 15,
+      "synonyms": [
+        "cystatin c",
+        "cystatin-c",
+        "serum cystatin c"
+      ],
+      "about": "cystatin C, a small protein filtered by the kidneys"
+    },
+    {
+      "parameter_id": "ionized_calcium",
+      "canonical_name": "Ionized Calcium",
+      "category": "KFT",
+      "default_unit": "mmol/L",
+      "plausible_min": 0.3,
+      "plausible_max": 3,
+      "synonyms": [
+        "ionized calcium",
+        "ionised calcium",
+        "ica",
+        "free calcium",
+        "calcium ionized"
+      ],
+      "about": "the 'free' part of calcium in the blood that is not bound to proteins"
+    },
+    {
+      "parameter_id": "lpa",
+      "canonical_name": "Lipoprotein(a)",
+      "category": "LIPID",
+      "default_unit": "mg/dL",
+      "plausible_min": 0,
+      "plausible_max": 600,
+      "synonyms": [
+        "lipoprotein a",
+        "lp a",
+        "lp(a)",
+        "lipoprotein little a",
+        "lpa"
+      ],
+      "about": "lipoprotein(a), a cholesterol-carrying particle whose level is largely inherited"
+    },
+    {
+      "parameter_id": "apo_a1",
+      "canonical_name": "Apolipoprotein A1",
+      "category": "LIPID",
+      "default_unit": "mg/dL",
+      "plausible_min": 10,
+      "plausible_max": 500,
+      "synonyms": [
+        "apolipoprotein a1",
+        "apo a1",
+        "apo a-1",
+        "apoa1",
+        "apolipoprotein a-1"
+      ],
+      "about": "apolipoprotein A1, the main protein in HDL particles"
+    },
+    {
+      "parameter_id": "apo_b",
+      "canonical_name": "Apolipoprotein B",
+      "category": "LIPID",
+      "default_unit": "mg/dL",
+      "plausible_min": 10,
+      "plausible_max": 500,
+      "synonyms": [
+        "apolipoprotein b",
+        "apo b",
+        "apob",
+        "apo-b",
+        "apolipoprotein b100"
+      ],
+      "about": "apolipoprotein B, the main protein in LDL and VLDL particles"
+    },
+    {
+      "parameter_id": "apob_apoa1_ratio",
+      "canonical_name": "Apo B/Apo A1 Ratio",
+      "category": "LIPID",
+      "default_unit": "ratio",
+      "plausible_min": 0,
+      "plausible_max": 10,
+      "synonyms": [
+        "apo b apo a1 ratio",
+        "apob/apoa1 ratio",
+        "apo b/a1 ratio"
+      ],
+      "about": "apolipoprotein B divided by apolipoprotein A1, a calculated figure"
+    },
+    {
+      "parameter_id": "hdl_ldl_ratio",
+      "canonical_name": "HDL/LDL Ratio",
+      "category": "LIPID",
+      "default_unit": "ratio",
+      "plausible_min": 0,
+      "plausible_max": 10,
+      "synonyms": [
+        "hdl ldl ratio",
+        "hdl/ldl ratio"
+      ],
+      "about": "HDL cholesterol divided by LDL cholesterol, a calculated figure"
+    },
+    {
+      "parameter_id": "anti_tpo",
+      "canonical_name": "Anti-TPO Antibodies",
+      "category": "THYROID",
+      "default_unit": "IU/mL",
+      "plausible_min": 0,
+      "plausible_max": 20000,
+      "synonyms": [
+        "anti tpo",
+        "anti-tpo",
+        "thyroid peroxidase antibodies",
+        "tpo antibodies",
+        "anti thyroid peroxidase",
+        "atpo",
+        "anti tpo antibody"
+      ],
+      "about": "antibodies against thyroid peroxidase, an enzyme in the thyroid gland"
+    },
+    {
+      "parameter_id": "anti_tg",
+      "canonical_name": "Anti-Thyroglobulin Antibodies",
+      "category": "THYROID",
+      "default_unit": "IU/mL",
+      "plausible_min": 0,
+      "plausible_max": 20000,
+      "synonyms": [
+        "anti tg",
+        "anti-tg",
+        "thyroglobulin antibodies",
+        "anti thyroglobulin",
+        "atg",
+        "tg antibodies"
+      ],
+      "about": "antibodies against thyroglobulin, a protein made by the thyroid gland"
+    },
+    {
+      "parameter_id": "insulin_fasting",
+      "canonical_name": "Insulin (Fasting)",
+      "category": "SUGAR",
+      "default_unit": "µIU/mL",
+      "plausible_min": 0,
+      "plausible_max": 2000,
+      "synonyms": [
+        "insulin fasting",
+        "fasting insulin",
+        "insulin",
+        "serum insulin",
+        "insulin f"
+      ],
+      "about": "insulin, the hormone that helps move sugar from the blood into cells, measured after fasting"
+    },
+    {
+      "parameter_id": "insulin_pp",
+      "canonical_name": "Insulin (Post Prandial)",
+      "category": "SUGAR",
+      "default_unit": "µIU/mL",
+      "plausible_min": 0,
+      "plausible_max": 3000,
+      "synonyms": [
+        "insulin pp",
+        "post prandial insulin",
+        "insulin post prandial",
+        "pp insulin"
+      ],
+      "about": "insulin measured a set time after a meal"
+    },
+    {
+      "parameter_id": "c_peptide",
+      "canonical_name": "C-Peptide",
+      "category": "SUGAR",
+      "default_unit": "ng/mL",
+      "plausible_min": 0,
+      "plausible_max": 50,
+      "synonyms": [
+        "c peptide",
+        "c-peptide",
+        "connecting peptide",
+        "c peptide fasting"
+      ],
+      "about": "C-peptide, released in equal amounts with insulin, used to gauge how much insulin the body makes"
+    },
+    {
+      "parameter_id": "homa_ir",
+      "canonical_name": "HOMA-IR",
+      "category": "SUGAR",
+      "default_unit": "ratio",
+      "plausible_min": 0,
+      "plausible_max": 100,
+      "synonyms": [
+        "homa ir",
+        "homa-ir",
+        "homa index",
+        "insulin resistance index"
+      ],
+      "about": "a calculated figure from fasting glucose and fasting insulin"
+    },
+    {
+      "parameter_id": "tibc",
+      "canonical_name": "TIBC (Total Iron Binding Capacity)",
+      "category": "IRON",
+      "default_unit": "µg/dL",
+      "plausible_min": 50,
+      "plausible_max": 1000,
+      "synonyms": [
+        "tibc",
+        "total iron binding capacity",
+        "iron binding capacity"
+      ],
+      "about": "how much iron the blood's carrier proteins could hold in total"
+    },
+    {
+      "parameter_id": "uibc",
+      "canonical_name": "UIBC (Unsaturated Iron Binding Capacity)",
+      "category": "IRON",
+      "default_unit": "µg/dL",
+      "plausible_min": 0,
+      "plausible_max": 1000,
+      "synonyms": [
+        "uibc",
+        "unsaturated iron binding capacity"
+      ],
+      "about": "the spare iron-carrying capacity not yet filled with iron"
+    },
+    {
+      "parameter_id": "transferrin_sat",
+      "canonical_name": "Transferrin Saturation",
+      "category": "IRON",
+      "default_unit": "%",
+      "plausible_min": 0,
+      "plausible_max": 100,
+      "synonyms": [
+        "transferrin saturation",
+        "tsat",
+        "iron saturation",
+        "percent saturation",
+        "% saturation",
+        "transferrin saturation percent"
+      ],
+      "about": "the share of the blood's iron-carrying protein (transferrin) that is carrying iron"
+    },
+    {
+      "parameter_id": "transferrin",
+      "canonical_name": "Transferrin",
+      "category": "IRON",
+      "default_unit": "mg/dL",
+      "plausible_min": 50,
+      "plausible_max": 800,
+      "synonyms": [
+        "transferrin",
+        "serum transferrin"
+      ],
+      "about": "transferrin, the main protein that carries iron in the blood"
+    },
+    {
+      "parameter_id": "folate",
+      "canonical_name": "Folate (Folic Acid)",
+      "category": "B12",
+      "default_unit": "ng/mL",
+      "plausible_min": 0.3,
+      "plausible_max": 110,
+      "synonyms": [
+        "folate",
+        "folic acid",
+        "serum folate",
+        "vitamin b9",
+        "folate serum"
+      ],
+      "about": "folate (vitamin B9), which the body needs to make healthy blood cells"
+    },
+    {
+      "parameter_id": "troponin_i",
+      "canonical_name": "Troponin I",
+      "category": "CARDIAC",
+      "default_unit": "ng/mL",
+      "plausible_min": 0,
+      "plausible_max": 1000,
+      "synonyms": [
+        "troponin i",
+        "trop i",
+        "ctni",
+        "cardiac troponin i",
+        "hs troponin i",
+        "high sensitivity troponin i"
+      ],
+      "about": "troponin I, a protein found in heart muscle"
+    },
+    {
+      "parameter_id": "troponin_t",
+      "canonical_name": "Troponin T",
+      "category": "CARDIAC",
+      "default_unit": "ng/mL",
+      "plausible_min": 0,
+      "plausible_max": 100,
+      "synonyms": [
+        "troponin t",
+        "trop t",
+        "ctnt",
+        "cardiac troponin t",
+        "hs troponin t"
+      ],
+      "about": "troponin T, a protein found in heart muscle"
+    },
+    {
+      "parameter_id": "ck_total",
+      "canonical_name": "CK (Creatine Kinase)",
+      "category": "CARDIAC",
+      "default_unit": "U/L",
+      "plausible_min": 5,
+      "plausible_max": 200000,
+      "synonyms": [
+        "creatine kinase",
+        "ck",
+        "cpk",
+        "creatine phosphokinase",
+        "ck total",
+        "cpk total"
+      ],
+      "about": "creatine kinase, an enzyme found mainly in muscles, including the heart"
+    },
+    {
+      "parameter_id": "ck_mb",
+      "canonical_name": "CK-MB",
+      "category": "CARDIAC",
+      "default_unit": "U/L",
+      "plausible_min": 0,
+      "plausible_max": 2000,
+      "synonyms": [
+        "ck mb",
+        "ck-mb",
+        "cpk mb",
+        "creatine kinase mb"
+      ],
+      "about": "the form of creatine kinase found mostly in heart muscle"
+    },
+    {
+      "parameter_id": "nt_probnp",
+      "canonical_name": "NT-proBNP",
+      "category": "CARDIAC",
+      "default_unit": "pg/mL",
+      "plausible_min": 0,
+      "plausible_max": 100000,
+      "synonyms": [
+        "nt probnp",
+        "nt-probnp",
+        "n terminal pro bnp",
+        "pro bnp",
+        "probnp"
+      ],
+      "about": "NT-proBNP, a substance released by the heart"
+    },
+    {
+      "parameter_id": "homocysteine",
+      "canonical_name": "Homocysteine",
+      "category": "CARDIAC",
+      "default_unit": "µmol/L",
+      "plausible_min": 0.5,
+      "plausible_max": 200,
+      "synonyms": [
+        "homocysteine",
+        "serum homocysteine",
+        "plasma homocysteine",
+        "hcy"
+      ],
+      "about": "homocysteine, an amino acid whose level is linked with B-vitamin status"
+    },
+    {
+      "parameter_id": "hs_crp",
+      "canonical_name": "hs-CRP (High-Sensitivity CRP)",
+      "category": "INFLAMMATION",
+      "default_unit": "mg/L",
+      "plausible_min": 0,
+      "plausible_max": 300,
+      "synonyms": [
+        "hs crp",
+        "hs-crp",
+        "high sensitivity crp",
+        "high sensitivity c reactive protein",
+        "hscrp",
+        "cardio crp"
+      ],
+      "about": "very small amounts of CRP, a general marker of inflammation"
+    },
+    {
+      "parameter_id": "procalcitonin",
+      "canonical_name": "Procalcitonin",
+      "category": "INFLAMMATION",
+      "default_unit": "ng/mL",
+      "plausible_min": 0,
+      "plausible_max": 1000,
+      "synonyms": [
+        "procalcitonin",
+        "pct procalcitonin",
+        "procalcitonin pct"
+      ],
+      "about": "procalcitonin, a protein whose level can rise with some infections"
+    },
+    {
+      "parameter_id": "ra_factor",
+      "canonical_name": "Rheumatoid Factor (RF)",
+      "category": "INFLAMMATION",
+      "default_unit": "IU/mL",
+      "plausible_min": 0,
+      "plausible_max": 5000,
+      "synonyms": [
+        "rheumatoid factor",
+        "ra factor",
+        "rf",
+        "ra test",
+        "rf quantitative"
+      ],
+      "about": "rheumatoid factor, an antibody the immune system can make"
+    },
+    {
+      "parameter_id": "aso",
+      "canonical_name": "ASO Titre",
+      "category": "INFLAMMATION",
+      "default_unit": "IU/mL",
+      "plausible_min": 0,
+      "plausible_max": 5000,
+      "synonyms": [
+        "aso",
+        "aso titre",
+        "aso titer",
+        "anti streptolysin o",
+        "antistreptolysin o"
+      ],
+      "about": "antibodies against a toxin made by streptococcus bacteria"
+    },
+    {
+      "parameter_id": "il6",
+      "canonical_name": "Interleukin-6 (IL-6)",
+      "category": "INFLAMMATION",
+      "default_unit": "pg/mL",
+      "plausible_min": 0,
+      "plausible_max": 100000,
+      "synonyms": [
+        "interleukin 6",
+        "il 6",
+        "il-6",
+        "il6"
+      ],
+      "about": "interleukin-6, a messenger protein of the immune system"
+    },
+    {
+      "parameter_id": "testosterone",
+      "canonical_name": "Testosterone (Total)",
+      "category": "HORMONE",
+      "default_unit": "ng/dL",
+      "plausible_min": 1,
+      "plausible_max": 3000,
+      "synonyms": [
+        "testosterone",
+        "total testosterone",
+        "testosterone total",
+        "serum testosterone"
+      ],
+      "about": "testosterone, a sex hormone present in everyone at different levels"
+    },
+    {
+      "parameter_id": "prolactin",
+      "canonical_name": "Prolactin",
+      "category": "HORMONE",
+      "default_unit": "ng/mL",
+      "plausible_min": 0,
+      "plausible_max": 1000,
+      "synonyms": [
+        "prolactin",
+        "prl",
+        "serum prolactin"
+      ],
+      "about": "prolactin, a hormone from the pituitary gland"
+    },
+    {
+      "parameter_id": "cortisol",
+      "canonical_name": "Cortisol",
+      "category": "HORMONE",
+      "default_unit": "µg/dL",
+      "plausible_min": 0,
+      "plausible_max": 100,
+      "synonyms": [
+        "cortisol",
+        "serum cortisol",
+        "cortisol morning",
+        "am cortisol",
+        "cortisol am"
+      ],
+      "about": "cortisol, a hormone from the adrenal glands that varies through the day"
+    },
+    {
+      "parameter_id": "fsh",
+      "canonical_name": "FSH",
+      "category": "HORMONE",
+      "default_unit": "mIU/mL",
+      "plausible_min": 0,
+      "plausible_max": 300,
+      "synonyms": [
+        "fsh",
+        "follicle stimulating hormone"
+      ],
+      "about": "FSH, a pituitary hormone involved in reproduction"
+    },
+    {
+      "parameter_id": "lh",
+      "canonical_name": "LH",
+      "category": "HORMONE",
+      "default_unit": "mIU/mL",
+      "plausible_min": 0,
+      "plausible_max": 300,
+      "synonyms": [
+        "lh",
+        "luteinizing hormone",
+        "luteinising hormone"
+      ],
+      "about": "LH, a pituitary hormone involved in reproduction"
+    },
+    {
+      "parameter_id": "estradiol",
+      "canonical_name": "Estradiol (E2)",
+      "category": "HORMONE",
+      "default_unit": "pg/mL",
+      "plausible_min": 0,
+      "plausible_max": 5000,
+      "synonyms": [
+        "estradiol",
+        "oestradiol",
+        "e2",
+        "estradiol e2"
+      ],
+      "about": "estradiol, the main form of estrogen"
+    },
+    {
+      "parameter_id": "progesterone",
+      "canonical_name": "Progesterone",
+      "category": "HORMONE",
+      "default_unit": "ng/mL",
+      "plausible_min": 0,
+      "plausible_max": 500,
+      "synonyms": [
+        "progesterone",
+        "serum progesterone"
+      ],
+      "about": "progesterone, a hormone involved in the menstrual cycle and pregnancy"
+    },
+    {
+      "parameter_id": "dhea_s",
+      "canonical_name": "DHEA-S",
+      "category": "HORMONE",
+      "default_unit": "µg/dL",
+      "plausible_min": 1,
+      "plausible_max": 2000,
+      "synonyms": [
+        "dhea s",
+        "dhea-s",
+        "dheas",
+        "dehydroepiandrosterone sulfate",
+        "dhea sulphate"
+      ],
+      "about": "DHEA-S, a hormone made mainly by the adrenal glands"
+    },
+    {
+      "parameter_id": "amh",
+      "canonical_name": "AMH (Anti-Mullerian Hormone)",
+      "category": "HORMONE",
+      "default_unit": "ng/mL",
+      "plausible_min": 0,
+      "plausible_max": 50,
+      "synonyms": [
+        "amh",
+        "anti mullerian hormone",
+        "anti-mullerian hormone",
+        "mullerian inhibiting substance"
+      ],
+      "about": "AMH, a hormone made in the ovaries or testes"
+    },
+    {
+      "parameter_id": "beta_hcg",
+      "canonical_name": "Beta hCG",
+      "category": "HORMONE",
+      "default_unit": "mIU/mL",
+      "plausible_min": 0,
+      "plausible_max": 500000,
+      "synonyms": [
+        "beta hcg",
+        "b hcg",
+        "bhcg",
+        "hcg",
+        "beta human chorionic gonadotropin",
+        "serum beta hcg"
+      ],
+      "about": "hCG, a hormone made during pregnancy"
+    },
+    {
+      "parameter_id": "pth",
+      "canonical_name": "PTH (Parathyroid Hormone)",
+      "category": "HORMONE",
+      "default_unit": "pg/mL",
+      "plausible_min": 1,
+      "plausible_max": 3000,
+      "synonyms": [
+        "pth",
+        "parathyroid hormone",
+        "intact pth",
+        "ipth",
+        "pth intact"
+      ],
+      "about": "parathyroid hormone, which helps control calcium levels"
+    },
+    {
+      "parameter_id": "growth_hormone",
+      "canonical_name": "Growth Hormone",
+      "category": "HORMONE",
+      "default_unit": "ng/mL",
+      "plausible_min": 0,
+      "plausible_max": 200,
+      "synonyms": [
+        "growth hormone",
+        "gh",
+        "hgh",
+        "somatotropin"
+      ],
+      "about": "growth hormone from the pituitary gland"
+    },
+    {
+      "parameter_id": "psa_total",
+      "canonical_name": "PSA (Total)",
+      "category": "OTHER",
+      "default_unit": "ng/mL",
+      "plausible_min": 0,
+      "plausible_max": 10000,
+      "synonyms": [
+        "psa",
+        "total psa",
+        "psa total",
+        "prostate specific antigen",
+        "tpsa"
+      ],
+      "about": "PSA, a protein made by the prostate gland"
+    },
+    {
+      "parameter_id": "psa_free",
+      "canonical_name": "PSA (Free)",
+      "category": "OTHER",
+      "default_unit": "ng/mL",
+      "plausible_min": 0,
+      "plausible_max": 1000,
+      "synonyms": [
+        "free psa",
+        "psa free",
+        "fpsa"
+      ],
+      "about": "the part of PSA that is not bound to other proteins"
+    },
+    {
+      "parameter_id": "vitamin_b1",
+      "canonical_name": "Vitamin B1 (Thiamine)",
+      "category": "OTHER",
+      "default_unit": "nmol/L",
+      "plausible_min": 1,
+      "plausible_max": 1000,
+      "synonyms": [
+        "vitamin b1",
+        "thiamine",
+        "thiamin"
+      ],
+      "about": "vitamin B1 (thiamine), which helps the body turn food into energy"
+    },
+    {
+      "parameter_id": "vitamin_b6",
+      "canonical_name": "Vitamin B6",
+      "category": "OTHER",
+      "default_unit": "ng/mL",
+      "plausible_min": 0,
+      "plausible_max": 500,
+      "synonyms": [
+        "vitamin b6",
+        "pyridoxine",
+        "pyridoxal phosphate",
+        "plp"
+      ],
+      "about": "vitamin B6, which helps with protein use and making blood cells"
+    },
+    {
+      "parameter_id": "zinc",
+      "canonical_name": "Zinc",
+      "category": "OTHER",
+      "default_unit": "µg/dL",
+      "plausible_min": 10,
+      "plausible_max": 1000,
+      "synonyms": [
+        "zinc",
+        "serum zinc"
+      ],
+      "about": "zinc, a mineral needed for the immune system and healing"
+    },
+    {
+      "parameter_id": "copper",
+      "canonical_name": "Copper",
+      "category": "OTHER",
+      "default_unit": "µg/dL",
+      "plausible_min": 5,
+      "plausible_max": 1000,
+      "synonyms": [
+        "copper",
+        "serum copper"
+      ],
+      "about": "copper, a mineral needed to make red blood cells and some enzymes"
+    },
+    {
+      "parameter_id": "ammonia",
+      "canonical_name": "Ammonia",
+      "category": "LFT",
+      "default_unit": "µmol/L",
+      "plausible_min": 1,
+      "plausible_max": 1000,
+      "synonyms": [
+        "ammonia",
+        "plasma ammonia",
+        "serum ammonia",
+        "nh3"
+      ],
+      "about": "ammonia, a waste product the liver normally clears"
+    },
+    {
+      "parameter_id": "ggt_alp_ratio",
+      "canonical_name": "GGT/ALP Ratio",
+      "category": "LFT",
+      "default_unit": "ratio",
+      "plausible_min": 0,
+      "plausible_max": 50,
+      "synonyms": [
+        "ggt alp ratio",
+        "ggt/alp ratio"
+      ],
+      "about": "GGT divided by ALP, a calculated figure some labs print"
+    }
+  ]
+}

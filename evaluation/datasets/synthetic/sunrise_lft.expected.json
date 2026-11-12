@@ -1,0 +1,72 @@
+{
+  "meta": {
+    "lab_name": "Sunrise Pathology Lab",
+    "report_date": "2024-03-16",
+    "collected_date": "2024-03-15",
+    "report_category": "LFT"
+  },
+  "parameters": [
+    {
+      "parameter_id": "bilirubin_total",
+      "value": 1.6,
+      "ref_low": 0.3,
+      "ref_high": 1.2,
+      "status": "ABOVE",
+      "unit": "mg/dL",
+      "flag": "H"
+    },
+    {
+      "parameter_id": "bilirubin_direct",
+      "value": 0.3,
+      "ref_low": 0.0,
+      "ref_high": 0.3,
+      "status": "WITHIN",
+      "unit": "mg/dL",
+      "flag": null
+    },
+    {
+      "parameter_id": "ast_sgot",
+      "value": 45,
+      "ref_low": null,
+      "ref_high": 40,
+      "status": "ABOVE",
+      "unit": "U/L",
+      "flag": "H"
+    },
+    {
+      "parameter_id": "alt_sgpt",
+      "value": 38,
+      "ref_low": null,
+      "ref_high": 41,
+      "status": "WITHIN",
+      "unit": "U/L",
+      "flag": null
+    },
+    {
+      "parameter_id": "alp",
+      "value": 98,
+      "ref_low": 40,
+      "ref_high": 129,
+      "status": "WITHIN",
+      "unit": "U/L",
+      "flag": null
+    },
+    {
+      "parameter_id": "albumin",
+      "value": 4.4,
+      "ref_low": 3.5,
+      "ref_high": 5.2,
+      "status": "WITHIN",
+      "unit": "g/dL",
+      "flag": null
+    }
+  ],
+  "lines": [
+    "Bilirubin - Total 1.6 H 0.3 - 1.2 mg/dL",
+    "Bilirubin Direct 0.3  0.0 - 0.3 mg/dL",
+    "SGOT (AST) 45 H < 40 U/L",
+    "SGPT (ALT) 38  up to 41 U/L",
+    "Alkaline Phosphatase 98  40 - 129 U/L",
+    "Serum Albumin 4.4  3.5 - 5.2 g/dL"
+  ]
+}

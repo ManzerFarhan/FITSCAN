@@ -1,0 +1,3 @@
+# Only needed to rebuild reference data from public datasets (scripts/datasets/build_reference_data.py).
+# Not used by the running app.  pip install -r requirements-data.txt
+pandas>=2.2

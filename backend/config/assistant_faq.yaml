@@ -1,0 +1,176 @@
+# FITSCAN site assistant - curated answers (the "training" for the floating chatbot).
+# Matching: an intent fires when any of its `patterns` (case-insensitive regex) matches the question.
+# Intents are checked top to bottom; put safety intents first. `actions` become buttons in the chat.
+# Answers are fixed text written to follow BR-01..BR-15 (no diagnosis, no medicine advice, no urgency claims).
+
+intents:
+  - id: emergency
+    patterns:
+      - "chest pain|can'?t breathe|cannot breathe|difficulty breathing|short(ness)? of breath|faint(ed|ing)?|unconscious|seizure|stroke|heart attack|severe bleeding|suicid|kill myself|overdose"
+    answer: >-
+      If you or someone near you feels very unwell right now, please don't wait for an app - call your local
+      emergency number (112 in India, 108 for an ambulance) or go to the nearest emergency department.
+      FITSCAN can't assess symptoms.
+    actions: []
+
+  - id: medicine_advice
+    patterns:
+      - "\\b(dose|dosage|how many (tablets|pills)|which (medicine|tablet|drug)|should i (take|stop|start|increase|decrease|reduce|skip|change)|can i (stop|skip|reduce|increase|take)|prescribe|supplement)\\b"
+    answer: >-
+      I can't advise on medicines, supplements or doses - your doctor or pharmacist knows your full history and is
+      the right person for that. I can explain what a test measures and how your value compares with the lab's
+      own reference range.
+    actions: []
+
+  - id: diagnosis
+    patterns:
+      - "\\b(do i have|have i got|am i (diabetic|anemic|anaemic|sick|ill)|is (it|this) (cancer|diabetes|serious|dangerous)|what disease|diagnos)"
+    answer: >-
+      I can't tell you whether you have a condition - only a doctor can make a diagnosis, using your history,
+      symptoms and other tests. What I can do is explain what each value on your report measures and where it
+      sits compared with the lab's range, so you can have a better conversation with your doctor.
+    actions:
+      - { label: "Open my analysis", href: "/analysis" }
+
+  - id: greeting
+    patterns: ["^\\s*(hi|hello|hey|hii+|namaste|good (morning|afternoon|evening))\\b[\\s!.]*$"]
+    answer: >-
+      Hi! I'm the FITSCAN assistant. I can help you upload a lab report, understand what a test measures,
+      compare reports, or find a diagnostic centre near you. What would you like to do?
+    actions:
+      - { label: "Upload a lab report", href: "/analysis" }
+      - { label: "Find centres", href: "/tests" }
+
+  - id: thanks
+    patterns: ["^\\s*(thanks|thank you|thx|ok|okay|great|cool)\\b[\\s!.]*$"]
+    answer: "You're welcome! Ask me anything else about your reports or how FITSCAN works."
+    actions: []
+
+  - id: what_is_fitscan
+    patterns: ["what (is|does) (fitscan|this (app|site|website))|how does (fitscan|this) work|what can you do|help me|^\\s*help\\s*$"]
+    answer: >-
+      FITSCAN reads your lab report (PDF or photo), lets you check every value it read, and then explains the
+      verified results in plain language with sources. You can also compare reports over time, keep a history,
+      and find diagnostic centres nearby. It gives general information only - it doesn't diagnose or prescribe.
+    actions:
+      - { label: "Upload a lab report", href: "/analysis" }
+      - { label: "View history", href: "/history" }
+
+  - id: prescription
+    patterns: ["prescription|handwrit|doctor'?s (note|writing)"]
+    answer: >-
+      FITSCAN reads printed lab reports only - doctor's prescriptions (especially handwritten ones) can't be read
+      reliably, so they aren't supported. You can still search for the tests your doctor asked for on the
+      Tests & Centres page.
+    actions:
+      - { label: "Find centres", href: "/tests" }
+
+  - id: download
+    patterns: ["download|pdf summary|print|export|share with (my )?doctor"]
+    answer: >-
+      After running the AI analysis, press "Download summary" on the analysis page to get a PDF you can print or
+      share with your doctor.
+    actions:
+      - { label: "Upload & Analysis", href: "/analysis" }
+
+  - id: verify
+    patterns: ["verif|confirm|wrong value|incorrect|mistake|correct (a|the) value|edit (a|the) value|why (do|must) i check"]
+    answer: >-
+      Reading reports isn't perfect, so FITSCAN never analyses a value until you've checked it. On the analysis
+      page, compare each row with your report image, fix anything that's wrong, then press Confirm. Values that
+      look unusual are highlighted so you can check them first.
+    actions:
+      - { label: "Go to my report", href: "/analysis" }
+
+  - id: ai_analysis
+    patterns: ["ai analysis|analy[sz]e|explain (my|the) report|plain language|summary|locked|greyed|grayed|disabled"]
+    answer: >-
+      The AI analysis unlocks once you've uploaded a lab report and confirmed its values. It then explains each
+      verified value in plain language, notes which ones are outside the lab's range, lists questions to ask your
+      doctor, and cites its sources. You can download it as a PDF summary.
+    actions:
+      - { label: "Upload & Analysis", href: "/analysis" }
+
+  - id: upload
+    patterns: ["\\bupload|how (do|can) i (add|send|scan)|attach|which files?|file (type|format|size)|\\bpdf\\b|jpg|jpeg|png|photo of (my )?report"]
+    answer: >-
+      Go to Upload & Analysis and click the Lab report box (or drag your file onto it). PDF, JPG and PNG files up
+      to 15 MB are accepted, and PDFs up to 30 pages. A clear, flat, well-lit photo gives the best results.
+      After upload, FITSCAN shows what it read so you can check and correct it.
+    actions:
+      - { label: "Upload a lab report", href: "/analysis" }
+
+  - id: compare
+    patterns: ["compar|trend|over time|previous report|earlier report|progress|change(d)? since"]
+    answer: >-
+      Open History, tick two or more lab reports, and press Compare. FITSCAN lines up matching tests, shows how
+      each value changed and draws a trend chart with the lab's range. It describes changes as numbers and
+      direction only - your doctor can tell you what they mean for you.
+    actions:
+      - { label: "Compare reports", href: "/history?compare=1" }
+
+  - id: history
+    patterns: ["history|old reports?|past reports?|find my report|where (are|is) my (report|document)s?|delete (my )?(report|document)"]
+    answer: >-
+      All your uploads are on the History page. You can search, filter by test type or date, open any report
+      again, compare reports, or delete them.
+    actions:
+      - { label: "View history", href: "/history" }
+
+  - id: centres
+    patterns: ["centre|center|lab near|near me|nearby|diagnostic|\\bbook(ing)?\\b|appointment|where (can|do) i (get|do) (the |a )?test|pathology|collection"]
+    answer: >-
+      On Tests & Centres, allow location access or type your area, and FITSCAN lists diagnostic centres nearby on
+      a map with distance and contact details. Please call the centre to confirm timings, prices and whether they
+      offer the test you need.
+    actions:
+      - { label: "Find centres", href: "/tests" }
+
+  - id: account
+    patterns: ["account|sign ?up|register|log ?in|password|guest|24 hours|keep my (data|reports)|expire"]
+    answer: >-
+      You can use FITSCAN as a guest - guest uploads are kept for 24 hours. Create a free account to keep your
+      history; anything you uploaded as a guest moves into your account when you register.
+    actions:
+      - { label: "Create an account", href: "/register" }
+
+  - id: privacy
+    patterns: ["privacy|private|secure|safe to upload|who can see|share my data|data (stored|kept)|delete my (account|data)"]
+    answer: >-
+      Only you can see your documents - every request is tied to your guest session or account. The AI only ever
+      sees the verified values and your lab's ranges, never your name or address. You can delete any report from
+      History, or your whole account from Profile.
+    actions:
+      - { label: "Profile & privacy", href: "/profile" }
+
+  - id: reference_range
+    patterns: ["reference range|normal range|what (is|does) (a |the )?range|lab range|range mean"]
+    answer: >-
+      A reference range is the span of values the lab found in most healthy people, using its own equipment and
+      methods - that's why ranges differ between labs. FITSCAN always compares your value with the range printed
+      on your report. Being slightly outside it is common and is not, by itself, a diagnosis.
+    actions: []
+
+  - id: out_of_range
+    patterns: ["out of range|outside (the )?range|high value|low value|abnormal|flag(ged)?|\\bH\\b and \\bL\\b|red (mark|value)"]
+    answer: >-
+      A value outside the lab's range means it differs from what the lab sees in most healthy people. Many
+      everyday things can shift results - recent meals, hydration, exercise, time of day, medicines or how the
+      sample was handled. It's a good reason to talk it through with your doctor, not a diagnosis on its own.
+    actions:
+      - { label: "See my findings", href: "/dashboard" }
+
+  - id: fasting
+    patterns: ["fast(ing)?\\b|empty stomach|before (the|a|my) (blood )?test|prepare for"]
+    answer: >-
+      Some tests (like fasting glucose or a lipid profile) are usually done after not eating for several hours,
+      while many others need no preparation. The lab or your doctor will tell you exactly what to do for your test.
+    actions:
+      - { label: "Find centres", href: "/tests" }
+
+  - id: units
+    patterns: ["\\bunits?\\b|mg/dl|mmol|g/dl|µiu|uiu|convert"]
+    answer: >-
+      Labs can report the same test in different units (for example mg/dL or mmol/L). FITSCAN keeps the unit
+      printed on your report and converts units only when comparing reports, so the numbers line up correctly.
+    actions: []

@@ -1,0 +1,74 @@
+{
+  "meta": {
+    "lab_name": "APEX DIAGNOSTICS LABORATORY",
+    "report_date": "2024-02-04",
+    "collected_date": "2024-02-03",
+    "patient_name": "Test Patient One",
+    "report_number": "APX-2024-0001",
+    "report_category": "CBC"
+  },
+  "parameters": [
+    {
+      "parameter_id": "hemoglobin",
+      "value": 11.2,
+      "ref_low": 12.0,
+      "ref_high": 15.0,
+      "status": "BELOW",
+      "unit": "g/dL",
+      "flag": null
+    },
+    {
+      "parameter_id": "wbc_count",
+      "value": 7800,
+      "ref_low": 4000,
+      "ref_high": 11000,
+      "status": "WITHIN",
+      "unit": "/\u00b5L",
+      "flag": null
+    },
+    {
+      "parameter_id": "platelet_count",
+      "value": 2.1,
+      "ref_low": 1.5,
+      "ref_high": 4.5,
+      "status": "WITHIN",
+      "unit": "lakh/\u00b5L",
+      "flag": null
+    },
+    {
+      "parameter_id": "hematocrit",
+      "value": 36.5,
+      "ref_low": 36,
+      "ref_high": 46,
+      "status": "WITHIN",
+      "unit": "%",
+      "flag": null
+    },
+    {
+      "parameter_id": "mcv",
+      "value": 79.0,
+      "ref_low": 83,
+      "ref_high": 101,
+      "status": "BELOW",
+      "unit": "fL",
+      "flag": null
+    },
+    {
+      "parameter_id": "esr",
+      "value": 28,
+      "ref_low": 0,
+      "ref_high": 20,
+      "status": "ABOVE",
+      "unit": "mm/hr",
+      "flag": null
+    }
+  ],
+  "lines": [
+    "Haemoglobin 11.2 g/dL 12.0 - 15.0",
+    "Total Leucocyte Count 7800 cells/cumm 4000 - 11000",
+    "Platelet Count 2.1 lakhs/cumm 1.5 - 4.5",
+    "Packed Cell Volume (PCV) 36.5 % 36 - 46",
+    "MCV 79.0 fL 83 - 101",
+    "ESR 28 mm/1st hr 0 - 20"
+  ]
+}

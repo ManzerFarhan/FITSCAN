@@ -1,0 +1,61 @@
+# FR-AI-5: post-generation guardrails. Every LLM output is checked; on violation it is regenerated
+# once with feedback, and if it still fails a safe template answer is used instead.
+# Patterns are case-insensitive Python regexes. `contexts` limits where a category applies.
+version: 1
+
+categories:
+  diagnosis:
+    message: "states or implies a diagnosis"
+    contexts: [analysis, chat, comparison]
+    patterns:
+      - "\\byou (?:likely |probably |may |might |could |must )?(?:have|are suffering from|suffer from|are developing|have developed)\\s+(?:an?\\s+)?(?:early\\s+|mild\\s+|possible\\s+)?(?:diabetes|pre-?diabetes|anemia|anaemia|hypo-?thyroidism|hyper-?thyroidism|thyroid (?:disease|disorder)|kidney (?:disease|failure|damage)|liver (?:disease|damage)|fatty liver|hepatitis|cirrhosis|an? infection|leuk(?:a)?emia|cancer|gout|heart disease|a deficiency|deficiency|high cholesterol|hypercholesterolemia|dyslipidemia)"
+      - "\\byou(?:'re| are) (?:diabetic|pre-?diabetic|anemic|anaemic|hypothyroid|hyperthyroid|deficient)\\b"
+      - "\\b(?:indicat(?:es|ing|ive of)|suggest(?:s|ing|ive of)|consistent with|confirms?|diagnostic of|points? to|sign(?:s)? of|evidence of)\\s+(?:that you have\\s+|you have\\s+)?(?:an?\\s+)?(?:possible\\s+)?(?:diabetes|pre-?diabetes|anemia|anaemia|hypo-?thyroidism|hyper-?thyroidism|thyroid (?:disease|disorder)|kidney (?:disease|failure|damage|dysfunction)|liver (?:disease|damage|dysfunction)|fatty liver|hepatitis|cirrhosis|infection|leuk(?:a)?emia|cancer|gout|heart disease|deficiency|iron deficiency|b12 deficiency|vitamin d deficiency)"
+      - "\\b(?:diagnosed with|diagnosis of)\\b"
+
+  treatment:
+    message: "gives treatment or medicine advice"
+    contexts: [analysis, chat, comparison]
+    patterns:
+      - "\\byou (?:should|need to|must|ought to) (?:take|start|stop|increase|decrease|reduce|switch|change|avoid taking|begin)\\b"
+      - "\\b(?:start|stop|increase|decrease|double|halve|skip|change) (?:taking |your )?(?:medications?|medicines?|dose|dosage|tablets?|pills?|insulin|metformin|statins?|thyroxine|levothyroxine)\\b"
+      - "\\b(?:take|try|start) (?:a |an |some )?(?:supplements?|vitamin\\s?\\w*|iron|calcium|b12|tablets?|capsules?|medicines?|medications?)\\b"
+      - "\\b(?:i |we )?(?:recommend|suggest|advise) (?:that you )?(?:take|taking|start|starting|stop|stopping)\\b"
+      - "\\bprescri(?:be|ption for)\\b"
+
+  dosage:
+    message: "mentions a dose"
+    contexts: [analysis, chat, comparison]
+    patterns:
+      - "\\b\\d+(?:\\.\\d+)?\\s?(?:mg|mcg|µg|iu|units?)\\b(?!\\s*/)(?:\\s*(?:daily|per day|a day|once|twice|weekly))?"
+
+  additional_tests:
+    message: "recommends additional tests"
+    contexts: [analysis, chat, comparison]
+    patterns:
+      - "\\byou (?:should|need to|must|may want to|might want to) (?:get|have|do|book|schedule|undergo) (?:a |an |another |additional |further |more )?(?:[\\w-]+ ){0,3}(?:tests?|scans?|screenings?|biops(?:y|ies)|x-?rays?|ultrasounds?)\\b"
+      - "\\bconsider (?:getting|having|doing|booking) (?:a |an |another |additional |further )?(?:[\\w-]+ ){0,3}(?:tests?|scans?|screenings?)\\b"
+      - "\\b(?:further|additional|more) (?:tests?|testing|investigations?) (?:is|are|would be|will be) (?:needed|required|recommended|advised)\\b"
+
+  urgency:
+    message: "uses urgency language (only validated escalation rules may do that)"
+    contexts: [analysis, chat, comparison]
+    patterns:
+      - "\\b(?:medical )?emergency\\b"
+      - "\\bgo to (?:the )?(?:er|a&e|hospital|emergency)\\b"
+      - "\\b(?:seek|get) (?:immediate|urgent|emergency) (?:medical )?(?:help|care|attention)\\b"
+      - "\\b(?:life[- ]threatening|critically|dangerously|alarming(?:ly)?)\\b"
+
+  judgement:
+    message: "uses improved/worsened judgement language"
+    contexts: [comparison, analysis]
+    patterns:
+      - "\\b(?:improv(?:ed|es|ing|ement)|worsen(?:ed|s|ing)?|deteriorat\\w*|got (?:better|worse)|(?:is|are|was|were) (?:better|worse))\\b"
+
+# Optional second line of defence: an LLM judge asked yes/no questions about the text.
+llm_judge:
+  enabled: false
+  questions:
+    - "Does the text say or imply that the reader has a specific disease or medical condition?"
+    - "Does the text advise starting, stopping or changing a medicine, supplement or dose?"
+    - "Does the text recommend getting additional medical tests or scans?"

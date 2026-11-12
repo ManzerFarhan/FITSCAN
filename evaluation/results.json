@@ -1,0 +1,213 @@
+{
+  "ocr": {
+    "engine": "rapidocr",
+    "lines": 52,
+    "cer": 0.048490407155641645,
+    "wer": 0.39809218559218557,
+    "cer_median": 0.04083333333333333
+  },
+  "digital": {
+    "parameters": 30,
+    "recall": 1.0,
+    "exact_match": 1.0,
+    "range_accuracy": 1.0,
+    "unit_accuracy": 1.0,
+    "extra_rows": 0,
+    "seconds_per_report": 0.018094301223754883
+  },
+  "scanned": {
+    "parameters": 30,
+    "recall": 0.9333333333333333,
+    "exact_match": 0.9333333333333333,
+    "range_accuracy": 0.9333333333333333,
+    "unit_accuracy": 0.9642857142857143,
+    "extra_rows": 0,
+    "seconds_per_report": 4.07259460290273
+  },
+  "panels_digital": {
+    "reports": 30,
+    "seconds_per_report": 0.020880961418151857,
+    "panels": {
+      "cbc": {
+        "rows": 39,
+        "recall": 1.0,
+        "exact_match": 1.0,
+        "range_accuracy": 1.0,
+        "extra_rows": 0
+      },
+      "lipid": {
+        "rows": 12,
+        "recall": 1.0,
+        "exact_match": 1.0,
+        "range_accuracy": 1.0,
+        "extra_rows": 0
+      },
+      "diabetes": {
+        "rows": 9,
+        "recall": 1.0,
+        "exact_match": 1.0,
+        "range_accuracy": 1.0,
+        "extra_rows": 0
+      },
+      "kft": {
+        "rows": 15,
+        "recall": 1.0,
+        "exact_match": 1.0,
+        "range_accuracy": 1.0,
+        "extra_rows": 0
+      },
+      "lft": {
+        "rows": 24,
+        "recall": 1.0,
+        "exact_match": 1.0,
+        "range_accuracy": 1.0,
+        "extra_rows": 0
+      },
+      "thyroid": {
+        "rows": 12,
+        "recall": 1.0,
+        "exact_match": 1.0,
+        "range_accuracy": 1.0,
+        "extra_rows": 0
+      },
+      "vitamins": {
+        "rows": 6,
+        "recall": 1.0,
+        "exact_match": 1.0,
+        "range_accuracy": 1.0,
+        "extra_rows": 0
+      },
+      "iron": {
+        "rows": 12,
+        "recall": 1.0,
+        "exact_match": 1.0,
+        "range_accuracy": 1.0,
+        "extra_rows": 0
+      },
+      "electrolytes": {
+        "rows": 12,
+        "recall": 1.0,
+        "exact_match": 1.0,
+        "range_accuracy": 1.0,
+        "extra_rows": 0
+      },
+      "inflammation": {
+        "rows": 6,
+        "recall": 1.0,
+        "exact_match": 1.0,
+        "range_accuracy": 1.0,
+        "extra_rows": 0
+      },
+      "ALL": {
+        "rows": 147,
+        "recall": 1.0,
+        "exact_match": 1.0,
+        "range_accuracy": 1.0,
+        "extra_rows": 0
+      }
+    }
+  },
+  "panels_scanned": {
+    "reports": 30,
+    "seconds_per_report": 7.259274856249491,
+    "panels": {
+      "cbc": {
+        "rows": 39,
+        "recall": 1.0,
+        "exact_match": 0.9743589743589743,
+        "range_accuracy": 0.9743589743589743,
+        "extra_rows": 0
+      },
+      "lipid": {
+        "rows": 12,
+        "recall": 1.0,
+        "exact_match": 1.0,
+        "range_accuracy": 1.0,
+        "extra_rows": 0
+      },
+      "diabetes": {
+        "rows": 9,
+        "recall": 1.0,
+        "exact_match": 1.0,
+        "range_accuracy": 1.0,
+        "extra_rows": 0
+      },
+      "kft": {
+        "rows": 15,
+        "recall": 1.0,
+        "exact_match": 1.0,
+        "range_accuracy": 1.0,
+        "extra_rows": 0
+      },
+      "lft": {
+        "rows": 24,
+        "recall": 1.0,
+        "exact_match": 1.0,
+        "range_accuracy": 1.0,
+        "extra_rows": 0
+      },
+      "thyroid": {
+        "rows": 12,
+        "recall": 1.0,
+        "exact_match": 1.0,
+        "range_accuracy": 1.0,
+        "extra_rows": 0
+      },
+      "vitamins": {
+        "rows": 6,
+        "recall": 1.0,
+        "exact_match": 1.0,
+        "range_accuracy": 1.0,
+        "extra_rows": 0
+      },
+      "iron": {
+        "rows": 12,
+        "recall": 1.0,
+        "exact_match": 1.0,
+        "range_accuracy": 1.0,
+        "extra_rows": 0
+      },
+      "electrolytes": {
+        "rows": 12,
+        "recall": 1.0,
+        "exact_match": 1.0,
+        "range_accuracy": 1.0,
+        "extra_rows": 0
+      },
+      "inflammation": {
+        "rows": 6,
+        "recall": 1.0,
+        "exact_match": 1.0,
+        "range_accuracy": 1.0,
+        "extra_rows": 0
+      },
+      "ALL": {
+        "rows": 147,
+        "recall": 1.0,
+        "exact_match": 0.9931972789115646,
+        "range_accuracy": 0.9931972789115646,
+        "extra_rows": 0
+      }
+    }
+  },
+  "units": {
+    "aliases": 125,
+    "rate": 0.992,
+    "rate_uppercase": 0.992
+  },
+  "rag": {
+    "questions": 22,
+    "embedder": "tfidf",
+    "precision_at_k": 0.2272727272727273,
+    "recall_at_k": 1.0,
+    "mrr": 0.9318181818181818,
+    "hit_rate": 1.0,
+    "k": 5
+  },
+  "guardrails": {
+    "unsafe": 18,
+    "blocked": 18,
+    "safe": 6,
+    "safe_passed": 6
+  }
+}

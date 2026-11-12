@@ -1,0 +1,158 @@
+# FITSCAN knowledge base seed (FR-AI-7, P3-01).
+# Short plain-language summaries PARAPHRASED for this project from public health sources.
+# Each entry links to its source page; users are pointed there for authoritative detail.
+# MedlinePlus (NLM) and NIH ODS consumer pages are U.S. federal works; NHS content is under the
+# Open Government Licence v3.0 (attribution required). Do not paste copyrighted text here.
+# Add more documents as .md files with front matter in this folder and re-run scripts/build_kb.py.
+documents:
+  - title: Understanding your lab results
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/how-to-understand-your-lab-results/
+    parameters: []
+    text: |
+      Lab reports usually show your result next to a reference range, the span of values seen in most healthy people when that specific lab runs that specific test. Ranges differ between labs because equipment, methods and the population used to set them differ, so a result should be read against the range printed on your own report.
+      A result outside the reference range does not automatically mean something is wrong. Around one in twenty healthy people have a result just outside the range on any single test. Diet, hydration, exercise, medicines, the time of day, pregnancy and how the sample was handled can all shift results. Doctors interpret results together with your history, symptoms and other tests, and sometimes repeat a test before drawing conclusions.
+  - title: Blood tests - why they are done and what results mean
+    source: NHS
+    url: https://www.nhs.uk/conditions/blood-tests/
+    parameters: []
+    text: |
+      Blood tests are used to check general health, look at how organs such as the liver and kidneys are working, and monitor ongoing conditions or treatments. Some tests need fasting beforehand, which can change values such as glucose and triglycerides.
+      Your doctor or the service that ordered the test is the right person to explain what your results mean for you, because they know why the test was requested and can compare it with earlier results.
+  - title: Complete blood count (CBC)
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/complete-blood-count-cbc/
+    parameters: [hemoglobin, rbc_count, hematocrit, mcv, mch, mchc, rdw_cv, wbc_count, platelet_count, neutrophils_pct, lymphocytes_pct, monocytes_pct, eosinophils_pct, basophils_pct, mpv]
+    text: |
+      A complete blood count measures the main parts of the blood: red blood cells, which carry oxygen; white blood cells, which help fight infection; and platelets, which help blood clot. It also reports hemoglobin, the oxygen-carrying protein, and hematocrit, the share of blood volume made up of red cells.
+      Red cell indices such as MCV (average red cell size), MCH and MCHC (hemoglobin per cell) describe what the red cells look like. A differential breaks white cells into types such as neutrophils, lymphocytes, monocytes, eosinophils and basophils. A CBC is often part of a routine check-up and results are read together rather than one value at a time.
+  - title: Hemoglobin test
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/hemoglobin-test/
+    parameters: [hemoglobin, hematocrit, rbc_count]
+    text: |
+      Hemoglobin is the protein in red blood cells that carries oxygen from the lungs to the rest of the body. The test measures how much hemoglobin is in the blood and is commonly done as part of a complete blood count.
+      Hemoglobin levels can be lower or higher than the lab's range for many reasons, including iron or vitamin levels, blood loss, hydration, smoking, living at high altitude, pregnancy and some long-term conditions. Normal ranges are different for men, women and children, which is why the lab's own range matters.
+  - title: White blood count (WBC)
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/white-blood-count-wbc/
+    parameters: [wbc_count, neutrophils_pct, lymphocytes_pct, monocytes_pct, eosinophils_pct, basophils_pct]
+    text: |
+      White blood cells are part of the immune system. The white blood count measures how many are in a sample of blood, and a differential shows the share of each type.
+      Counts can rise temporarily with infection, inflammation, physical or emotional stress and some medicines, and can fall with certain infections, medicines or conditions affecting the bone marrow. Doctors look at the pattern across cell types and at other results before interpreting a change.
+  - title: Blood differential test (absolute counts)
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/blood-differential/
+    parameters: [neutrophils_abs, lymphocytes_abs, monocytes_abs, eosinophils_abs, basophils_abs, neutrophils_pct, lymphocytes_pct, monocytes_pct, eosinophils_pct, basophils_pct, wbc_count]
+    text: |
+      A blood differential looks at the five main types of white blood cells: neutrophils, lymphocytes, monocytes, eosinophils and basophils. Reports often show each type twice - as a percentage of all white cells, and as an absolute count, which is the number of that cell type in a volume of blood (the total white count multiplied by the percentage).
+      Absolute counts are often reported in units such as 10^9/L or 10^3/uL, which give the same number. Each type has its own role in the immune system, and counts can change with infections, allergies, stress, some medicines and other conditions. Doctors read the percentages and absolute counts together with the total white count and other results.
+  - title: Platelet tests
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/platelet-tests/
+    parameters: [platelet_count, mpv]
+    text: |
+      Platelets are small cell fragments that help blood form clots to stop bleeding. A platelet count measures how many are in the blood; mean platelet volume (MPV) describes their average size.
+      Platelet counts can be affected by infections, inflammation, medicines, pregnancy and bone-marrow or immune conditions. Labs report platelets in different units (for example per microlitre, thousands per microlitre or lakhs per cubic millimetre), so values should be compared only when the units match.
+  - title: Erythrocyte sedimentation rate (ESR)
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/sed-rate-erythrocyte-sedimentation-rate/
+    parameters: [esr]
+    text: |
+      The sed rate measures how quickly red blood cells settle to the bottom of a tube over one hour. It is a non-specific marker: a faster rate can go with inflammation somewhere in the body, but it does not show where or why. Age, sex, pregnancy and anemia can also change ESR, so it is usually interpreted together with other tests.
+  - title: Liver function tests
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/liver-function-tests/
+    parameters: [ast_sgot, alt_sgpt, alp, ggt, albumin, total_protein, globulin, ag_ratio, bilirubin_total, bilirubin_direct, bilirubin_indirect]
+    text: |
+      Liver function tests measure enzymes and proteins that reflect how the liver is working. ALT (SGPT) and AST (SGOT) are enzymes found mainly in liver cells; ALP and GGT relate to the liver and bile ducts (ALP also comes from bone); albumin and total protein are made by the liver; bilirubin is a breakdown product of red blood cells that the liver processes.
+      Mildly different values are common and can be influenced by recent exercise, alcohol, some medicines and supplements, and body weight. Doctors look at the pattern of the panel and repeat tests over time rather than relying on one value.
+  - title: Bilirubin blood test
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/bilirubin-blood-test/
+    parameters: [bilirubin_total, bilirubin_direct, bilirubin_indirect]
+    text: |
+      Bilirubin is a yellowish substance made when red blood cells break down. The liver changes it into a form (direct or conjugated bilirubin) that can leave the body in bile. Reports may show total, direct and indirect bilirubin. Fasting, some medicines and common inherited differences in how bilirubin is processed can raise levels slightly.
+  - title: Creatinine test
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/creatinine-test/
+    parameters: [creatinine, egfr]
+    text: |
+      Creatinine is a waste product made by muscles and filtered out of the blood by the kidneys. Blood creatinine is used, often together with age and sex, to estimate the glomerular filtration rate (eGFR), a measure of kidney filtering.
+      Muscle mass, intense exercise, a high-protein meal, dehydration and some medicines can affect creatinine. Ranges commonly differ for men and women.
+  - title: Blood urea nitrogen (BUN) and urea
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/bun-blood-urea-nitrogen/
+    parameters: [urea, bun]
+    text: |
+      Urea is a waste product formed when the body breaks down protein; BUN is the nitrogen part of urea. Labs may report either urea or BUN, which use different numbers for the same substance, so they should not be compared directly. Hydration, protein intake and some medicines influence results, and doctors usually read them with creatinine.
+  - title: Uric acid test
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/uric-acid-test/
+    parameters: [uric_acid]
+    text: |
+      Uric acid is produced when the body breaks down purines, substances found in body cells and in foods such as red meat, some seafood and beer. Most uric acid is removed by the kidneys. Diet, alcohol, body weight, kidney function and some medicines affect levels.
+  - title: Electrolyte panel
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/electrolyte-panel/
+    parameters: [sodium, potassium, chloride, calcium]
+    text: |
+      Electrolytes such as sodium, potassium and chloride are minerals that carry an electric charge and help control fluid balance, nerve signals and muscle function. Levels can shift with fluid loss (for example vomiting or diarrhoea), hydration, kidney function and many medicines.
+      Potassium results can be falsely raised if blood cells break open in the sample after it is drawn, which is one reason a surprising value is sometimes simply repeated.
+  - title: Cholesterol levels
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/cholesterol-levels/
+    parameters: [cholesterol_total, hdl, ldl, vldl, non_hdl, tc_hdl_ratio, ldl_hdl_ratio]
+    text: |
+      A lipid profile measures fats in the blood. Total cholesterol is the overall amount; LDL cholesterol is often called the "bad" cholesterol because high levels can build up in artery walls; HDL is called "good" cholesterol because it helps carry cholesterol away; VLDL carries mostly triglycerides. Many labs calculate LDL and VLDL from the other values.
+      Many reports print tiered targets (such as desirable, borderline and high) instead of a single range. What counts as a suitable target depends on a person's overall heart-health picture, which is assessed by a doctor.
+  - title: Triglycerides test
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/triglycerides-test/
+    parameters: [triglycerides]
+    text: |
+      Triglycerides are a type of fat the body uses for energy. Levels rise after eating, so the test is often done after fasting; a recent meal, alcohol and some medicines can raise the result.
+  - title: TSH (thyroid stimulating hormone) test
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/tsh-thyroid-stimulating-hormone-test/
+    parameters: [tsh, t3_total, t4_total, ft3, ft4]
+    text: |
+      TSH is made by the pituitary gland in the brain and tells the thyroid gland how much thyroid hormone (T4 and T3) to make. TSH and thyroid hormones normally move in opposite directions, so doctors read TSH together with T4 (and sometimes T3).
+      Results can be influenced by illness, pregnancy, the time of day and some medicines and supplements such as biotin. Thyroid results are often repeated before decisions are made.
+  - title: Blood glucose test
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/blood-glucose-test/
+    parameters: [glucose_fasting, glucose_pp, glucose_random, eag]
+    text: |
+      A blood glucose test measures the amount of sugar in the blood at the time of the sample. Fasting glucose is taken after not eating for at least eight hours; post-prandial glucose is measured a set time after a meal; random glucose is taken at any time. Food, stress, illness, physical activity and medicines all change glucose levels, so the type of sample matters when reading the result.
+  - title: Hemoglobin A1c (HbA1c) test
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/hemoglobin-a1c-hba1c-test/
+    parameters: [hba1c, eag]
+    text: |
+      HbA1c measures the percentage of hemoglobin that has glucose attached to it. Because red blood cells live about three months, HbA1c reflects average blood sugar over roughly the past two to three months rather than a single moment. Some reports also show an estimated average glucose (eAG) calculated from HbA1c.
+      Conditions that affect red blood cells, such as some anemias or hemoglobin variants, can make HbA1c less reliable, which is something a doctor considers when interpreting it.
+  - title: Vitamin B12 - consumer fact sheet
+    source: NIH Office of Dietary Supplements
+    url: https://ods.od.nih.gov/factsheets/VitaminB12-Consumer/
+    parameters: [vitamin_b12]
+    text: |
+      Vitamin B12 helps keep nerve and blood cells healthy and helps make DNA. It is found naturally in animal foods such as fish, meat, eggs and dairy, and in fortified foods. People who eat little or no animal food, older adults and people taking some long-term medicines may absorb or get less B12. Blood B12 is one of several tests doctors can use when looking at B12 status.
+  - title: Vitamin D - consumer fact sheet
+    source: NIH Office of Dietary Supplements
+    url: https://ods.od.nih.gov/factsheets/VitaminD-Consumer/
+    parameters: [vitamin_d, calcium]
+    text: |
+      Vitamin D helps the body absorb calcium and is important for bone health. The body makes it when skin is exposed to sunlight, and it is also found in a few foods and supplements. The usual blood test measures 25-hydroxyvitamin D, which reflects vitamin D from all sources. Labs report it in ng/mL or nmol/L (1 ng/mL is about 2.5 nmol/L), and the cut-offs used to describe low or adequate levels vary between organisations.
+  - title: Ferritin and iron tests
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/ferritin-blood-test/
+    parameters: [ferritin, iron]
+    text: |
+      Ferritin is a protein that stores iron inside cells, and blood ferritin gives an idea of the body's iron stores. Serum iron measures iron circulating in the blood. Ferritin can also rise with inflammation or infection, so it is usually interpreted together with other iron tests and a complete blood count.
+  - title: C-reactive protein (CRP) test
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/c-reactive-protein-crp-test/
+    parameters: [crp]
+    text: |
+      CRP is a protein made by the liver that increases in the blood when there is inflammation in the body. Like ESR, it is a general marker and does not show where the inflammation is or what is causing it. A high-sensitivity CRP test measures lower levels and is used in a different context.

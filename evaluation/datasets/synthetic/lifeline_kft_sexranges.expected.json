@@ -1,0 +1,62 @@
+{
+  "meta": {
+    "lab_name": "LIFELINE HOSPITAL LABORATORY",
+    "report_date": "2024-05-05",
+    "report_number": "LL-5512",
+    "report_category": "KFT"
+  },
+  "parameters": [
+    {
+      "parameter_id": "urea",
+      "value": 32,
+      "ref_low": 15,
+      "ref_high": 40,
+      "status": "WITHIN",
+      "unit": "mg/dL",
+      "flag": null
+    },
+    {
+      "parameter_id": "creatinine",
+      "value": 1.4,
+      "ref_low": 0.7,
+      "ref_high": 1.3,
+      "status": "ABOVE",
+      "unit": "mg/dL",
+      "flag": null
+    },
+    {
+      "parameter_id": "uric_acid",
+      "value": 6.2,
+      "ref_low": 3.4,
+      "ref_high": 7.0,
+      "status": "WITHIN",
+      "unit": "mg/dL",
+      "flag": null
+    },
+    {
+      "parameter_id": "sodium",
+      "value": 139,
+      "ref_low": 135,
+      "ref_high": 145,
+      "status": "WITHIN",
+      "unit": "mmol/L",
+      "flag": null
+    },
+    {
+      "parameter_id": "potassium",
+      "value": 4.6,
+      "ref_low": 3.5,
+      "ref_high": 5.1,
+      "status": "WITHIN",
+      "unit": "mEq/L",
+      "flag": null
+    }
+  ],
+  "lines": [
+    "Blood Urea 32 mg/dL 15 - 40",
+    "Serum Creatinine 1.4 mg/dL M: 0.7-1.3 F: 0.6-1.1",
+    "Uric Acid 6.2 mg/dL M: 3.4-7.0 F: 2.4-5.7",
+    "Sodium (Na+) 139 mmol/L 135 - 145",
+    "Potassium (K+) 4.6 mEq/L 3.5 - 5.1"
+  ]
+}

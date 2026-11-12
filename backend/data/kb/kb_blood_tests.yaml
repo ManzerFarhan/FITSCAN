@@ -1,0 +1,413 @@
+# FITSCAN knowledge base - blood test reports (extension of kb_seed.yaml).
+# Plain-language summaries PARAPHRASED for this project from public consumer health pages. Every URL was
+# checked to open (MedlinePlus, Nov 2026; NIH ODS fact sheets use the same address format as kb_seed.yaml).
+# MedlinePlus and NIH ODS consumer pages are U.S. federal works. Do not paste copyrighted text here.
+# Entries with source "FITSCAN glossary" are written by the FITSCAN team to explain how lab reports are laid
+# out; they link to MedlinePlus's general guide for further reading.
+# After editing, re-run: python scripts/build_kb.py
+documents:
+  # ------------------------------------------------------------------ how to read a report (glossary)
+  - title: Reading a lab report - columns and common words
+    source: FITSCAN glossary
+    url: https://medlineplus.gov/lab-tests/how-to-understand-your-lab-results/
+    parameters: []
+    text: |
+      Most blood reports are a table with four columns: the test name, your result, the unit, and the reference range. Labs label the range column in different ways, such as "Reference Range", "Bio Ref Interval", "Biological Reference Interval", "Normal Values" or "Expected Values". All of these mean the span of results the lab sees in most healthy people.
+      Some rows say "Calculated" under the name. That means the number was worked out from other results on the report (for example LDL cholesterol, VLDL, globulin, ratios or absolute counts) rather than measured directly. The words under a test name, such as "Flowcytometry", "Electrical impedance" or "Photometry", describe the lab method.
+  - title: Flags such as H, L, High, Low and critical
+    source: FITSCAN glossary
+    url: https://medlineplus.gov/lab-tests/how-to-understand-your-lab-results/
+    parameters: []
+    text: |
+      Labs often mark a result outside their reference range with a flag: H or High for above the range, L or Low for below it, and sometimes bold print, an asterisk or a colour. Some labs use "critical" or "panic" for results far outside the range, which they may phone through to the doctor.
+      A flag only tells you where the number sits compared with that lab's range. Many flagged results are slightly outside the range and have everyday explanations, so the result should be discussed with the doctor who ordered the test.
+  - title: Units on blood reports
+    source: FITSCAN glossary
+    url: https://medlineplus.gov/lab-tests/how-to-understand-your-lab-results/
+    parameters: []
+    text: |
+      The same test can be reported in different units. Cell counts may appear as 10^9/L, 10^3/uL, thou/cumm or cells/cumm; 10^9/L and 10^3/uL give the same number, while cells/cumm is 1,000 times larger. Red cell counts may appear as 10^12/L, 10^6/uL or million/cumm, which all give the same number. Platelets in India are often written in lakhs/cumm, where 1 lakh is 100,000.
+      Chemistry tests may use mg/dL, mmol/L or umol/L, and hormones may use ng/mL, pg/mL, uIU/mL or IU/mL. Because units differ, a result should always be read against the range printed in the same unit on the same report.
+  - title: Fasting, timing and other things that affect results
+    source: FITSCAN glossary
+    url: https://medlineplus.gov/lab-tests/how-to-understand-your-lab-results/
+    parameters: [glucose_fasting, triglycerides, cortisol, insulin_fasting]
+    text: |
+      Some tests, such as fasting glucose, fasting insulin and triglycerides, are affected by recent meals, which is why labs ask people to fast first. Others, such as cortisol and some hormones, change through the day, so labs note the collection time.
+      Results can also be affected by hydration, recent exercise, illness, pregnancy, medicines and supplements, and by how the sample was handled - for example a "haemolysed" sample, where red cells broke open in the tube, can change values such as potassium and LDH. Labs sometimes add a note when they think the sample may have affected the result.
+  # ------------------------------------------------------------------ CBC extras
+  - title: Red blood cell (RBC) count
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/red-blood-cell-rbc-count/
+    parameters: [rbc_count, hematocrit, hemoglobin, mcv, mch, mchc, rdw_cv, rdw_sd]
+    text: |
+      A red blood cell count measures how many red cells, which carry oxygen around the body, are in a sample of blood. It is usually part of a complete blood count, together with hemoglobin, hematocrit and the red cell indices.
+      The indices describe the cells: MCV is their average size, MCH and MCHC describe how much hemoglobin they carry, and RDW shows how much their size varies. Results can be affected by hydration, altitude, pregnancy, recent blood loss and nutrition, among other things.
+  - title: Hematocrit test
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/hematocrit-test/
+    parameters: [hematocrit]
+    text: |
+      Hematocrit, also called packed cell volume (PCV), measures what share of your blood volume is made up of red blood cells. It is reported as a percentage and is usually read together with hemoglobin and the red cell count.
+      Dehydration can make the hematocrit look higher, and things such as pregnancy or recent blood loss can make it lower. Ranges differ for men, women and children.
+  - title: Reticulocyte count
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/reticulocyte-count/
+    parameters: [retic_pct]
+    text: |
+      Reticulocytes are young red blood cells that the bone marrow has recently released into the blood. They mature into regular red cells within a day or two. The reticulocyte count shows how actively the bone marrow is making new red cells.
+      It is often ordered alongside a complete blood count and read together with hemoglobin and the red cell count. It can change after blood loss, with some nutrient levels, at high altitude and during pregnancy.
+  - title: Blood smear (peripheral smear)
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/blood-smear/
+    parameters: [nrbc, bands_pct, ig_pct, ig_abs]
+    text: |
+      A blood smear is a thin layer of blood on a glass slide that is looked at under a microscope, or by an automated analyser. It shows the size, shape and number of red cells, white cells and platelets, and can pick up cells that are not usually seen in the blood, such as nucleated red blood cells or immature white cells.
+      Reports may describe these findings in words, for example "normocytic normochromic" for red cells of normal size and colour, or list counts such as band forms or immature granulocytes. The doctor reads these comments together with the full blood count.
+  # ------------------------------------------------------------------ coagulation
+  - title: Prothrombin time (PT) and INR
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/prothrombin-time-test-and-inr-ptinr/
+    parameters: [pt, pt_control, inr]
+    text: |
+      The prothrombin time measures how long it takes a sample of blood plasma to form a clot. The INR (international normalized ratio) is calculated from the PT so that results from different labs and reagents can be compared. Reports often also print a "control" time from a normal sample for comparison.
+      PT and INR are commonly checked before some procedures and in people taking certain blood-thinning medicines, where the doctor decides the target. Liver health and vitamin K levels also affect the result.
+  - title: Partial thromboplastin time (PTT / aPTT)
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/partial-thromboplastin-time-ptt-test/
+    parameters: [aptt, aptt_control]
+    text: |
+      The PTT or aPTT measures how long it takes plasma to clot through a different set of clotting factors than the PT. It is often done together with the PT/INR, and the report may print a control time for comparison.
+      The test is used to check how blood clots, for example before surgery, and to monitor some blood-thinning medicines. Results are read against the lab's own range and the person's medicines.
+  - title: D-dimer test
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/d-dimer-test/
+    parameters: [d_dimer]
+    text: |
+      D-dimer is a protein fragment made when a blood clot dissolves in the body. The test measures how much is in the blood. Labs report it in different units, such as ug/mL FEU, mg/L FEU or ng/mL, so the range on the same report should be used.
+      D-dimer can be raised for many reasons, including recent surgery, injury, pregnancy, infection and older age, so the result is always interpreted by a doctor together with other information.
+  # ------------------------------------------------------------------ liver / pancreas
+  - title: ALT (alanine aminotransferase / SGPT)
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/alt-blood-test/
+    parameters: [alt_sgpt, ast_alt_ratio]
+    text: |
+      ALT, also printed as SGPT, is an enzyme found mostly in the liver. The test measures how much ALT is in the blood and is part of liver function tests.
+      ALT can rise for short periods after intense exercise and with some medicines, supplements and alcohol, as well as with conditions affecting the liver. Doctors read it together with AST, ALP, GGT, bilirubin and albumin.
+  - title: AST (aspartate aminotransferase / SGOT)
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/ast-test/
+    parameters: [ast_sgot, ast_alt_ratio]
+    text: |
+      AST, also printed as SGOT, is an enzyme found mainly in the liver but also in muscles, including the heart. The test measures how much AST is in the blood.
+      Because AST is in muscle as well as liver, heavy exercise or muscle injury can raise it. Some reports print an AST/ALT (SGOT/SGPT) ratio, which doctors may look at together with the other liver tests.
+  - title: Alkaline phosphatase (ALP)
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/alkaline-phosphatase/
+    parameters: [alp, ggt_alp_ratio]
+    text: |
+      Alkaline phosphatase is an enzyme found mainly in the liver and bones. The test measures the total amount in the blood and is part of liver function tests and comprehensive metabolic panels.
+      ALP is naturally higher in children and teenagers whose bones are growing, and during pregnancy. Doctors look at it together with GGT and other tests to understand where a change comes from.
+  - title: Gamma-glutamyl transferase (GGT)
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/gamma-glutamyl-transferase-ggt-test/
+    parameters: [ggt, ggt_alp_ratio]
+    text: |
+      GGT is an enzyme found mostly in the liver and bile ducts. The test measures how much is in the blood and is often read together with ALP.
+      GGT can be affected by alcohol and by some medicines, so it is interpreted together with the person's history and other liver tests.
+  - title: Albumin and total protein
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/albumin-blood-test/
+    parameters: [albumin, total_protein, globulin, ag_ratio]
+    text: |
+      Albumin is the main protein made by the liver. It helps keep fluid inside blood vessels and carries hormones, vitamins and medicines around the body. Reports often show total protein, albumin, globulin (total protein minus albumin) and the albumin/globulin (A/G) ratio together.
+      Albumin can be affected by nutrition, hydration, liver and kidney health and long-term illness. These values are read together rather than one at a time.
+  - title: Lactate dehydrogenase (LDH)
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/lactate-dehydrogenase-ldh-test/
+    parameters: [ldh]
+    text: |
+      LDH is an enzyme found in almost all body tissues, including blood cells, muscle, liver, heart and lungs. When cells are damaged, LDH is released into the blood, so the test is a general marker rather than a test of one organ.
+      A sample in which red cells broke open in the tube (a haemolysed sample) can raise LDH falsely. Doctors read LDH together with other tests.
+  - title: Ammonia levels
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/ammonia-levels/
+    parameters: [ammonia]
+    text: |
+      Ammonia is a waste product made when the body breaks down protein. The liver normally turns it into urea, which leaves the body in urine. The test measures how much ammonia is in the blood.
+      Ammonia samples need careful handling, because a delay or a tight tourniquet can change the result.
+  - title: Amylase test
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/amylase-test/
+    parameters: [amylase]
+    text: |
+      Amylase is an enzyme that helps digest starches. Most of it comes from the pancreas and the salivary glands. The test measures how much is in the blood (or sometimes urine).
+      Amylase is often checked together with lipase when doctors want to look at the pancreas. Some medicines can also affect the level.
+  - title: Lipase test
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/lipase-tests/
+    parameters: [lipase]
+    text: |
+      Lipase is an enzyme made mainly by the pancreas that helps the body digest fats. The test measures how much lipase is in the blood.
+      Lipase is often ordered with amylase, and doctors interpret it together with symptoms and other tests.
+  # ------------------------------------------------------------------ kidney / electrolytes / minerals
+  - title: eGFR (estimated glomerular filtration rate)
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/estimated-glomerular-filtration-rate-egfr-and-gfr-tests/
+    parameters: [egfr, creatinine, cystatin_c]
+    text: |
+      The glomerular filtration rate describes how much blood the kidneys filter each minute. It is usually estimated (eGFR) from the blood creatinine level using a formula that also takes age and sex into account; some labs also use cystatin C.
+      Because eGFR is calculated, it can be affected by muscle mass, diet and hydration. It is reported in mL/min/1.73m2 and is read by the doctor together with other kidney tests, often over time.
+  - title: Calcium blood test
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/calcium-blood-test/
+    parameters: [calcium, ionized_calcium, pth]
+    text: |
+      Calcium is a mineral needed for strong bones and teeth and for nerves, muscles and the heart to work. A total calcium test measures all the calcium in the blood; an ionized calcium test measures only the "free" part not attached to proteins.
+      Because much of the calcium in blood is carried by albumin, the albumin level affects total calcium. Calcium is controlled by parathyroid hormone and vitamin D, which are sometimes tested alongside it.
+  - title: Phosphate in blood
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/phosphate-in-blood/
+    parameters: [phosphorus]
+    text: |
+      Phosphate is a form of the mineral phosphorus. It works with calcium to build bones and teeth and is also used for energy and nerve and muscle function. The test measures how much phosphate is in the blood.
+      Phosphate is usually read together with calcium, vitamin D and parathyroid hormone. Recent meals and some medicines can affect it.
+  - title: Magnesium blood test
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/magnesium-blood-test/
+    parameters: [magnesium]
+    text: |
+      Magnesium is a mineral the body needs for muscles, nerves, the heart and turning food into energy. The test measures how much magnesium is in the blood.
+      Magnesium can be affected by diet, some medicines, alcohol, and stomach or kidney problems, and it is often checked together with calcium and potassium.
+  - title: Sodium blood test
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/sodium-blood-test/
+    parameters: [sodium]
+    text: |
+      Sodium is an electrolyte that helps control the amount of water in and around cells and is needed for nerves and muscles. The test measures sodium in the blood, usually as part of an electrolyte or metabolic panel.
+      Sodium levels are affected by how much fluid a person drinks or loses, and by some medicines.
+  - title: Potassium blood test
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/potassium-blood-test/
+    parameters: [potassium]
+    text: |
+      Potassium is an electrolyte needed for nerves and muscles, including the heart muscle. The test measures potassium in the blood, usually as part of an electrolyte or metabolic panel.
+      A sample in which red cells broke open, or a delay before testing, can raise potassium falsely, and some medicines also affect it. Labs may repeat the test when the sample is in doubt.
+  - title: Chloride blood test
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/chloride-blood-test/
+    parameters: [chloride]
+    text: |
+      Chloride is an electrolyte that works with sodium, potassium and bicarbonate to keep the body's fluids and acid-base balance steady. The test is usually part of an electrolyte panel.
+      Chloride usually moves in the same direction as sodium and is read together with the other electrolytes.
+  - title: Carbon dioxide (bicarbonate) in blood
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/carbon-dioxide-co2-in-blood/
+    parameters: [bicarbonate]
+    text: |
+      Most of the carbon dioxide in blood is in the form of bicarbonate (HCO3). Bicarbonate helps keep the blood from becoming too acidic or too basic. Reports may label it bicarbonate, total CO2 or HCO3.
+      It is part of electrolyte and metabolic panels and is read together with sodium, potassium and chloride.
+  - title: Basic and comprehensive metabolic panels (BMP / CMP)
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/comprehensive-metabolic-panel-cmp/
+    parameters: [glucose_fasting, glucose_random, calcium, sodium, potassium, chloride, bicarbonate, bun, urea, creatinine, albumin, total_protein, alp, alt_sgpt, ast_sgot, bilirubin_total]
+    text: |
+      A basic metabolic panel (BMP) groups several tests: glucose, calcium, the electrolytes sodium, potassium, chloride and bicarbonate, and the kidney tests BUN and creatinine. A comprehensive metabolic panel (CMP) adds liver-related tests: albumin, total protein, ALP, ALT, AST and bilirubin.
+      These panels give a general picture of the body's chemical balance and are commonly part of routine check-ups. The results are read together.
+  # ------------------------------------------------------------------ lipids
+  - title: Cholesterol levels and lipid ratios
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/cholesterol-levels/
+    parameters: [cholesterol_total, hdl, ldl, vldl, non_hdl, tc_hdl_ratio, ldl_hdl_ratio, hdl_ldl_ratio, triglycerides]
+    text: |
+      A lipid profile reports total cholesterol, HDL, LDL and triglycerides. Many labs also print calculated values: VLDL (often estimated from triglycerides), non-HDL cholesterol (total minus HDL), and ratios such as total cholesterol/HDL or LDL/HDL.
+      LDL is often measured indirectly by calculation, and calculated values can be less accurate when triglycerides are very high. Recent meals affect triglycerides most, which is why some labs ask for fasting.
+  # ------------------------------------------------------------------ thyroid
+  - title: Thyroxine (T4) test
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/thyroxine-t4-test/
+    parameters: [t4_total, ft4]
+    text: |
+      T4 (thyroxine) is the main hormone made by the thyroid gland. Most T4 in blood is attached to proteins; a small part is "free" and active. Reports may show total T4, free T4 (FT4), or both.
+      T4 is usually read together with TSH. Pregnancy, some medicines and illness can affect the result, particularly total T4.
+  - title: Triiodothyronine (T3) tests
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/triiodothyronine-t3-tests/
+    parameters: [t3_total, ft3]
+    text: |
+      T3 (triiodothyronine) is the more active thyroid hormone; much of it is made from T4 in body tissues. Reports may show total T3, free T3 (FT3), or both.
+      T3 is read together with TSH and T4, and can be affected by illness, pregnancy and some medicines.
+  - title: Thyroid antibody tests
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/thyroid-antibody-tests/
+    parameters: [anti_tpo, anti_tg]
+    text: |
+      Thyroid antibody tests look for antibodies the immune system may make against parts of the thyroid gland, such as thyroid peroxidase (anti-TPO) and thyroglobulin (anti-Tg).
+      These tests are usually ordered together with TSH and thyroid hormone tests. Some people have thyroid antibodies without any thyroid symptoms, so results are interpreted by a doctor.
+  # ------------------------------------------------------------------ sugar / metabolic
+  - title: Insulin in blood
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/insulin-in-blood-test/
+    parameters: [insulin_fasting, insulin_pp, homa_ir]
+    text: |
+      Insulin is a hormone made by the pancreas that helps move glucose from the blood into cells for energy. An insulin test measures how much insulin is in the blood, often after fasting and sometimes after a meal or glucose drink.
+      Insulin is read together with glucose. Some reports also print HOMA-IR, a number calculated from fasting glucose and fasting insulin.
+  - title: C-peptide test
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/c-peptide-test/
+    parameters: [c_peptide]
+    text: |
+      C-peptide is made in the pancreas at the same time as insulin, in equal amounts. Measuring it shows how much insulin the body itself is making, even in people who take insulin.
+      C-peptide is usually read together with glucose and, sometimes, insulin.
+  # ------------------------------------------------------------------ iron / vitamins
+  - title: Iron tests (serum iron, TIBC, UIBC, transferrin saturation)
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/iron-tests/
+    parameters: [iron, tibc, uibc, transferrin, transferrin_sat, ferritin]
+    text: |
+      Iron tests measure different parts of how iron is carried and stored. Serum iron is the iron in the blood; transferrin is the main protein that carries it; TIBC (total iron-binding capacity) shows how much iron the blood's proteins could carry; UIBC is the spare capacity; transferrin saturation is the share of that capacity in use; ferritin reflects stored iron.
+      Iron changes during the day and after meals or supplements, so these tests are read together rather than one at a time.
+  - title: Folate (vitamin B9)
+    source: NIH Office of Dietary Supplements
+    url: https://ods.od.nih.gov/factsheets/Folate-Consumer/
+    parameters: [folate]
+    text: |
+      Folate (vitamin B9) is a B vitamin the body needs to make DNA and healthy red blood cells. It is found in leafy greens, beans and other foods; the form added to fortified foods and supplements is called folic acid.
+      Blood folate reflects recent intake. It is often tested together with vitamin B12 because both are needed to make red blood cells.
+  - title: Zinc
+    source: NIH Office of Dietary Supplements
+    url: https://ods.od.nih.gov/factsheets/Zinc-Consumer/
+    parameters: [zinc]
+    text: |
+      Zinc is a mineral that helps the immune system work, helps wounds heal and is needed for taste and smell. It is found in foods such as meat, seafood, beans, nuts and whole grains.
+      Blood zinc can be affected by recent meals, the time of day and inflammation, so the doctor reads it in context.
+  - title: Copper
+    source: NIH Office of Dietary Supplements
+    url: https://ods.od.nih.gov/factsheets/Copper-Consumer/
+    parameters: [copper]
+    text: |
+      Copper is a mineral the body uses to make energy, connective tissue and blood vessels, and to help use iron. It is found in foods such as shellfish, nuts, seeds and whole grains.
+      Blood copper can change with inflammation, pregnancy and some medicines.
+  - title: Thiamin (vitamin B1)
+    source: NIH Office of Dietary Supplements
+    url: https://ods.od.nih.gov/factsheets/Thiamin-Consumer/
+    parameters: [vitamin_b1]
+    text: |
+      Thiamin (vitamin B1) helps the body turn food into energy and is important for nerves and the heart. It is found in whole grains, fortified foods, meat, fish, beans and seeds.
+  - title: Vitamin B6
+    source: NIH Office of Dietary Supplements
+    url: https://ods.od.nih.gov/factsheets/VitaminB6-Consumer/
+    parameters: [vitamin_b6]
+    text: |
+      Vitamin B6 helps the body use protein, make red blood cells and support brain development and the immune system. It is found in many foods, including poultry, fish, potatoes, chickpeas and bananas.
+  # ------------------------------------------------------------------ heart markers
+  - title: Troponin test
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/troponin-test/
+    parameters: [troponin_i, troponin_t]
+    text: |
+      Troponins are proteins found in heart muscle. When heart muscle is damaged, troponin is released into the blood. The test measures troponin I or troponin T; high-sensitivity tests can measure very small amounts and are often reported in ng/L.
+      Troponin is usually measured more than once a few hours apart, and is always interpreted by a doctor together with symptoms and an ECG.
+  - title: Creatine kinase (CK / CPK) and CK-MB
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/creatine-kinase/
+    parameters: [ck_total, ck_mb]
+    text: |
+      Creatine kinase is an enzyme found mainly in skeletal muscle, the heart and the brain. The test measures total CK; CK-MB is the form found mostly in heart muscle.
+      Strenuous exercise, injections into muscle and muscle injury can raise CK for a time, so recent activity is taken into account.
+  - title: BNP and NT-proBNP tests
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/natriuretic-peptide-tests-bnp-nt-probnp/
+    parameters: [nt_probnp]
+    text: |
+      BNP and NT-proBNP are substances released by the heart when it has to work harder. The tests measure how much is in the blood.
+      Levels naturally rise with age and can be affected by kidney function, so the doctor interprets them with other information.
+  - title: Homocysteine test
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/homocysteine-test/
+    parameters: [homocysteine]
+    text: |
+      Homocysteine is an amino acid made when the body breaks down protein. Vitamins B12, B6 and folate help break it down further, so the level is linked with these vitamins.
+      Homocysteine is usually read together with B12 and folate, and can also be affected by kidney function and some medicines.
+  # ------------------------------------------------------------------ inflammation & immunity
+  - title: Procalcitonin test
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/procalcitonin-test/
+    parameters: [procalcitonin]
+    text: |
+      Procalcitonin is a protein made by many cells in the body. Its level in blood can rise with some bacterial infections, which is why doctors may use it alongside other information when someone is unwell.
+      It is interpreted by the doctor together with symptoms and other tests.
+  - title: Rheumatoid factor (RF) test
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/rheumatoid-factor-rf-test/
+    parameters: [ra_factor]
+    text: |
+      Rheumatoid factors are antibodies the immune system can make against the body's own proteins. The RF test measures how much is in the blood.
+      RF can be found in some healthy people, especially older adults, and with several conditions, so it is read together with symptoms and other tests.
+  # ------------------------------------------------------------------ hormones / other
+  - title: Testosterone levels
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/testosterone-levels-test/
+    parameters: [testosterone]
+    text: |
+      Testosterone is a sex hormone found in everyone, at higher levels in men than in women. The test usually measures total testosterone, which is highest in the morning, so labs often ask for an early sample.
+  - title: Prolactin levels
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/prolactin-levels/
+    parameters: [prolactin]
+    text: |
+      Prolactin is a hormone made by the pituitary gland; it helps with breast milk production. The level can be affected by sleep, stress, exercise, pregnancy and some medicines, so labs may ask for a morning sample taken at rest.
+  - title: Cortisol test
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/cortisol-test/
+    parameters: [cortisol]
+    text: |
+      Cortisol is a hormone made by the adrenal glands that helps the body respond to stress and controls blood sugar and blood pressure. Levels are usually highest in the morning and lowest at night, so the collection time matters when reading the result.
+  - title: FSH and LH tests
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/follicle-stimulating-hormone-fsh-levels-test/
+    parameters: [fsh, lh]
+    text: |
+      FSH (follicle-stimulating hormone) and LH (luteinizing hormone) are made by the pituitary gland and control the ovaries and testes. In women, levels change across the menstrual cycle and after menopause, so labs often print different ranges for different phases.
+  - title: Estrogen and progesterone tests
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/estrogen-levels-test/
+    parameters: [estradiol, progesterone]
+    text: |
+      Estradiol (E2) is the main form of estrogen, and progesterone is another hormone involved in the menstrual cycle and pregnancy. Both change across the cycle, so reports often show several ranges, and the day of the cycle matters when reading results.
+  - title: Anti-Mullerian hormone (AMH) test
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/anti-mullerian-hormone-test/
+    parameters: [amh]
+    text: |
+      Anti-Mullerian hormone is made in the ovaries and testes. In women, the level is related to the number of eggs remaining in the ovaries and naturally falls with age.
+  - title: DHEA sulfate test
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/dhea-sulfate-test/
+    parameters: [dhea_s]
+    text: |
+      DHEA sulfate (DHEA-S) is a hormone made mainly by the adrenal glands; the body uses it to make other hormones such as testosterone and estrogen. Levels change with age.
+  - title: Parathyroid hormone (PTH) test
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/parathyroid-hormone-pth-test/
+    parameters: [pth, calcium]
+    text: |
+      Parathyroid hormone is made by four small glands in the neck and helps control calcium and phosphate in the blood. PTH is usually read together with calcium and sometimes vitamin D.
+  - title: Growth hormone tests
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/growth-hormone-tests/
+    parameters: [growth_hormone]
+    text: |
+      Growth hormone is made by the pituitary gland and helps control growth and metabolism. It is released in bursts, so a single random level is hard to interpret, and doctors often use special stimulation or suppression tests.
+  - title: hCG (pregnancy) blood test
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/pregnancy-test/
+    parameters: [beta_hcg]
+    text: |
+      hCG (human chorionic gonadotropin) is a hormone made during pregnancy. Blood tests can measure the amount (quantitative beta hCG), which normally rises quickly in early pregnancy.
+  - title: PSA (prostate-specific antigen) test
+    source: MedlinePlus
+    url: https://medlineplus.gov/lab-tests/prostate-specific-antigen-psa-test/
+    parameters: [psa_total, psa_free]
+    text: |
+      PSA is a protein made by the prostate gland. The test measures total PSA, and sometimes free PSA (the part not attached to other proteins). PSA can rise with age, an enlarged prostate, infection, and recently after ejaculation or vigorous cycling, so the doctor interprets it in context.

@@ -1,0 +1,51 @@
+{
+  "meta": {
+    "lab_name": "Medline Labs & Imaging",
+    "report_date": "2024-04-22",
+    "report_number": "ML/77/2024"
+  },
+  "parameters": [
+    {
+      "parameter_id": "tsh",
+      "value": 6.8,
+      "ref_low": 0.4,
+      "ref_high": 4.0,
+      "status": "ABOVE",
+      "unit": "\u00b5IU/mL",
+      "flag": "H"
+    },
+    {
+      "parameter_id": "ft4",
+      "value": 1.1,
+      "ref_low": 0.9,
+      "ref_high": 1.7,
+      "status": "WITHIN",
+      "unit": "ng/dL",
+      "flag": null
+    },
+    {
+      "parameter_id": "glucose_fasting",
+      "value": 112,
+      "ref_low": 70,
+      "ref_high": 100,
+      "status": "ABOVE",
+      "unit": "mg/dL",
+      "flag": "H"
+    },
+    {
+      "parameter_id": "hba1c",
+      "value": 6.1,
+      "ref_low": 4.0,
+      "ref_high": 5.6,
+      "status": "ABOVE",
+      "unit": "%",
+      "flag": null
+    }
+  ],
+  "lines": [
+    "TSH - Ultrasensitive 6.8 H 0.4 - 4.0 \u00b5IU/mL",
+    "Free T4 1.1 0.9 - 1.7 ng/dL",
+    "Fasting Blood Sugar 112 H 70 - 100 mg/dL",
+    "Glycosylated Haemoglobin (HbA1c) 6.1 4.0 - 5.6 %"
+  ]
+}

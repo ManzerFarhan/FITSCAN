@@ -1,0 +1,10 @@
+{
+  "_comment": "Synthetic demo centres - fictional names. Mirrors POST /centres/search.",
+  "location": { "city": "Pune", "locality": null, "postal_code": null, "source": "MANUAL", "note": null },
+  "origin": { "lat": 18.5204, "lng": 73.8567, "label": "Pune" },
+  "radius_km": 10, "tests": ["Complete Blood Count (CBC)"], "provider": "demo",
+  "disclaimer": "Listings come from public map data and do not guarantee that a test is offered, its price or availability. Please call the centre to confirm before visiting.",
+  "results": [
+    { "centre": { "provider_id": "demo-1", "name": "Sample Diagnostics Lab (demo)", "address": "Demo Road, Pune", "locality": "Shivajinagar", "city": "Pune", "lat": 18.531, "lng": 73.847, "phone": "000-000-0000", "website": null, "maps_url": null, "booking_url": null, "rating": 4.4, "rating_count": 120, "hours": ["Mon-Sat: 7 AM - 8 PM"], "business_status": "OPERATIONAL", "categories": ["medical_lab"], "price": null }, "distance_km": 1.6, "score": 0.78, "score_breakdown": { "availability": 0.75, "proximity": 0.84, "completeness": 0.8, "ratings": 0.77, "convenience": 0.7 }, "verified": false, "verification_note": "Demo listing", "test_availability": "Likely offers lab tests - not confirmed" }
+  ]
+}

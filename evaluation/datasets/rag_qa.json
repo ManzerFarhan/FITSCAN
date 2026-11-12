@@ -1,0 +1,27 @@
+{
+  "_comment": "RAG retrieval QA set (BRD §10). relevant = KB document titles that answer the question.",
+  "questions": [
+    {"q": "What does hemoglobin carry in the blood?", "pid": "hemoglobin", "relevant": ["Hemoglobin test", "Complete blood count (CBC)"]},
+    {"q": "What are platelets for?", "pid": "platelet_count", "relevant": ["Platelet tests", "Complete blood count (CBC)"]},
+    {"q": "Why might my white blood cell count be different?", "pid": "wbc_count", "relevant": ["White blood count (WBC)"]},
+    {"q": "What is ESR?", "pid": "esr", "relevant": ["Erythrocyte sedimentation rate (ESR)"]},
+    {"q": "What do ALT and AST measure?", "pid": "alt_sgpt", "relevant": ["Liver function tests"]},
+    {"q": "What is bilirubin?", "pid": "bilirubin_total", "relevant": ["Bilirubin blood test", "Liver function tests"]},
+    {"q": "What does creatinine tell about the kidneys?", "pid": "creatinine", "relevant": ["Creatinine test"]},
+    {"q": "Is urea the same as BUN?", "pid": "urea", "relevant": ["Blood urea nitrogen (BUN) and urea"]},
+    {"q": "What affects uric acid levels?", "pid": "uric_acid", "relevant": ["Uric acid test"]},
+    {"q": "Why can potassium be falsely high?", "pid": "potassium", "relevant": ["Electrolyte panel"]},
+    {"q": "What is the difference between HDL and LDL?", "pid": "ldl", "relevant": ["Cholesterol levels"]},
+    {"q": "Why do I need to fast for triglycerides?", "pid": "triglycerides", "relevant": ["Triglycerides test"]},
+    {"q": "What does TSH control?", "pid": "tsh", "relevant": ["TSH (thyroid stimulating hormone) test"]},
+    {"q": "What is fasting blood sugar?", "pid": "glucose_fasting", "relevant": ["Blood glucose test"]},
+    {"q": "What period does HbA1c reflect?", "pid": "hba1c", "relevant": ["Hemoglobin A1c (HbA1c) test"]},
+    {"q": "Where do we get vitamin B12 from?", "pid": "vitamin_b12", "relevant": ["Vitamin B12 - consumer fact sheet"]},
+    {"q": "What units is vitamin D reported in?", "pid": "vitamin_d", "relevant": ["Vitamin D - consumer fact sheet"]},
+    {"q": "What does ferritin show?", "pid": "ferritin", "relevant": ["Ferritin and iron tests"]},
+    {"q": "What is CRP?", "pid": "crp", "relevant": ["C-reactive protein (CRP) test"]},
+    {"q": "Why are reference ranges different between labs?", "pid": null, "relevant": ["Understanding your lab results"]},
+    {"q": "Does a result outside the range mean I am ill?", "pid": null, "relevant": ["Understanding your lab results"]},
+    {"q": "Who should explain my blood test results?", "pid": null, "relevant": ["Blood tests - why they are done and what results mean"]}
+  ]
+}

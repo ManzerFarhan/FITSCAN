@@ -1,0 +1,50 @@
+{
+  "meta": {
+    "lab_name": "GreenLeaf Diagnostic Centre",
+    "report_date": "2024-06-18"
+  },
+  "parameters": [
+    {
+      "parameter_id": "vitamin_b12",
+      "value": 180,
+      "ref_low": 211,
+      "ref_high": 911,
+      "status": "BELOW",
+      "unit": "pg/mL",
+      "flag": null
+    },
+    {
+      "parameter_id": "vitamin_d",
+      "value": 14.2,
+      "ref_low": 30,
+      "ref_high": 100,
+      "status": "BELOW",
+      "unit": "ng/mL",
+      "flag": null
+    },
+    {
+      "parameter_id": "calcium",
+      "value": 9.4,
+      "ref_low": 8.6,
+      "ref_high": 10.2,
+      "status": "WITHIN",
+      "unit": "mg/dL",
+      "flag": null
+    },
+    {
+      "parameter_id": "ferritin",
+      "value": 45,
+      "ref_low": 22,
+      "ref_high": 322,
+      "status": "WITHIN",
+      "unit": "ng/mL",
+      "flag": null
+    }
+  ],
+  "lines": [
+    "Vitamin B12 180 pg/mL 211 - 911",
+    "25-OH Vitamin D 14.2 ng/mL 30 - 100",
+    "Calcium 9.4 mg/dL 8.6 - 10.2",
+    "Serum Ferritin 45 ng/mL 22 - 322"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "user": { "full_name": null, "is_guest": true },
+  "cards": { "total_reports": 4, "tests_analyzed": 27, "out_of_range": 6, "to_review": 1 },
+  "latest_report": {
+    "id": "demo-doc-1", "doc_type": "LAB_REPORT", "original_filename": "lipid-profile-jun-2024.pdf", "mime": "application/pdf",
+    "size_bytes": 182344, "pages": 1, "status": "ANALYZED", "status_message": null,
+    "lab_name": "CityCare Diagnostics (demo)", "lab_address": null, "patient_name": "Demo User", "doctor_name": null,
+    "report_category": "LIPID", "report_date": "2024-06-10", "collected_date": "2024-06-09", "report_number": "DEMO-001",
+    "uploaded_at": "2024-06-11T09:30:00Z", "description": null, "parameter_count": 5, "out_of_range_count": 3,
+    "needs_verification_count": 0, "has_analysis": true,
+    "summary": "5 parameters extracted: 2 within the lab's range, 3 outside it, 0 need your check."
+  },
+  "important_findings": [
+    { "document_id": "demo-doc-1", "parameter_row_id": "p1", "parameter_id": "ldl", "name": "LDL Cholesterol", "value": "146", "unit": "mg/dL", "ref_raw": "< 100", "status": "ABOVE", "lab_flag": "H", "finding_class": "OUT_OF_RANGE", "verified": true, "report_date": "2024-06-10", "lab_name": "CityCare Diagnostics (demo)", "previous": { "value": 158, "date": "2024-01-10", "document_id": "demo-doc-0", "change": -12 } },
+    { "document_id": "demo-doc-1", "parameter_row_id": "p2", "parameter_id": "hdl", "name": "HDL Cholesterol", "value": "38", "unit": "mg/dL", "ref_raw": "> 40", "status": "BELOW", "lab_flag": "L", "finding_class": "OUT_OF_RANGE", "verified": true, "report_date": "2024-06-10", "lab_name": "CityCare Diagnostics (demo)", "previous": null },
+    { "document_id": "demo-doc-2", "parameter_row_id": "p3", "parameter_id": "tsh", "name": "TSH", "value": "6.8", "unit": "µIU/mL", "ref_raw": "0.4 - 4.0", "status": "ABOVE", "lab_flag": "H", "finding_class": "UNCERTAIN", "verified": false, "report_date": "2024-04-22", "lab_name": "Medline Labs (demo)", "previous": null }
+  ],
+  "health_score": {
+    "available": true, "out_of": 10, "score": 7.0, "band": "SOME_OUTSIDE", "counted": 5, "within": 2, "slightly_outside": 2,
+    "well_outside": 1, "urgent": 0, "excluded_unverified": 0, "report_date": "2024-06-10", "document_id": "demo-doc-1",
+    "lab_name": "CityCare Diagnostics (demo)", "previous": { "score": 6.4, "report_date": "2024-01-10", "document_id": "demo-doc-0" },
+    "method": "Each confirmed result with a range printed by your lab earns points: inside the range 1, slightly outside 0.6, well outside 0.3, flagged for prompt attention 0. The score is the average x 10."
+  },
+  "bmi": null
+}

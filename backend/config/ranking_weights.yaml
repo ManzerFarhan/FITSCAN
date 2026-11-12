@@ -1,0 +1,9 @@
+# FR-TEST-8 centre ranking weights (must sum to 1.0)
+weights:
+  availability: 0.40      # does the centre look able to do the test (category / listed services)
+  proximity: 0.25         # closer is better, relative to the search radius
+  completeness: 0.15      # phone, website, hours, address, rating present
+  ratings: 0.10           # rating, damped by number of reviews
+  convenience: 0.10       # open hours known / booking link / website
+default_radius_km: 10
+max_results: 15

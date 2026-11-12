@@ -1,0 +1,30 @@
+# FITSCAN reverse proxy. Caddy obtains and renews the HTTPS certificate automatically.
+# Set FITSCAN_DOMAIN (e.g. fitscan.example.org) and point its DNS A/AAAA record at this server.
+{$FITSCAN_DOMAIN} {
+	encode zstd gzip
+
+	# Upload limit: 15 MB files + form overhead (backend enforces the exact limit).
+	request_body {
+		max_size 20MB
+	}
+
+	handle /api/* {
+		reverse_proxy backend:8000
+	}
+
+	handle {
+		reverse_proxy frontend:3000
+	}
+
+	header {
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		-Server
+	}
+
+	log {
+		output stdout
+		format json
+	}
+}

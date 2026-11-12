@@ -1,0 +1,97 @@
+# FITSCAN
+
+FITSCAN helps people understand their printed **lab reports**. Upload a PDF or photo and it will:
+
+1. extract values, units and the lab's own reference ranges (OCR / native PDF text),
+2. ask you to check anything it is unsure about,
+3. explain the verified values in plain language with cited sources,
+4. list the tests your doctor recommended and find nearby diagnostic centres, and
+5. keep your history and compare reports over time.
+
+> **Informational only.** FITSCAN never diagnoses, prescribes, changes doses or recommends extra tests.
+> Requirements: [`docs/01_BRD_FITSCAN.md`](docs/01_BRD_FITSCAN.md) · progress: [`docs/04_TASK_SHEET.md`](docs/04_TASK_SHEET.md).
+
+## Quick start (no Docker needed)
+
+Prerequisites: **Python 3.11** and **Node 20+**.
+
+```powershell
+# Windows - one command (creates venv, installs, migrates, starts both servers)
+.\scripts\dev_up.ps1
+```
+
+Or step by step:
+
+```bash
+# Backend  ->  http://localhost:8000  (API docs at /docs)
+cd backend
+python -m venv .venv && .venv\Scripts\activate        # macOS/Linux: source .venv/bin/activate
+pip install -r requirements.txt
+copy ..\.env.example .env                              # cp on macOS/Linux
+alembic upgrade head
+python scripts/build_kb.py --tfidf                     # RAG index (also built automatically on first use)
+uvicorn app.main:app --reload --port 8000
+
+# Frontend ->  http://localhost:3000
+cd frontend
+npm install
+echo NEXT_PUBLIC_API_BASE_URL=http://localhost:8000/api/v1 > .env.local
+npm run dev
+```
+
+Defaults: SQLite (`backend/fitscan.db`) and local file storage (`backend/storage/`). For Postgres + MinIO:
+`docker compose up -d postgres minio`, then set `DATABASE_URL=postgresql+psycopg://fitscan:fitscan@localhost:5432/fitscan`
+and `STORAGE_BACKEND=s3` in `backend/.env`.
+
+Sample documents (synthetic, no real patients): `python backend/scripts/make_sample_documents.py` writes them to
+`evaluation/datasets/synthetic/`.
+
+## Configuration (`backend/.env`)
+
+| Variable | Default | Purpose |
+|---|---|---|
+| `DATABASE_URL` | SQLite file | Postgres in production |
+| `STORAGE_BACKEND` | `local` | `s3` for MinIO / S3 / R2 (signed, expiring URLs) |
+| `FRONTEND_ORIGIN` | `http://localhost:3000` | CORS allow-list (comma-separated) |
+| `MAX_UPLOAD_MB` / `MAX_PDF_PAGES` | 15 / 30 | Upload limits |
+| `CONFIDENCE_THRESHOLD` | 0.85 | Below this a field needs user verification |
+| `LLM_API_KEY` (or `ANTHROPIC_API_KEY`) | empty | Enables Claude explanations (`LLM_MODEL=claude-opus-5-5`). Empty = offline template explanations |
+| `GOOGLE_PLACES_API_KEY` | empty | Enables Google Places; otherwise OpenStreetMap (Overpass, Nominatim fallback) |
+| `JWT_SECRET` | dev value | **Must** be changed in production |
+
+Optional heavy ML (`pip install -r backend/requirements-ml.txt`): sentence-transformers + FAISS
+for dense retrieval. Without them FITSCAN uses RapidOCR (PP-OCR models on ONNX) and a TF-IDF retriever.
+
+## Tests
+
+```bash
+cd backend && pytest                       # 193 tests, ~84% coverage (NFR-10 target 70%)
+cd backend && pytest -m "not ocr"          # skip the slower OCR tests
+cd frontend && npm run typecheck && npm run build
+cd frontend && npx playwright install chromium && npm run e2e   # needs both servers running
+python evaluation/scripts/run_eval.py      # writes docs/evaluation_report.md
+```
+
+## Architecture
+
+```
+frontend (Next.js 15, TS, Tailwind, Recharts, Leaflet)
+    |  fetch, httpOnly cookies (guest token or JWT)
+backend (FastAPI)  api/ -> services/ -> pipelines/ | rag/ | integrations/ | db/
+    pipelines/  PDF/image load -> enhance (OpenCV) -> OCR (PaddleOCR | RapidOCR | Tesseract)
+                -> layout-agnostic table parser -> normalizer -> range parser -> status -> confidence
+    rag/        KB (MedlinePlus/NIH/NHS summaries) -> TF-IDF or MiniLM -> FAISS/numpy -> retriever
+                -> Claude (Anthropic SDK) or offline templates -> safety_validator
+    services/   documents, findings (URGENT only via escalation_rules.yaml), analysis, comparison, centres, PDF
+```
+
+Details: [`docs/architecture.md`](docs/architecture.md) · API: [`docs/api.md`](docs/api.md) · evaluation: [`docs/evaluation_report.md`](docs/evaluation_report.md).
+
+## Safety design (BR-01..BR-15)
+
+- Status always comes from the **lab's own range**. Unverified values are never analysed or compared.
+- `OUT_OF_RANGE`, `UNCERTAIN` and `URGENT` are separate. `URGENT` only comes from `backend/config/escalation_rules.yaml`
+  (placeholder thresholds that **must be clinically reviewed**).
+- Every AI output passes `safety_validator` (regex rules in `config/safety_rules.yaml`). It is regenerated once,
+  then a safe template is used. AI text is always labelled *AI-generated*.
+- Logs scrub numbers, emails and phone numbers. Guest data expires after 24 hours.

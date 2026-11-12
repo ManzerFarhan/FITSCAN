@@ -1,0 +1,61 @@
+{
+  "meta": {
+    "lab_name": "CityCare Diagnostics",
+    "report_date": "2024-01-10",
+    "report_category": "LIPID"
+  },
+  "parameters": [
+    {
+      "parameter_id": "cholesterol_total",
+      "value": 212,
+      "ref_low": null,
+      "ref_high": 200,
+      "status": "ABOVE",
+      "unit": "mg/dL",
+      "flag": null
+    },
+    {
+      "parameter_id": "triglycerides",
+      "value": 140,
+      "ref_low": null,
+      "ref_high": 150,
+      "status": "WITHIN",
+      "unit": "mg/dL",
+      "flag": null
+    },
+    {
+      "parameter_id": "hdl",
+      "value": 38,
+      "ref_low": 40,
+      "ref_high": null,
+      "status": "BELOW",
+      "unit": "mg/dL",
+      "flag": null
+    },
+    {
+      "parameter_id": "ldl",
+      "value": 146,
+      "ref_low": null,
+      "ref_high": 100,
+      "status": "ABOVE",
+      "unit": "mg/dL",
+      "flag": null
+    },
+    {
+      "parameter_id": "vldl",
+      "value": 28,
+      "ref_low": 5,
+      "ref_high": 40,
+      "status": "WITHIN",
+      "unit": "mg/dL",
+      "flag": null
+    }
+  ],
+  "lines": [
+    "Total Cholesterol 212 mg/dL Desirable: <200 Borderline: 200-239",
+    "Triglycerides 140 mg/dL < 150",
+    "HDL Cholesterol 38 mg/dL > 40",
+    "LDL Cholesterol 146 mg/dL < 100",
+    "VLDL Cholesterol 28 mg/dL 5 - 40"
+  ]
+}

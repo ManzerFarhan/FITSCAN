@@ -1,0 +1,22 @@
+# BR-05 / BRD §9: ONLY these rules can produce finding_class = URGENT. Never LLM opinion.
+#
+# REVIEW STATUS: PROTOTYPE PLACEHOLDER. Thresholds are taken from commonly published adult
+# laboratory critical-value lists. They MUST be reviewed and signed off by a qualified
+# clinician / lab director before any production use.
+#
+# Values are in `unit`; extracted values are unit-converted before comparison.
+# A rule fires when value < low  OR  value > high.
+version: 1
+reviewed_by: null
+rules:
+  hemoglobin:      { unit: "g/dL",    low: 7.0,  high: 20.0 }
+  platelet_count:  { unit: "10^3/µL", low: 20,   high: 1000 }
+  wbc_count:       { unit: "10^3/µL", low: 2.0,  high: 30.0 }
+  potassium:       { unit: "mmol/L",  low: 2.8,  high: 6.2 }
+  sodium:          { unit: "mmol/L",  low: 120,  high: 160 }
+  calcium:         { unit: "mg/dL",   low: 6.0,  high: 13.0 }
+  glucose_fasting: { unit: "mg/dL",   low: 50,   high: 400 }
+  glucose_random:  { unit: "mg/dL",   low: 50,   high: 400 }
+  glucose_pp:      { unit: "mg/dL",   low: 50,   high: 400 }
+  creatinine:      { unit: "mg/dL",   high: 7.0 }
+  bilirubin_total: { unit: "mg/dL",   high: 15.0 }
