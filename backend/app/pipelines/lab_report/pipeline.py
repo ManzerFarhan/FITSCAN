@@ -7,6 +7,7 @@ from collections import Counter
 from pydantic import BaseModel, Field
 
 from app.core.constants import DocumentStatus, ParameterStatus
+from app.core.logging import log_memory
 from app.pipelines.base import BBox, LoadedDocument, MetadataField, StageCallback
 from app.pipelines.lab_report.confidence import combine_confidence, needs_verification, sanity_issues
 from app.pipelines.lab_report.metadata_extractor import extract_metadata
@@ -152,7 +153,11 @@ class LabReportPipeline:
         ocr = get_printed_ocr()
 
         def read(page) -> None:
-            page.words = ocr.run(enhance(page.image), page.page_no)
+            log_memory(f"page {page.page_no} loaded")
+            image = enhance(page.image)
+            log_memory(f"page {page.page_no} enhanced")
+            page.words = ocr.run(image, page.page_no)
+            log_memory(f"page {page.page_no} OCR done")
 
         workers = min(len(ocr_pages), ocr.parallel_pages)
         if workers > 1:  # scanned multi-page reports: pages are read at the same time

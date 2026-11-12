@@ -32,5 +32,20 @@ def setup_logging(level: int = logging.INFO) -> None:
     root.propagate = False
 
 
+def log_memory(stage: str) -> None:
+    """LOG_MEMORY=1 (Linux): print current/peak resident memory. Printed, not logged, because the PHI filter
+    above masks every number; these figures contain no patient data."""
+    import os
+
+    if os.environ.get("LOG_MEMORY") != "1":
+        return
+    try:
+        with open("/proc/self/status") as f:
+            fields = dict(line.split(":", 1) for line in f if line.startswith(("VmRSS", "VmHWM")))
+        print(f"[memory] {stage}: rss={fields['VmRSS'].strip()} peak={fields['VmHWM'].strip()}", flush=True)
+    except (OSError, KeyError):
+        pass
+
+
 def get_logger(name: str) -> logging.Logger:
     return logging.getLogger(f"fitscan.{name}")
