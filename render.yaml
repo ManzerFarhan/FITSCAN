@@ -26,6 +26,8 @@ services:
         value: "1"
       - key: OCR_DET_MAX_SIDE
         value: "1024"          # text detection in page strips at <=1024 px; reading stays full-res
+      - key: OCR_REC_BATCH
+        value: "1"             # read one text line at a time (long lines made big padded batches)
       # Free instances get a slice of one CPU but see every host core: without these, OpenCV/BLAS start a thread
       # (and buffers) per host core and glibc keeps a memory arena per thread - enough to exceed 512 MB.
       - key: CV_THREADS
