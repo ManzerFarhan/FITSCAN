@@ -13,3 +13,15 @@ def test_fit_caps_longest_side(monkeypatch):
     assert small.shape[:2] == (1600, 1131)
     tiny = np.zeros((500, 400, 3), np.uint8)
     assert p._fit(tiny) is tiny  # never upscales
+
+
+def test_detection_side_cap(monkeypatch):
+    import pytest
+
+    pytest.importorskip("rapidocr_onnxruntime")
+    from app.pipelines.ocr import printed_ocr as p
+
+    monkeypatch.setattr(p, "DET_MAX_SIDE", 960)
+    det = p._new_rapidocr().text_det
+    op = det.get_preprocess(2339)  # an A4 page at 200 dpi
+    assert (op.limit_side_len, op.limit_type) == (960, "max")

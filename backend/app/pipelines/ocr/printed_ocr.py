@@ -36,6 +36,8 @@ ONNX_THREADS = int(os.environ.get("OCR_THREADS", "4"))
 POOL_SIZE = max(1, int(os.environ.get("OCR_POOL_SIZE", "3")))
 # Longest page side fed to OCR (0 = no limit). Detection memory grows with page area; 512 MB hosts: OCR_MAX_SIDE=1600.
 MAX_SIDE = int(os.environ.get("OCR_MAX_SIDE", "0"))
+# Longest side used for text *detection* only (0 = RapidOCR's own choice, up to 2000 px). 512 MB hosts: 960.
+DET_MAX_SIDE = int(os.environ.get("OCR_DET_MAX_SIDE", "0"))
 
 
 def _fit(image: np.ndarray) -> np.ndarray:
@@ -51,7 +53,16 @@ def _fit(image: np.ndarray) -> np.ndarray:
 def _new_rapidocr():
     from rapidocr_onnxruntime import RapidOCR  # type: ignore
 
-    return RapidOCR(intra_op_num_threads=ONNX_THREADS, inter_op_num_threads=1)
+    engine = RapidOCR(intra_op_num_threads=ONNX_THREADS, inter_op_num_threads=1)
+    if DET_MAX_SIDE:
+        # Text *detection* runs on a copy shrunk to DET_MAX_SIDE (PP-OCR's own default is 960); boxes are mapped back
+        # and *recognition* still reads crops of the full-resolution page. RapidOCR otherwise detects at up to 2000 px,
+        # whose activations alone exceed a 512 MB host.
+        from rapidocr_onnxruntime.ch_ppocr_det.utils import DetPreProcess  # type: ignore
+
+        det = engine.text_det
+        det.get_preprocess = lambda _max_wh: DetPreProcess(DET_MAX_SIDE, "max", det.mean, det.std)
+    return engine
 
 
 class PrintedOCR:
