@@ -39,7 +39,9 @@ def _warm_ocr() -> None:
 
         ocr = get_printed_ocr()
         if ocr.available:
-            ocr.run(np.full((64, 256, 3), 255, dtype=np.uint8), 1)
+            # Page-shaped: RapidOCR upscales the short side to 736 px, so a thin strip (e.g. 64x256 -> 736x2944)
+            # would cost more memory than a real page (~560 MB vs ~320 MB) and crash 512 MB hosts at startup.
+            ocr.run(np.full((736, 520, 3), 255, dtype=np.uint8), 1)
     except Exception:
         logging.getLogger("fitscan.ocr").exception("OCR warm-up failed")
 
