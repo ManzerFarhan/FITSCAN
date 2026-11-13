@@ -70,6 +70,9 @@ for dense retrieval. Without them FITSCAN uses RapidOCR (PP-OCR models on ONNX) 
 
 ## Hosting (free tier)
 
+Live site: **https://fitscan-report.vercel.app** (admin panel at `/admin`).
+
+
 - **Website:** Vercel, building `frontend/` from GitHub on every push to `main`.
   - Its settings are `BACKEND_URL` (the Render URL) and `NEXT_PUBLIC_API_BASE_URL=/api/v1`.
   - The site forwards `/api/v1/*` to the backend, so login cookies come from the site's own address and no CORS is needed.

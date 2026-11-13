@@ -82,7 +82,7 @@ function Architecture({ s }: { s: AdminSystem }) {
             Clients upload reports, check values, read explanations. Admins use this panel.
           </Node>
           <Arrow label="HTTPS" />
-          <Node icon={Globe} title="Website" host="Vercel · fitscan-smoky.vercel.app" state={<State on label="Live" />}>
+          <Node icon={Globe} title="Website" host="Vercel · fitscan-report.vercel.app" state={<State on label="Live" />}>
             Next.js 15 + React 19 pages. Forwards <code className="text-xs">/api/v1/*</code> to the API.
           </Node>
           <Arrow label="/api/v1" />

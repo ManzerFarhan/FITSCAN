@@ -17,7 +17,7 @@ services:
       - key: STORAGE_BACKEND
         value: db              # uploaded files live in Postgres (free plan has no persistent disk)
       - key: FRONTEND_ORIGIN
-        value: https://fitscan-smoky.vercel.app
+        value: https://fitscan-report.vercel.app,https://fitscan-smoky.vercel.app
       - key: WEB_CONCURRENCY
         value: "1"             # 512 MB RAM: one worker...
       - key: OCR_POOL_SIZE
