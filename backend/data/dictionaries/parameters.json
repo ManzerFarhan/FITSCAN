@@ -497,7 +497,13 @@
         "egfr",
         "estimated gfr",
         "estimated glomerular filtration rate",
-        "gfr"
+        "gfr",
+        "egfr by mdrd",
+        "egfr mdrd",
+        "mdrd egfr",
+        "egfr ckd epi",
+        "egfr by ckd epi",
+        "ckd epi egfr"
       ]
     },
     {
@@ -1575,7 +1581,9 @@
       "plausible_max": 10,
       "synonyms": [
         "hdl ldl ratio",
-        "hdl/ldl ratio"
+        "hdl/ldl ratio",
+        "hdl/ldl",
+        "hdl ldl"
       ],
       "about": "HDL cholesterol divided by LDL cholesterol, a calculated figure"
     },

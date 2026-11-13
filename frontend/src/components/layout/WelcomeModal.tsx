@@ -8,7 +8,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { CenterModal } from "./LoginToUnlock";
 
 const SEEN_KEY = "fitscan.welcomeSeen";
-const SKIP = ["/login", "/register", "/reset-password", "/privacy", "/terms", "/analysis", "/admin"];
+const SKIP = ["/login", "/register", "/reset-password", "/privacy", "/terms", "/analysis", "/admin", "/dashboard"];
 
 /** First visit (desktop or phone): a centred pop-up inviting people to upload their blood report. */
 export function WelcomeModal() {

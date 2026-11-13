@@ -48,3 +48,5 @@ services:
         sync: false            # chatbot
       - key: ADMIN_EMAILS
         sync: false            # comma-separated accounts that may open /admin
+      - key: RESEND_API_KEY
+        sync: false            # weekly summary email to the owner (resend.com)

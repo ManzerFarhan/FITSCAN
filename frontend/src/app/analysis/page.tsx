@@ -93,7 +93,8 @@ function AnalysisInner() {
           {doc && (
             <>
               {extraction && <VerificationTable extraction={extraction} onUpdated={setExtraction} focusParamId={focusParam} />}
-              <AnalysisPanel doc={extraction?.document ?? doc} focusParamId={focusParam} />
+              <AnalysisPanel doc={extraction?.document ?? doc} focusParamId={focusParam}
+                onAnalyzed={() => extraction && setExtraction({ ...extraction, document: { ...extraction.document, status: "ANALYZED", has_analysis: true } })} />
               {verified && (
                 <Card className="border-brand-100 bg-brand-50/50">
                   <CardContent className="flex flex-col gap-3 pt-5 sm:flex-row sm:items-center sm:justify-between">

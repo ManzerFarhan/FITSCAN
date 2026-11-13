@@ -16,6 +16,8 @@ type Edit = { name_raw?: string; parameter_id?: string; value_raw?: string; unit
 type TermState = TermExplanation | "loading" | { error: string };
 
 /** Rows that are almost certainly not a test: report text, or an unknown name with no usable value. */
+/** Set when the user confirms with "Looks right - explain my report"; AnalysisPanel starts the explanation. */
+export const AUTO_EXPLAIN_KEY = "fitscan.autoExplain";
 const FIELD_CAPTION = "mb-0.5 block text-[11px] font-medium uppercase tracking-wide text-slate-500";
 
 function isUnreadable(p: ParameterOut) {
@@ -65,6 +67,15 @@ export function VerificationTable({ extraction, onUpdated, focusParamId }: {
   const unrecognised = extraction.parameters.filter((p) =>
     !p.parameter_id && !edits[p.id]?.delete && !edits[p.id]?.parameter_id && !isUnreadable(p));
   const needsAuto = unchecked.length > 0 || unreadable.length > 0 || unrecognised.length > 0;
+  // Everything was read clearly (no row needs a check) and nothing was edited: offer a one-click confirm + explain.
+  const allClear = !locked && extraction.parameters.length > 0 && !needsAuto && flagged.length === 0 && !!meta.report_date
+    && Object.keys(edits).length === 0 && newRows.length === 0;
+  const lowestConfidence = Math.min(...extraction.parameters.map((p) => p.confidence));
+
+  const confirmAndExplain = async () => {
+    try { sessionStorage.setItem(AUTO_EXPLAIN_KEY, doc.id); } catch { /* storage unavailable */ }
+    await submit(true);
+  };
 
   const clearUnreadable = () => {
     const ids = unreadable.map((p) => p.id);
@@ -155,6 +166,18 @@ export function VerificationTable({ extraction, onUpdated, focusParamId }: {
           </CardDescription>
         </div>
       </CardHeader>
+      {allClear && (
+        <div className="mx-4 mb-2 flex flex-col gap-3 rounded-xl border border-green-200 bg-green-50 p-4 sm:mx-5 sm:flex-row sm:items-center sm:justify-between">
+          <div className="text-sm text-green-900">
+            <p className="font-semibold">Everything was read clearly</p>
+            <p className="mt-0.5">All {extraction.parameters.length} values were read with at least {Math.floor(lowestConfidence * 100)}% confidence.
+              Glance over them below - if they match your report, you&apos;re done.</p>
+          </div>
+          <Button onClick={confirmAndExplain} disabled={busy} size="lg" className="shrink-0">
+            {busy ? <Spinner /> : <Sparkles className="h-4 w-4" />}Looks right - explain my report
+          </Button>
+        </div>
+      )}
       <CardContent className="space-y-4">
         {extraction.warnings.includes("NO_PARAMETERS_FOUND") && (
           <Alert tone="warning" title="No values were found automatically">You can add them by hand using "Add a value" below.</Alert>

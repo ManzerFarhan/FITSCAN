@@ -59,6 +59,7 @@ Sample documents (synthetic, no real patients): `python backend/scripts/make_sam
 | `LLM_API_KEY` (or `ANTHROPIC_API_KEY`) | empty | Enables Claude explanations (`LLM_MODEL=claude-opus-5-5`). Empty = offline template explanations |
 | `GOOGLE_PLACES_API_KEY` | empty | Enables Google Places; otherwise OpenStreetMap (Overpass, Nominatim fallback) |
 | `JWT_SECRET` | dev value | **Must** be changed in production |
+| `RESEND_API_KEY` | empty | Weekly summary email to the owners (Mondays 09:00 IST; `WEEKLY_SUMMARY_WEEKDAY`, `EMAIL_FROM`) |
 | `ADMIN_EMAILS` | empty | Owner accounts of the admin panel at `/admin` (full access; they add/remove other admins in the panel) |
 
 Test dictionary: `backend/data/dictionaries/parameters.json` (core panels) plus `parameters_extended.json`

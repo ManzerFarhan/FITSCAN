@@ -292,6 +292,26 @@ export interface AdminActivity { at: string; action: string; label: string | nul
 export interface AdminClientDetail { user: AdminClient; documents: AdminDocument[]; activity: AdminActivity[] }
 export interface AdminAuditRow extends AdminActivity { entity_id: string | null; user_id: string | null; who: string }
 export interface Paged<T> { total: number; items: T[] }
+export interface DatasetTest {
+  id: string; name: string; category: string; category_label: string; source: "core" | "extended";
+  unit: string | null; plausible_min: number | null; plausible_max: number | null; synonyms: string[]; about: string | null;
+  kb_articles: number;
+  reference: { n: number | null; p2_5: number | null; p50: number | null; p97_5: number | null; unit: string | null; sources: string[] } | null;
+}
+export interface AdminDataset {
+  summary: { tests: number; names: number; categories: number; core: number; extended: number; with_reference: number;
+    reference_values: number; kb_articles: number; with_kb: number; units: number };
+  sources: { name: string; kind: string; file: string; what: string; used_for: string }[];
+  categories: { category: string; label: string; tests: number }[];
+  tests: DatasetTest[];
+  reference_sources: { source: string; tests: number; values: number }[];
+  knowledge: { title: string; source: string; url: string; tests: string[] }[];
+}
+export interface NameCheck { input: string; recognised: boolean; test_id: string | null; test_name: string | null; category: string | null; confidence: number; method: string }
+export interface WeeklySummaryPreview {
+  configured: boolean; recipients: string[]; weekday: number; last_sent: string | null; html: string;
+  summary: { period: string; new_clients: number; reports: number; failed: number; read_success_rate: number | null };
+}
 export interface AdminTeamMember extends Partial<AdminClient> { email: string; role: AdminRole; pending?: boolean }
 
 export interface SessionOut { authenticated: boolean; user: User | null; migrated_documents: number }

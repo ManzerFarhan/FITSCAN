@@ -108,3 +108,49 @@ def test_owner_manages_admin_team(app, owner_email):
         assert owner.delete(f"{API}/admin/admins/{me['id']}").status_code == 403       # owner can't be removed
         assert owner.delete(f"{API}/admin/admins/{s['user']['id']}").status_code == 204
         assert adm.get(f"{API}/admin/users").status_code == 403
+
+
+def test_dataset_view_and_name_check(app, owner_email):
+    with TestClient(app) as owner:
+        _register(owner, owner_email)
+        d = owner.get(f"{API}/admin/dataset").json()
+        assert d["summary"]["tests"] >= 450 and d["summary"]["with_reference"] >= 60 and d["summary"]["kb_articles"] >= 70
+        assert {"core", "extended"} == {t["source"] for t in d["tests"]}
+        hb = next(t for t in d["tests"] if t["id"] == "hemoglobin")
+        assert hb["reference"]["n"] > 0 and "hb" in hb["synonyms"]
+        assert any(c["category"] == "URINE" for c in d["categories"])
+        ok = owner.get(f"{API}/admin/dataset/check", params={"name": "S. Typhi 'O'"}).json()
+        assert ok["recognised"] and ok["test_id"] == "widal_o"
+        assert owner.get(f"{API}/admin/dataset/check", params={"name": "Zyxwv Factor"}).json()["recognised"] is False
+
+
+def test_weekly_summary_preview_send_and_schedule(app, owner_email, monkeypatch):
+    from datetime import UTC, datetime
+
+    from app.core.config import get_settings
+    from app.db.session import SessionLocal
+    from app.services import weekly_summary as ws
+
+    with TestClient(app) as owner:
+        _register(owner, owner_email)
+        p = owner.get(f"{API}/admin/weekly-summary").json()
+        assert p["configured"] is False and owner_email in [r.lower() for r in p["recipients"]]
+        assert "FITSCAN weekly summary" in p["html"] and p["summary"]["new_clients"] >= 1
+        assert owner.post(f"{API}/admin/weekly-summary/send").json()["error"]["code"] == "EMAIL_NOT_CONFIGURED"
+
+        sent: list[dict] = []
+
+        class _Resp:
+            status_code = 200
+
+        monkeypatch.setattr(get_settings(), "resend_api_key", "test-key")
+        monkeypatch.setattr(ws.httpx, "post", lambda url, **kw: sent.append(kw["json"]) or _Resp())
+        monday_10_ist = datetime(2030, 1, 7, 5, 0, tzinfo=UTC)  # Monday 10:30 IST
+        with SessionLocal() as db:
+            db.query(ws.AuditLog).filter(ws.AuditLog.action == ws.ACTION).delete()
+            db.commit()
+            assert ws.maybe_send(db, datetime(2030, 1, 8, 5, 0, tzinfo=UTC)) is False  # Tuesday: not the day
+            assert ws.maybe_send(db, monday_10_ist) is True
+            assert ws.maybe_send(db, monday_10_ist) is False  # once a week
+        assert sent and sent[0]["to"] and "weekly summary" in sent[0]["subject"]
+        assert "@" not in sent[0]["html"].split("Open the admin panel")[0]  # no client emails in the body

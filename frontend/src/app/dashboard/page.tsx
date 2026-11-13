@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { BmiCard } from "@/components/dashboard/BmiCard";
 import { DashboardCharts } from "@/components/dashboard/DashboardCharts";
+import { FirstReportPanel } from "@/components/dashboard/FirstReportPanel";
 import { HealthScoreCard } from "@/components/dashboard/HealthScoreCard";
 import { ImportantFindings } from "@/components/dashboard/ImportantFindings";
 import { LatestReportCard } from "@/components/dashboard/LatestReportCard";
@@ -24,6 +25,8 @@ export default function DashboardPage() {
   }, []);
 
   const name = data?.user.full_name?.split(" ")[0];
+  // No reports yet: one clear "upload your first report" panel instead of empty cards and charts.
+  const isNew = !!data && !demoMode && data.cards.total_reports === 0;
 
   return (
     <div className="space-y-6">
@@ -36,15 +39,20 @@ export default function DashboardPage() {
           The FITSCAN server could not be reached, so sample data is shown. Start the backend to see your own documents.
         </Alert>
       )}
-      {data?.user.is_guest && !demoMode && (
+      {data?.user.is_guest && !demoMode && !isNew && (
         <Alert tone="info">
           You're using FITSCAN as a guest - your documents are kept for 24 hours.{" "}
           <Link href="/register" className="font-medium underline">Create a free account</Link> to keep your history.
         </Alert>
       )}
-      <QuickActions />
+      {!isNew && <QuickActions />}
       {!data ? (
         <div className="grid gap-3 sm:grid-cols-4">{[0, 1, 2, 3].map((i) => <Skeleton key={i} className="h-28" />)}</div>
+      ) : isNew ? (
+        <>
+          <FirstReportPanel isGuest={data.user.is_guest} />
+          {!data.user.is_guest && <div className="grid gap-6 lg:grid-cols-2"><BmiCard /></div>}
+        </>
       ) : (
         <>
           <SummaryCards cards={data.cards} />

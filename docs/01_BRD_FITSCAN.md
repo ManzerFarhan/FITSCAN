@@ -177,6 +177,8 @@ Disclaimer text (constant `DISCLAIMER_TEXT`): *"FITSCAN provides general informa
 | FR-ADM-9 | Report actions: view everything that was read, open/download the original file, read again, Owner-only delete. | MUST |
 | FR-ADM-10 | Activity log of client and admin actions, searchable and filterable. | MUST |
 | FR-ADM-11 | Overview charts: sign-ups and uploads per day (30 days), reading success rate; client list CSV export (formula-safe). | SHOULD |
+| FR-ADM-13 | Weekly summary email to the Owner(s): totals and unrecognised test names only (no client names, emails or results); preview and "send now" in the panel. | SHOULD |
+| FR-ADM-14 | Dataset view: every recognised test with its printed names, unit, sanity range, population data and articles; coverage by area; sources; "is this test name covered?" check. | MUST |
 | FR-ADM-12 | System page: version, database, storage, OCR engine, dictionary size, which AI services are on (never secrets). | SHOULD |
 
 ## 5. API Specification (REST, FastAPI, prefix `/api/v1`)

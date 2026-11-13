@@ -28,6 +28,10 @@ class Settings(BaseSettings):
 
     # Admin panel (/admin): comma-separated emails of registered accounts that may open it. Empty = nobody.
     admin_emails: str = ""
+    # Weekly summary email to the owners (Resend HTTP API - https://resend.com). Empty key = not sent.
+    resend_api_key: str | None = None
+    email_from: str = "FITSCAN <onboarding@resend.dev>"  # Resend's test sender: delivers only to your Resend account email
+    weekly_summary_weekday: int = 0  # 0 = Monday (09:00 IST)
 
     jwt_secret: str = "dev-only-change-me"
     jwt_expire_minutes: int = 60 * 24

@@ -21,10 +21,17 @@ async def _retention_loop() -> None:
     from app.services.document_service import fail_interrupted
     from app.services.retention_service import cleanup
 
+    from app.services import weekly_summary
+
     def run_once():
         with SessionLocal() as db:
             cleanup(db)
             fail_interrupted(db)
+        try:
+            with SessionLocal() as db:
+                weekly_summary.maybe_send(db)
+        except Exception:  # an email problem must never stop retention
+            logging.getLogger("fitscan.weekly_summary").exception("Weekly summary email failed")
 
     while True:
         try:

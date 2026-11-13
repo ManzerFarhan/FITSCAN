@@ -167,3 +167,40 @@ def audit_log(q: str | None = Query(None, max_length=200), action: str | None = 
               limit: int = Query(50, ge=1, le=200), offset: int = Query(0, ge=0),
               _: User = Depends(admin_required), db: Session = Depends(get_db)) -> dict:
     return svc.audit_log(db, q, action, limit, offset)
+
+
+# ------------------------------------------------------------------ dataset (what FITSCAN knows)
+@router.get("/dataset")
+def dataset(_: User = Depends(admin_required)) -> dict:
+    from app.services import dataset_service
+
+    return dataset_service.dataset()
+
+
+@router.get("/dataset/check")
+def dataset_check(name: str = Query(..., min_length=1, max_length=200), _: User = Depends(admin_required)) -> dict:
+    from app.services import dataset_service
+
+    return dataset_service.check_name(name)
+
+
+# ------------------------------------------------------------------ weekly summary email
+@router.get("/weekly-summary")
+def weekly_summary_preview(_: User = Depends(admin_required), db: Session = Depends(get_db)) -> dict:
+    from app.core.config import get_settings
+    from app.services import weekly_summary as ws
+
+    s = get_settings()
+    summary = ws.build(db)
+    return {"configured": bool(s.resend_api_key), "recipients": ws.recipients(), "weekday": s.weekly_summary_weekday,
+            "last_sent": ws.last_sent(db), "summary": summary,
+            "html": ws.render_html(summary, s.frontend_origin.split(",")[0].strip().rstrip("/") + "/admin")}
+
+
+@router.post("/weekly-summary/send")
+def weekly_summary_send(admin: User = Depends(owner_required), db: Session = Depends(get_db)) -> dict:
+    from app.services import weekly_summary as ws
+
+    out = ws.send(db)
+    _log(db, admin, "ADMIN_SEND_SUMMARY", "email", None, "Sent the weekly summary email now")
+    return {"sent_to": out["sent_to"]}

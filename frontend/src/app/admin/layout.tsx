@@ -1,5 +1,5 @@
 "use client";
-import { Activity, FileText, LayoutDashboard, Server, ShieldCheck, Users, UserCog } from "lucide-react";
+import { Activity, Database, FileText, LayoutDashboard, Mail, Server, ShieldCheck, Users, UserCog } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { RoleBadge } from "@/components/admin/ui";
@@ -12,8 +12,10 @@ const NAV = [
   { href: "/admin", label: "Overview", Icon: LayoutDashboard, exact: true },
   { href: "/admin/clients", label: "Clients", Icon: Users },
   { href: "/admin/reports", label: "Reports", Icon: FileText },
+  { href: "/admin/dataset", label: "Dataset", Icon: Database },
   { href: "/admin/team", label: "Admin team", Icon: UserCog },
   { href: "/admin/activity", label: "Activity log", Icon: Activity },
+  { href: "/admin/weekly-email", label: "Weekly email", Icon: Mail },
   { href: "/admin/system", label: "System", Icon: Server },
 ];
 

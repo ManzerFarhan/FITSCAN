@@ -13,6 +13,7 @@ import { CATEGORY_LABELS } from "@/lib/constants";
 import type { AnalysisOut, DocumentOut } from "@/lib/types";
 import { cn, formatDate } from "@/lib/utils";
 import { DownloadSummaryButton } from "./DownloadSummaryButton";
+import { AUTO_EXPLAIN_KEY } from "./VerificationTable";
 import { ParameterRow } from "./ParameterRow";
 
 const TEASER_POINTS = [
@@ -67,6 +68,18 @@ export function AnalysisPanel({ doc, focusParamId, onAnalyzed }: { doc: Document
     if (!doc.has_analysis) return;
     api<AnalysisOut>(`/documents/${doc.id}/analysis`).then((a) => { setAnalysis(a); if (focusParamId) setOpen(true); }).catch(() => undefined);
   }, [doc.id, doc.has_analysis, focusParamId]);
+
+  // "Looks right - explain my report": the values were just confirmed, so start the explanation straight away.
+  useEffect(() => {
+    if (!ready || analysis || busy) return;
+    let auto: string | null = null;
+    try { auto = sessionStorage.getItem(AUTO_EXPLAIN_KEY); } catch { /* storage unavailable */ }
+    if (auto !== doc.id) return;
+    try { sessionStorage.removeItem(AUTO_EXPLAIN_KEY); } catch { /* ignore */ }
+    void run();
+    setTimeout(() => document.getElementById("ai-analysis")?.scrollIntoView({ behavior: "smooth", block: "start" }), 300);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ready, doc.id]);
 
   const run = async () => {
     setBusy(true); setError(null);
