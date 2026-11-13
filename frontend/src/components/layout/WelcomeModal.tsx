@@ -4,20 +4,23 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { buttonVariants } from "@/components/ui/button";
+import { useAuth } from "@/hooks/useAuth";
 import { CenterModal } from "./LoginToUnlock";
 
 const SEEN_KEY = "fitscan.welcomeSeen";
-const SKIP = ["/login", "/register", "/reset-password", "/privacy", "/terms", "/analysis"];
+const SKIP = ["/login", "/register", "/reset-password", "/privacy", "/terms", "/analysis", "/admin"];
 
 /** First visit (desktop or phone): a centred pop-up inviting people to upload their blood report. */
 export function WelcomeModal() {
   const pathname = usePathname() || "/";
+  const { user, loading } = useAuth();
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    if (SKIP.some((p) => pathname.startsWith(p))) return;
+    // Only for first-time visitors: never on staff/auth pages, and not for people who already have an account.
+    if (loading || user || SKIP.some((p) => pathname.startsWith(p))) { setOpen(false); return; }
     try { if (!localStorage.getItem(SEEN_KEY)) setOpen(true); } catch { /* storage unavailable */ }
-  }, [pathname]);
+  }, [pathname, user, loading]);
 
   const close = () => {
     setOpen(false);

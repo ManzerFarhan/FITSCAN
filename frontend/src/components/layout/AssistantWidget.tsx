@@ -169,5 +169,7 @@ function Bubble({ role, content, reply, onNavigate }: { role: Msg["role"]; conte
 }
 
 export function AssistantWidget() {
+  const pathname = usePathname() || "/";
+  if (pathname.startsWith("/admin")) return null;  // staff pages: the health assistant is for clients
   return <Suspense fallback={null}><Widget /></Suspense>;
 }

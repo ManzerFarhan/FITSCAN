@@ -76,8 +76,8 @@ def _resolve_user(request: Request, db: Session) -> User | None:
     if not decoded:
         return None
     user = db.get(User, decoded[0])
-    if user is None or fingerprint(user.password_hash) != decoded[1]:
-        return None  # password changed since the token was issued
+    if user is None or fingerprint(user.password_hash) != decoded[1] or user.disabled_at is not None:
+        return None  # password changed since the token was issued, or the account was suspended
     return user
 
 
@@ -143,11 +143,20 @@ def login_required(feature: str):
 
 
 def admin_required(owner: Owner = Depends(get_owner)) -> User:
-    """Admin panel: a signed-in account listed in ADMIN_EMAILS. Everyone else gets 401/403."""
+    """Admin panel: OWNER (ADMIN_EMAILS) or an account made ADMIN in the panel. Everyone else gets 401/403."""
     from app.core.errors import AppError
 
     if owner.user is None:
         raise AppError("AUTH_REQUIRED", "Please log in to continue.", 401)
-    if not get_settings().is_admin_email(owner.user.email):
+    if get_settings().role_for(owner.user.email, owner.user.role) == "USER":
         raise AppError("FORBIDDEN", "This page is for FITSCAN administrators only.", 403)
     return owner.user
+
+
+def owner_required(user: User = Depends(admin_required)) -> User:
+    """Destructive admin actions (delete clients/reports, reset passwords, manage admins): OWNER only."""
+    from app.core.errors import AppError
+
+    if get_settings().role_for(user.email, user.role) != "OWNER":
+        raise AppError("FORBIDDEN", "Only the account owner can do this.", 403)
+    return user

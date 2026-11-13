@@ -24,6 +24,9 @@ class User(Base):  # DB-01
     height_cm: Mapped[float | None] = mapped_column(Float)  # optional, for BMI
     weight_kg: Mapped[float | None] = mapped_column(Float)  # optional, for BMI
     created_at: Mapped[datetime] = created_at_col()
+    role: Mapped[str] = mapped_column(String(16), default="USER", server_default="USER")  # UserRole
+    disabled_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))  # suspended by an admin
+    last_login_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
 
 class GuestSession(Base):  # DB-02

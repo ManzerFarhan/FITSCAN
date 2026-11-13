@@ -16,6 +16,8 @@ type Edit = { name_raw?: string; parameter_id?: string; value_raw?: string; unit
 type TermState = TermExplanation | "loading" | { error: string };
 
 /** Rows that are almost certainly not a test: report text, or an unknown name with no usable value. */
+const FIELD_CAPTION = "mb-0.5 block text-[11px] font-medium uppercase tracking-wide text-slate-500";
+
 function isUnreadable(p: ParameterOut) {
   const unknown = p.issues.includes("UNRECOGNIZED_PARAMETER");
   return p.issues.includes("LIKELY_NOT_A_TEST")
@@ -327,16 +329,20 @@ function ParamEditor({ p, edit, locked, active, pending, term, onExplain, onFocu
         <span className="text-sm font-semibold text-slate-900">{p.canonical_name ?? p.name_raw}</span>
         {edit.parameter_id && <span className="rounded bg-brand-50 px-1.5 py-0.5 text-xs text-brand-800 ring-1 ring-brand-200">Matched by you - save to apply</span>}
         <StatusBadge status={p.status} />
-        <FindingBadge value={p.finding_class} />
-        <SourceBadge tag={p.source_tag} />
+        {p.finding_class !== "OUT_OF_RANGE" && <FindingBadge value={p.finding_class} />}
+        {p.source_tag !== "EXTRACTED" && <SourceBadge tag={p.source_tag} />}
         {p.lab_flag && <span className="text-xs text-slate-500">Lab flag: {p.lab_flag}</span>}
         <span className="ml-auto text-xs text-slate-500" title="How sure FITSCAN is about this reading">Confidence {Math.round(p.confidence * 100)}%</span>
       </div>
       <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-        <Input aria-label="Test name as printed" value={val("name_raw")} disabled={locked} onChange={(e) => onChange({ name_raw: e.target.value })} />
-        <Input aria-label="Value" value={val("value_raw")} disabled={locked} inputMode="decimal" onChange={(e) => onChange({ value_raw: e.target.value })} className="font-semibold" />
-        <Input aria-label="Unit" value={val("unit")} disabled={locked} onChange={(e) => onChange({ unit: e.target.value })} />
-        <Input aria-label="Lab reference range" value={val("ref_raw")} disabled={locked} onChange={(e) => onChange({ ref_raw: e.target.value })} />
+        <label className="block"><span className={FIELD_CAPTION}>Test name (as printed)</span>
+          <Input value={val("name_raw")} disabled={locked} onChange={(e) => onChange({ name_raw: e.target.value })} /></label>
+        <label className="block"><span className={FIELD_CAPTION}>Your value</span>
+          <Input value={val("value_raw")} disabled={locked} inputMode="decimal" onChange={(e) => onChange({ value_raw: e.target.value })} className="font-semibold" /></label>
+        <label className="block"><span className={FIELD_CAPTION}>Unit</span>
+          <Input value={val("unit")} disabled={locked} onChange={(e) => onChange({ unit: e.target.value })} /></label>
+        <label className="block"><span className={FIELD_CAPTION}>Lab&apos;s normal range</span>
+          <Input value={val("ref_raw")} disabled={locked} onChange={(e) => onChange({ ref_raw: e.target.value })} /></label>
       </div>
       {(p.issues.length > 0 || !locked) && (
         <div className="mt-2 flex flex-wrap items-center gap-2">

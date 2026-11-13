@@ -6,9 +6,15 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+/** Server timestamps are UTC; some (SQLite) arrive without a zone - treat those as UTC, not local time. */
+export function parseIso(iso: string): Date {
+  if (iso.length === 10) return new Date(`${iso}T00:00:00`);  // a calendar date: local midnight
+  return new Date(/[zZ]|[+-]\d\d:?\d\d$/.test(iso) ? iso : `${iso}Z`);
+}
+
 export function formatDate(iso: string | null | undefined, withTime = false): string {
   if (!iso) return "-";
-  const d = new Date(iso.length === 10 ? `${iso}T00:00:00` : iso);
+  const d = parseIso(iso);
   if (Number.isNaN(d.getTime())) return iso;
   return d.toLocaleDateString("en-IN", {
     day: "numeric", month: "short", year: "numeric",
@@ -17,7 +23,7 @@ export function formatDate(iso: string | null | undefined, withTime = false): st
 }
 
 export function timeAgo(iso: string): string {
-  const s = (Date.now() - new Date(iso).getTime()) / 1000;
+  const s = (Date.now() - parseIso(iso).getTime()) / 1000;
   if (s < 60) return "just now";
   if (s < 3600) return `${Math.floor(s / 60)} min ago`;
   if (s < 86400) return `${Math.floor(s / 3600)} h ago`;

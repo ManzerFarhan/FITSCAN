@@ -39,7 +39,7 @@ export function ImportantFindings({ findings }: { findings: Finding[] }) {
                   </div>
                   <div className="flex shrink-0 flex-wrap gap-1">
                     {f.finding_class !== "UNCERTAIN" && <StatusBadge status={f.status} />}
-                    <FindingBadge value={f.finding_class} />
+                    {f.finding_class !== "OUT_OF_RANGE" && <FindingBadge value={f.finding_class} />}
                   </div>
                 </Link>
               </li>

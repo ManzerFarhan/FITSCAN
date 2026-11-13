@@ -166,12 +166,18 @@ Disclaimer text (constant `DISCLAIMER_TEXT`): *"FITSCAN provides general informa
 
 | ID | Requirement | Priority |
 |---|---|---|
-| FR-ADM-1 | Only registered accounts listed in the `ADMIN_EMAILS` server setting can open `/admin`; everyone else gets 401/403. | MUST |
+| FR-ADM-1 | Roles: **Owner** (accounts in the `ADMIN_EMAILS` server setting - everything) and **Admin** (granted in the panel - view, suspend, re-read). Everyone else gets 401/403. | MUST |
 | FR-ADM-2 | Overview: client and report counts (total and last 7 days), failed reads, reports by status, active guest sessions. | MUST |
 | FR-ADM-3 | Clients: searchable (name, email, phone, city), paged list with report count and last upload; details show profile, reports and recent activity. Never shows password hashes. | MUST |
 | FR-ADM-4 | Reports: latest reports across clients, filter by status, with the reason a read failed and how many test names were not recognised. | MUST |
-| FR-ADM-5 | Read-only. Every opening of a client's details is written to the audit log (`ADMIN_VIEW`). | MUST |
+| FR-ADM-5 | Every admin view and change is written to the audit log (`ADMIN_*` actions). | MUST |
 | FR-ADM-6 | List the most frequent unrecognised test names, so the test dictionary can be extended (FR-LAB-5). | SHOULD |
+| FR-ADM-7 | Admin team: the Owner adds admins (existing account, or a new account with a password) and removes them. The Owner can't be removed or suspended. | MUST |
+| FR-ADM-8 | Client actions: suspend / reactivate (signs the client out at once), Owner-only temporary password reset and permanent deletion (typed confirmation). | MUST |
+| FR-ADM-9 | Report actions: view everything that was read, open/download the original file, read again, Owner-only delete. | MUST |
+| FR-ADM-10 | Activity log of client and admin actions, searchable and filterable. | MUST |
+| FR-ADM-11 | Overview charts: sign-ups and uploads per day (30 days), reading success rate; client list CSV export (formula-safe). | SHOULD |
+| FR-ADM-12 | System page: version, database, storage, OCR engine, dictionary size, which AI services are on (never secrets). | SHOULD |
 
 ## 5. API Specification (REST, FastAPI, prefix `/api/v1`)
 

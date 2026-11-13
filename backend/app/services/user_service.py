@@ -1,6 +1,8 @@
 """Accounts: registration, login, guest->account migration, password reset, deletion (FR-PROF-4..6)."""
 from __future__ import annotations
 
+from datetime import datetime, timezone
+
 from sqlalchemy import select, update
 from sqlalchemy.orm import Session
 
@@ -18,7 +20,8 @@ def register(db: Session, email: str, password: str, full_name: str | None) -> U
     email = email.lower().strip()
     if db.scalar(select(User).where(User.email == email)):
         raise AppError("EMAIL_TAKEN", "An account with this email already exists. Try logging in.", 409)
-    user = User(email=email, password_hash=hash_password(password), full_name=full_name)
+    user = User(email=email, password_hash=hash_password(password), full_name=full_name,
+                last_login_at=datetime.now(timezone.utc))
     db.add(user)
     db.commit()
     return user
@@ -28,6 +31,10 @@ def authenticate(db: Session, email: str, password: str) -> User:
     user = db.scalar(select(User).where(User.email == email.lower().strip()))
     if user is None or not verify_password(password, user.password_hash):
         raise AppError("INVALID_CREDENTIALS", "Email or password is incorrect.", 401)
+    if user.disabled_at is not None:
+        raise AppError("ACCOUNT_DISABLED", "This account has been suspended. Please contact FITSCAN support.", 403)
+    user.last_login_at = datetime.now(timezone.utc)
+    db.commit()
     return user
 
 
@@ -77,6 +84,11 @@ def change_password(db: Session, user: User, current: str, new: str) -> None:
 def delete_account(db: Session, user: User, password: str) -> None:
     if not verify_password(password, user.password_hash):
         raise AppError("INVALID_CREDENTIALS", "Password is incorrect.", 401)
+    purge_user(db, user)
+
+
+def purge_user(db: Session, user: User) -> None:
+    """Delete an account with all its data and stored files (self-service deletion and admin deletion)."""
     keys = list(db.scalars(select(Document.storage_key).where(Document.user_id == user.id)))
     db.delete(user)  # documents, parameters, analyses, recs, comparisons cascade in the DB
     db.commit()

@@ -69,6 +69,12 @@ class Settings(BaseSettings):
     def max_upload_bytes(self) -> int:
         return self.max_upload_mb * 1024 * 1024
 
+    def role_for(self, email: str | None, stored_role: str | None) -> str:
+        """Effective admin-panel role: OWNER (ADMIN_EMAILS) > ADMIN (granted in the panel) > USER."""
+        if self.is_admin_email(email):
+            return "OWNER"
+        return "ADMIN" if stored_role in ("ADMIN", "OWNER") else "USER"
+
     def is_admin_email(self, email: str | None) -> bool:
         admins = {e.strip().lower() for e in self.admin_emails.split(",") if e.strip()}
         return bool(email) and email.strip().lower() in admins

@@ -259,23 +259,39 @@ export interface User {
   id: string; email: string; full_name: string | null; phone: string | null; dob: string | null; gender: string | null;
   preferred_city: string | null; address: string | null; retention_days: number | null; created_at: string;
   height_cm?: number | null; weight_kg?: number | null;
-  is_admin?: boolean;  // may open /admin (ADMIN_EMAILS on the server)
+  is_admin?: boolean;  // may open /admin
+  admin_role?: "USER" | "ADMIN" | "OWNER";
 }
 
 // ---- Admin panel (/admin) ----
+export type AdminRole = "USER" | "ADMIN" | "OWNER";
+export interface DailyCount { date: string; count: number }
 export interface AdminOverview {
-  users: number; users_7d: number; guests_active: number; documents: number; documents_7d: number; failed: number;
-  parameters: number; by_status: Record<string, number>; unrecognised_tests: { name: string; count: number }[];
+  users: number; users_7d: number; active_7d: number; suspended: number; guests_active: number;
+  documents: number; documents_7d: number; failed: number; read_success_rate: number | null; parameters: number;
+  by_status: Record<string, number>; signups_daily: DailyCount[]; uploads_daily: DailyCount[];
+  unrecognised_tests: { name: string; count: number }[];
 }
-export interface AdminClient extends Omit<User, "is_admin"> { documents: number; last_upload: string | null }
+export interface AdminSystem {
+  version: string; environment: string; database: string; storage: string; ocr_engine: string; tests_in_dictionary: number;
+  chatbot: string; explanations: string; centre_search: string; guest_retention_hours: number; max_upload_mb: number;
+}
+export interface AdminClient extends Omit<User, "is_admin" | "admin_role"> {
+  role: AdminRole; last_login_at: string | null; disabled_at: string | null; documents?: number; last_upload?: string | null;
+}
 export interface AdminDocument {
   id: string; filename: string; status: DocumentStatus; status_message: string | null; category: string | null;
-  lab_name: string | null; report_date: string | null; uploaded_at: string; pages: number; size_bytes: number;
-  parameters: number; unrecognised: number; owner: string; user_id: string | null;
+  lab_name: string | null; report_date: string | null; uploaded_at: string; pages: number; size_bytes: number; mime: string;
+  parameters: number; unrecognised: number; out_of_range: number; owner: string; user_id: string | null;
 }
-export interface AdminClientDetail {
-  user: Omit<User, "is_admin">; documents: AdminDocument[];
-  activity: { at: string; action: string; label: string | null; entity: string }[];
+export interface AdminDocumentDetail extends AdminDocument {
+  patient_name: string | null; doctor_name: string | null; collected_date: string | null; engine: string | null;
+  warnings: string[]; results: ParameterOut[];
 }
+export interface AdminActivity { at: string; action: string; label: string | null; entity: string }
+export interface AdminClientDetail { user: AdminClient; documents: AdminDocument[]; activity: AdminActivity[] }
+export interface AdminAuditRow extends AdminActivity { entity_id: string | null; user_id: string | null; who: string }
+export interface Paged<T> { total: number; items: T[] }
+export interface AdminTeamMember extends Partial<AdminClient> { email: string; role: AdminRole; pending?: boolean }
 
 export interface SessionOut { authenticated: boolean; user: User | null; migrated_documents: number }

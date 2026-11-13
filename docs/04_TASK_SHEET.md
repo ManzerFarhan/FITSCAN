@@ -170,5 +170,6 @@ Legend — **Pri:** M = MUST, S = SHOULD. **Status:** ☐ Todo · ◐ In progres
 |---|---|---|---|
 | X-01 | Extended test dictionary: 310 more tests (urine, blood gas, tumour markers, serology, autoimmune, vitamins, hormones, coagulation, drug levels) | FR-LAB-5 | ☑ |
 | X-02 | Admin panel `/admin` + `/api/v1/admin/*` (overview, clients, reports, unrecognised test names) | FR-ADM-1..6 | ☑ |
+| X-03 | Admin roles (Owner/Admin), admin team, suspend/reset/delete clients, report actions, activity log, charts, CSV, system page | FR-ADM-1..12 | ☑ |
 
 **Totals:** Phase 1: 29 tasks · Phase 2: 28 · Phase 3: 30 · Phase 4: 22 → **109 tasks**.

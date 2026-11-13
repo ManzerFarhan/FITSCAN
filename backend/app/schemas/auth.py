@@ -41,14 +41,20 @@ class UserOut(BaseModel):
     height_cm: float | None = None
     weight_kg: float | None = None
     created_at: datetime
+    role: str = "USER"
+
+    @computed_field  # type: ignore[prop-decorator]
+    @property
+    def admin_role(self) -> str:
+        """USER | ADMIN | OWNER - OWNER comes from the ADMIN_EMAILS setting."""
+        from app.core.config import get_settings
+
+        return get_settings().role_for(self.email, self.role)
 
     @computed_field  # type: ignore[prop-decorator]
     @property
     def is_admin(self) -> bool:
-        """May open the admin panel (ADMIN_EMAILS setting)."""
-        from app.core.config import get_settings
-
-        return get_settings().is_admin_email(self.email)
+        return self.admin_role != "USER"
 
 
 class SessionOut(BaseModel):

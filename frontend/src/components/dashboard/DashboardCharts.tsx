@@ -76,7 +76,7 @@ function LatestStatusChart({ data }: { data: Charts["latest_status"] }) {
                 </li>
               ))}
               {data && data.needs_check > 0 && (
-                <li className="pt-1 text-xs text-slate-500">{data.needs_check} value(s) still need your check.</li>
+                <li className="pt-1 text-xs text-slate-500">{data.needs_check} value(s) not confirmed yet - open the report and press &quot;Confirm all values&quot;.</li>
               )}
             </ul>
           </div>

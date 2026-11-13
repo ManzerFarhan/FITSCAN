@@ -70,6 +70,13 @@ class ReportCategory(StrEnum):
     OTHER = "OTHER"
 
 
+class UserRole(StrEnum):
+    """Admin panel access (FR-ADM). OWNER = listed in ADMIN_EMAILS (cannot be removed from the panel)."""
+    USER = "USER"
+    ADMIN = "ADMIN"
+    OWNER = "OWNER"
+
+
 class HealthScoreBand(StrEnum):
     """Dashboard lab score band - describes the share of results within the lab's range, never a diagnosis (BR-04)."""
     MOSTLY_WITHIN = "MOSTLY_WITHIN"   # score >= 8.5
