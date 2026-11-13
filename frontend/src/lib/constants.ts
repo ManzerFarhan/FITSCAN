@@ -15,7 +15,8 @@ export type FindingClass = "OUT_OF_RANGE" | "UNCERTAIN" | "URGENT";
 export type SourceTag = "EXTRACTED" | "USER_CORRECTED" | "AI_GENERATED";
 
 export const REPORT_CATEGORIES = [
-  "CBC", "LFT", "KFT", "LIPID", "THYROID", "SUGAR", "B12", "VITAMIN_D", "IRON", "COAG", "CARDIAC", "HORMONE", "INFLAMMATION", "OTHER",
+  "CBC", "LFT", "KFT", "LIPID", "THYROID", "SUGAR", "B12", "VITAMIN_D", "IRON", "COAG", "CARDIAC", "HORMONE", "INFLAMMATION",
+  "URINE", "BLOOD_GAS", "VITAMINS", "TUMOR_MARKER", "INFECTION", "AUTOIMMUNE", "OTHER",
 ] as const;
 export type ReportCategory = (typeof REPORT_CATEGORIES)[number];
 
@@ -23,7 +24,8 @@ export const CATEGORY_LABELS: Record<string, string> = {
   CBC: "Complete Blood Count", LFT: "Liver Function", KFT: "Kidney Function", LIPID: "Lipid Profile",
   THYROID: "Thyroid", SUGAR: "Sugar / HbA1c", B12: "Vitamin B12 & Folate", VITAMIN_D: "Vitamin D",
   IRON: "Iron Studies", COAG: "Coagulation", CARDIAC: "Heart Markers", HORMONE: "Hormones", INFLAMMATION: "Inflammation & Immunity",
-  OTHER: "Other",
+  URINE: "Urine & Stool", BLOOD_GAS: "Blood Gas", VITAMINS: "Vitamins & Minerals", TUMOR_MARKER: "Tumour Markers",
+  INFECTION: "Infection Tests", AUTOIMMUNE: "Autoimmune", OTHER: "Other",
 };
 
 // Mirrors HealthScoreBand / BmiCategory in backend/app/core/constants.py

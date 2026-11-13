@@ -259,6 +259,23 @@ export interface User {
   id: string; email: string; full_name: string | null; phone: string | null; dob: string | null; gender: string | null;
   preferred_city: string | null; address: string | null; retention_days: number | null; created_at: string;
   height_cm?: number | null; weight_kg?: number | null;
+  is_admin?: boolean;  // may open /admin (ADMIN_EMAILS on the server)
+}
+
+// ---- Admin panel (/admin) ----
+export interface AdminOverview {
+  users: number; users_7d: number; guests_active: number; documents: number; documents_7d: number; failed: number;
+  parameters: number; by_status: Record<string, number>; unrecognised_tests: { name: string; count: number }[];
+}
+export interface AdminClient extends Omit<User, "is_admin"> { documents: number; last_upload: string | null }
+export interface AdminDocument {
+  id: string; filename: string; status: DocumentStatus; status_message: string | null; category: string | null;
+  lab_name: string | null; report_date: string | null; uploaded_at: string; pages: number; size_bytes: number;
+  parameters: number; unrecognised: number; owner: string; user_id: string | null;
+}
+export interface AdminClientDetail {
+  user: Omit<User, "is_admin">; documents: AdminDocument[];
+  activity: { at: string; action: string; label: string | null; entity: string }[];
 }
 
 export interface SessionOut { authenticated: boolean; user: User | null; migrated_documents: number }

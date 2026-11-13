@@ -1,5 +1,5 @@
 "use client";
-import { ChevronDown, FlaskConical, History, LayoutDashboard, Lock, LogIn, LogOut, Menu, ScanLine, Upload, User, X } from "lucide-react";
+import { ChevronDown, FlaskConical, History, LayoutDashboard, Lock, LogIn, LogOut, Menu, ScanLine, ShieldCheck, Upload, User, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -70,6 +70,9 @@ export function Navbar() {
               <div className="absolute right-0 z-40 mt-2 w-56 rounded-xl border border-slate-200 bg-white p-1 shadow-lg">
                 <p className="truncate px-3 py-2 text-xs text-slate-500">{user ? user.email : "Guest - data kept for 24 hours"}</p>
                 <Link href="/profile" className="block rounded-lg px-3 py-2 text-sm hover:bg-slate-50">Profile & settings</Link>
+                {user?.is_admin && (
+                  <Link href="/admin" className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm hover:bg-slate-50"><ShieldCheck className="h-4 w-4" />Admin panel</Link>
+                )}
                 {user ? (
                   <button onClick={async () => { await logout(); router.push("/dashboard"); router.refresh(); }}
                     className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm hover:bg-slate-50">

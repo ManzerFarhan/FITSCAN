@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from app.api.v1 import analysis, assistant, auth, centres, dashboard, documents, health, profile
+from app.api.v1 import admin, analysis, assistant, auth, centres, dashboard, documents, health, profile
 
 api_router = APIRouter()
 api_router.include_router(health.router)
@@ -12,3 +12,4 @@ api_router.include_router(analysis.router)
 api_router.include_router(analysis.comparisons_router)
 api_router.include_router(centres.router)
 api_router.include_router(assistant.router)
+api_router.include_router(admin.router)

@@ -14,11 +14,12 @@ from app.utils import dictionaries
 
 def test_dictionary_is_large_and_consistent():
     params = dictionaries.parameters()
-    assert len(params) >= 140
+    assert len(params) >= 450
     owner: dict[str, str] = {}
     for pid, p in params.items():
         assert about_text(pid), f"{pid} has no plain-language description"
-        assert p["plausible_min"] <= p["plausible_max"]
+        if p.get("plausible_min") is not None and p.get("plausible_max") is not None:
+            assert p["plausible_min"] <= p["plausible_max"]
         for s in [p["canonical_name"], *p["synonyms"]]:
             k = normalize_key(s)
             assert owner.setdefault(k, pid) == pid, f"'{s}' belongs to both {owner[k]} and {pid}"
@@ -100,3 +101,17 @@ def test_explain_term_for_new_tests():
     r = explain_term("Total Iron Binding Capacity")
     assert r.suggestions[0].parameter_id == "tibc" and r.sources
     assert re.search(r"\[S\d\]", r.explanation)
+
+
+@pytest.mark.parametrize("name,pid", [  # extended dictionary (scripts/build_extended_dictionary.py)
+    ("CEA", "cea"), ("CA 19-9", "ca199"), ("CA-125", "ca125"), ("Alpha Feto Protein (AFP)", "afp"),
+    ("HBsAg", "hbsag"), ("HIV I & II Antibody", "hiv"), ("Anti HCV", "anti_hcv"), ("S. Typhi 'O'", "widal_o"),
+    ("Dengue NS1 Antigen", "dengue_ns1"), ("Pus Cells", "pus_cells"), ("Specific Gravity", "urine_sg"),
+    ("Epithelial Cells", "epithelial_cells"), ("Ketone Bodies", "urine_ketones"), ("Urine Microalbumin", "urine_microalbumin"),
+    ("Albumin/Creatinine Ratio", "urine_acr"), ("Anti CCP", "anti_ccp"), ("ANA (IFA)", "ana"), ("pCO2", "pco2"),
+    ("Base Excess", "base_excess"), ("Fructosamine", "fructosamine"), ("IgE Total", "ige_total"), ("Complement C3", "complement_c3"),
+    ("Blood Group (ABO)", "blood_group"), ("Rh Factor", "rh_type"), ("HbA2", "hb_a2"), ("Thyroglobulin", "thyroglobulin"),
+    ("SHBG", "shbg"), ("Free Testosterone", "free_testosterone"), ("Selenium", "selenium"), ("CD4 Count", "cd4"),
+])
+def test_extended_report_names_are_recognised(name, pid):
+    assert match_parameter(name).parameter_id == pid

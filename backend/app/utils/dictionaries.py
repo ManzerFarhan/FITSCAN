@@ -12,7 +12,13 @@ def _load(name: str) -> dict:
 
 @lru_cache
 def parameters() -> dict[str, dict]:
-    return {p["parameter_id"]: p for p in _load("parameters.json")["parameters"]}
+    """Core dictionary first, then the extended one (scripts/build_extended_dictionary.py); core entries win."""
+    out: dict[str, dict] = {}
+    for name in ("parameters.json", "parameters_extended.json"):
+        if (DICT_DIR / name).exists():
+            for p in _load(name)["parameters"]:
+                out.setdefault(p["parameter_id"], p)
+    return out
 
 
 @lru_cache

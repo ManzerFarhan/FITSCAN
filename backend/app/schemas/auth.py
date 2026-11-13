@@ -3,7 +3,7 @@ from __future__ import annotations
 import uuid
 from datetime import date, datetime
 
-from pydantic import BaseModel, ConfigDict, EmailStr, Field
+from pydantic import BaseModel, ConfigDict, EmailStr, Field, computed_field
 
 
 class RegisterIn(BaseModel):
@@ -41,6 +41,14 @@ class UserOut(BaseModel):
     height_cm: float | None = None
     weight_kg: float | None = None
     created_at: datetime
+
+    @computed_field  # type: ignore[prop-decorator]
+    @property
+    def is_admin(self) -> bool:
+        """May open the admin panel (ADMIN_EMAILS setting)."""
+        from app.core.config import get_settings
+
+        return get_settings().is_admin_email(self.email)
 
 
 class SessionOut(BaseModel):

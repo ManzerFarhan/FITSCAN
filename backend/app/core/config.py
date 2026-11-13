@@ -26,6 +26,9 @@ class Settings(BaseSettings):
     max_pdf_pages: int = 30
     confidence_threshold: float = 0.85
 
+    # Admin panel (/admin): comma-separated emails of registered accounts that may open it. Empty = nobody.
+    admin_emails: str = ""
+
     jwt_secret: str = "dev-only-change-me"
     jwt_expire_minutes: int = 60 * 24
     guest_retention_hours: int = 24
@@ -65,6 +68,10 @@ class Settings(BaseSettings):
     @property
     def max_upload_bytes(self) -> int:
         return self.max_upload_mb * 1024 * 1024
+
+    def is_admin_email(self, email: str | None) -> bool:
+        admins = {e.strip().lower() for e in self.admin_emails.split(",") if e.strip()}
+        return bool(email) and email.strip().lower() in admins
 
     @property
     def is_production(self) -> bool:

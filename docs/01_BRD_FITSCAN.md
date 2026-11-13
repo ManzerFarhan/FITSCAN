@@ -162,6 +162,17 @@ Disclaimer text (constant `DISCLAIMER_TEXT`): *"FITSCAN provides general informa
 | FR-PROF-5 | Auth: register, login, logout, password reset, sessions, protected routes, per-user data isolation. | MUST (Phase 4) |
 | FR-PROF-6 | Guest mode: session-scoped data using a signed guest token; upgrade-to-account migrates session docs. | SHOULD |
 
+### 4.6 Module ADM — Admin Panel (route `/admin`)
+
+| ID | Requirement | Priority |
+|---|---|---|
+| FR-ADM-1 | Only registered accounts listed in the `ADMIN_EMAILS` server setting can open `/admin`; everyone else gets 401/403. | MUST |
+| FR-ADM-2 | Overview: client and report counts (total and last 7 days), failed reads, reports by status, active guest sessions. | MUST |
+| FR-ADM-3 | Clients: searchable (name, email, phone, city), paged list with report count and last upload; details show profile, reports and recent activity. Never shows password hashes. | MUST |
+| FR-ADM-4 | Reports: latest reports across clients, filter by status, with the reason a read failed and how many test names were not recognised. | MUST |
+| FR-ADM-5 | Read-only. Every opening of a client's details is written to the audit log (`ADMIN_VIEW`). | MUST |
+| FR-ADM-6 | List the most frequent unrecognised test names, so the test dictionary can be extended (FR-LAB-5). | SHOULD |
+
 ## 5. API Specification (REST, FastAPI, prefix `/api/v1`)
 
 | ID | Method & Path | Purpose |

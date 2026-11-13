@@ -8,7 +8,7 @@ import hashlib
 import secrets
 import uuid
 from dataclasses import dataclass
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 
 from fastapi import Depends, Request, Response
 from sqlalchemy import Select, select
@@ -96,12 +96,12 @@ def rate_limit(name: str, limit: int, window_s: int = 60):
 
 def _resolve_guest(request: Request, response: Response, db: Session) -> GuestSession:
     s = get_settings()
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     token = request.cookies.get(GUEST_COOKIE) or request.headers.get("x-guest-token")
     if token:
         guest = db.scalar(select(GuestSession).where(GuestSession.token_hash == hash_token(token)))
         if guest is not None:
-            expires = guest.expires_at if guest.expires_at.tzinfo else guest.expires_at.replace(tzinfo=timezone.utc)
+            expires = guest.expires_at if guest.expires_at.tzinfo else guest.expires_at.replace(tzinfo=UTC)
             if expires > now:
                 return guest
     token = secrets.token_urlsafe(32)
@@ -140,3 +140,14 @@ def login_required(feature: str):
                            {"feature": feature})
         return owner
     return dep
+
+
+def admin_required(owner: Owner = Depends(get_owner)) -> User:
+    """Admin panel: a signed-in account listed in ADMIN_EMAILS. Everyone else gets 401/403."""
+    from app.core.errors import AppError
+
+    if owner.user is None:
+        raise AppError("AUTH_REQUIRED", "Please log in to continue.", 401)
+    if not get_settings().is_admin_email(owner.user.email):
+        raise AppError("FORBIDDEN", "This page is for FITSCAN administrators only.", 403)
+    return owner.user
