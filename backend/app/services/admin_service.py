@@ -89,7 +89,16 @@ def system_status(db: Session) -> dict:
         "explanations": "Claude" if s.llm_api_key else "built-in templates",
         "centre_search": "Google Places" if s.google_places_api_key else "OpenStreetMap",
         "guest_retention_hours": s.guest_retention_hours, "max_upload_mb": s.max_upload_mb,
+        "email": "Resend" if s.resend_api_key else "not connected",
+        "kb_articles": _kb_count(), "llm_model": s.llm_model if s.llm_api_key else None,
+        "gemini_model": s.gemini_model if s.gemini_api_key else None,
     }
+
+
+def _kb_count() -> int:
+    from app.rag.ingest import load_documents
+
+    return len(load_documents())
 
 
 # ------------------------------------------------------------------ clients

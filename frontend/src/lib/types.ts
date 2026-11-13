@@ -275,6 +275,7 @@ export interface AdminOverview {
 export interface AdminSystem {
   version: string; environment: string; database: string; storage: string; ocr_engine: string; tests_in_dictionary: number;
   chatbot: string; explanations: string; centre_search: string; guest_retention_hours: number; max_upload_mb: number;
+  email: string; kb_articles: number; llm_model: string | null; gemini_model: string | null;
 }
 export interface AdminClient extends Omit<User, "is_admin" | "admin_role"> {
   role: AdminRole; last_login_at: string | null; disabled_at: string | null; documents?: number; last_upload?: string | null;
