@@ -1,6 +1,6 @@
 "use client";
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
-import { api } from "@/lib/api";
+import { api, ApiError, SERVER_WAKING, wakeServer } from "@/lib/api";
 import type { SessionOut, User } from "@/lib/types";
 
 interface AuthState {
@@ -21,7 +21,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const refresh = useCallback(async () => {
     try {
-      const s = await api<SessionOut>("/auth/me");
+      let s: SessionOut;
+      try {
+        s = await api<SessionOut>("/auth/me");
+      } catch (e) {
+        // Sleeping free-tier server: wait for it instead of showing a signed-in person as logged out.
+        if (!(e instanceof ApiError && e.code === SERVER_WAKING) || !(await wakeServer())) throw e;
+        s = await api<SessionOut>("/auth/me");
+      }
       setUser(s.user);
     } catch {
       setUser(null);

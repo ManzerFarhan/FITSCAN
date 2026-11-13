@@ -3,6 +3,7 @@ import Link from "next/link";
 import { AssistantWidget } from "@/components/layout/AssistantWidget";
 import { DisclaimerBanner } from "@/components/layout/DisclaimerBanner";
 import { Navbar } from "@/components/layout/Navbar";
+import { WakeServer } from "@/components/layout/WakeServer";
 import { WelcomeModal } from "@/components/layout/WelcomeModal";
 import { AuthProvider } from "@/hooks/useAuth";
 import "@/styles/globals.css";
@@ -22,6 +23,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-50 focus:rounded focus:bg-white focus:p-2">
           Skip to content
         </a>
+        <WakeServer />
         <AuthProvider>
           <Navbar />
           <main id="main" className="mx-auto w-full max-w-7xl px-4 py-6">{children}</main>

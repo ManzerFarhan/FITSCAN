@@ -13,7 +13,7 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Alert, Skeleton } from "@/components/ui/misc";
 import { useDocument } from "@/hooks/useDocument";
-import { api, ApiError, uploadWithProgress } from "@/lib/api";
+import { api, ApiError, SERVER_WAKING, uploadWithProgress, wakeServer } from "@/lib/api";
 
 function AnalysisInner() {
   const params = useSearchParams();
@@ -24,6 +24,7 @@ function AnalysisInner() {
   const [uploading, setUploading] = useState(false);
   const [progress, setProgress] = useState(0);
   const [uploadError, setUploadError] = useState<string | null>(null);
+  const [waking, setWaking] = useState(false);
   const { doc, extraction, setExtraction, error, restart } = useDocument(docParam);
 
   const upload = async () => {
@@ -32,12 +33,24 @@ function AnalysisInner() {
     const form = new FormData();
     form.append("file", file);
     form.append("doc_type", "LAB_REPORT");
+    const send = () => uploadWithProgress<{ document_id: string }>("/documents", form, setProgress);
     try {
-      const res = await uploadWithProgress<{ document_id: string }>("/documents", form, setProgress);
+      let res;
+      try {
+        res = await send();
+      } catch (e) {
+        // Free hosting: the API may be asleep. Wake it, then send the same file again automatically.
+        if (!(e instanceof ApiError && e.code === SERVER_WAKING)) throw e;
+        setWaking(true); setProgress(0);
+        const awake = await wakeServer();
+        setWaking(false);
+        if (!awake) throw e;
+        res = await send();
+      }
       router.replace(`/analysis?doc=${res.document_id}`);
     } catch (e) {
-      setUploadError(e instanceof ApiError ? e.message : "Upload failed.");
-    } finally { setUploading(false); }
+      setUploadError(e instanceof ApiError ? e.message : "Upload failed. Please try again.");
+    } finally { setUploading(false); setWaking(false); }
   };
 
   const retry = async () => {
@@ -69,6 +82,11 @@ function AnalysisInner() {
             <CardContent className="space-y-4 pt-5">
               <p className="text-sm font-medium text-slate-700">1. Upload your lab report</p>
               <UploadDropzone file={file} onFile={setFile} onUpload={upload} uploading={uploading} progress={progress} />
+              {waking && (
+                <Alert tone="info" title="Starting the FITSCAN server...">
+                  It was resting to save resources. This takes up to a minute - your report will upload automatically, no need to click again.
+                </Alert>
+              )}
               {uploadError && <Alert tone="error">{uploadError}</Alert>}
               {file && <DocumentPreview file={file} />}
             </CardContent>
